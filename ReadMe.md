@@ -41,7 +41,9 @@ You can configure more ForwardedHeaders-options:
 
 ## Certificate-store
 
-The application contains a certificate-store. Here we can put root-certificates and intermediate-certificates to use for signing the certificates we create. The certificates in the certificate-store are configured in appsettings.json.
+The application contains a certificate-store. Here we can put root-certificates and intermediate-certificates to use for signing the certificates we create. The certificates in the certificate-store are configured in appsettings.json. Example:
+
+- [appsettings.Development.json](/Source/Application/appsettings.Development.json#L2)
 
 The certificates configured for the development-environment are:
 
