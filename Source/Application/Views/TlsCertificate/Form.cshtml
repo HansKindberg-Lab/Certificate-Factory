@@ -1,0 +1,17 @@
+﻿@model TlsCertificateForm
+@if(Model != null)
+{
+	<form method="post">
+		<partial model="@Model" name="Forms/Parts/AsymmetricAlgorithmInput" />
+		<partial model="@Model" name="Forms/Parts/SubjectInput" />
+		<partial model="@Model" name="Forms/Parts/OptionalIssuerInput" />
+		<partial model="@Model" name="Forms/Parts/LifetimeInput" />
+		<div class="mb-3">
+			<label for="dns-names-input">DNS-names</label>
+			<textarea class="form-control" id="dns-names-input" name="@nameof(Model.DnsNames)" placeholder="Enter zero or more dns-names separated by line breaks" rows="5">@Model.DnsNames</textarea>
+			<small class="form-text text-muted">The dns-names the TLS certificate will be valid for. Separate them with a line break.</small>
+		</div>
+		<partial model="@Model" name="Forms/Parts/PasswordInput" />
+		<partial model="@("TlsCertificate")" name="Forms/Parts/Buttons" />
+	</form>
+}

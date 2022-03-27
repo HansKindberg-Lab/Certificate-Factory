@@ -1,0 +1,9 @@
+﻿@model string
+@if(Model != null)
+{
+	<div class="text-end">
+		<button class="btn btn-primary" type="submit">Download</button>
+		<a asp-controller="@Model" class="btn btn-secondary">Clear</a>
+	</div>
+	<small class="form-text text-muted">When clicking download a certificate is created and archived to a zip-file that is downloaded if all required input-fields are valid.</small>
+}

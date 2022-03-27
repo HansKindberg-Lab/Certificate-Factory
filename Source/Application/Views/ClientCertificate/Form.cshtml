@@ -1,0 +1,12 @@
+﻿@model ClientCertificateForm
+@if(Model != null)
+{
+	<form method="post">
+		<partial model="@Model" name="Forms/Parts/AsymmetricAlgorithmInput" />
+		<partial model="@Model" name="Forms/Parts/SubjectInput" />
+		<partial model="@Model" name="Forms/Parts/OptionalIssuerInput" />
+		<partial model="@Model" name="Forms/Parts/LifetimeInput" />
+		<partial model="@Model" name="Forms/Parts/PasswordInput" />
+		<partial model="@("ClientCertificate")" name="Forms/Parts/Buttons" />
+	</form>
+}

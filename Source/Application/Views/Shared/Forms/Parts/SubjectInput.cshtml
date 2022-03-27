@@ -1,0 +1,11 @@
+﻿@model ISubjectCertificateForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="subject-input" title="Required">
+			@nameof(Model.Subject) <small class="form-text text-muted">*</small>
+		</label>
+		<input autofocus="autofocus" class="form-control" id="subject-input" name="@nameof(Model.Subject)" placeholder="Enter a subject" value="@Model.Subject" />
+		<small class="form-text text-muted">The subject for the certificate. The subject must be a valid X500 distinguished name. Eg. "CN=My certificate name" or "CN=Bob Bobson, E=bob.bobson@example.org, G=Bob, SERIALNUMBER=123456789, SN=Bobson".</small>
+	</div>
+}

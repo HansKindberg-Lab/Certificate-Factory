@@ -1,0 +1,15 @@
+﻿@if(!ViewContext.ModelState.IsValid)
+{
+	<div asp-validation-summary="All" class="alert alert-danger pb-1">
+		@if(ViewContext.ModelState.ContainsKey("Exception"))
+		{
+			<h2 class="h5">Error</h2>
+			<p>An internal error has occurred.</p>
+		}
+		else
+		{
+			<h2 class="h5">Input-error</h2>
+			<p>The form is not filled in correctly.</p>
+		}
+	</div>
+}

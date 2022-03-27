@@ -1,0 +1,11 @@
+﻿@model IIssuedCertificateForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="issuer-input" title="Required">
+			@nameof(Model.Issuer) <small class="form-text text-muted">*</small>
+		</label>
+		<select asp-items="@Model.IssuerList" class="form-select" id="issuer-input" name="@nameof(Model.Issuer)"></select>
+		<small class="form-text text-muted">The issuer for this certificate.</small>
+	</div>
+}

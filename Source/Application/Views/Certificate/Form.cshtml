@@ -1,0 +1,85 @@
+﻿@model CertificateForm
+@if(Model != null)
+{
+	<form method="post">
+		<partial model="@Model" name="Forms/Parts/AsymmetricAlgorithmInput" />
+		<partial model="@Model" name="Forms/Parts/SubjectInput" />
+		<partial model="@Model" name="Forms/Parts/OptionalIssuerInput" />
+		<div class="mb-3">
+			<label for="not-before-input">Not before</label>
+			<input class="form-control" id="not-before-input" name="@nameof(Model.NotBefore)" type="date" value="@Model.NotBefore?.ToString("yyyy-MM-dd")" />
+			<small class="form-text text-muted">UTC-date</small>
+		</div>
+		<div class="mb-3">
+			<label for="not-after-input">Not after</label>
+			<input class="form-control" id="not-after-input" name="@nameof(Model.NotAfter)" type="date" value="@Model.NotAfter?.ToString("yyyy-MM-dd")" />
+			<small class="form-text text-muted">UTC-date</small>
+		</div>
+		<fieldset class="border border-1 border-secondary mb-3 p-3 pb-2 pt-2 rounded-3">
+			<legend>Certificate authority</legend>
+			<div class="form-check mb-1">
+				<input checked="@(Model.CertificateAuthorityEnabled ? "checked" : null)" class="form-check-input" id="certificate-authority-input" name="@nameof(Model.CertificateAuthorityEnabled)" type="checkbox" value="true" />
+				<label class="form-check-label" for="certificate-authority-input">Enabled</label>
+			</div>
+			<div class="mb-2">
+				<label for="path-length-constraint-input">Path-length constraint</label>
+				<input class="form-control" id="path-length-constraint-input" max="1000" min="0" name="@nameof(Model.PathLengthConstraint)" placeholder="Enter a path-length constraint or leave blank" type="number" value="@Model.PathLengthConstraint" />
+				<small class="form-text text-muted"><a href="http://www.pkiglobe.org/" target="_blank">Basic Constraint Extension</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509basicconstraintsextension.pathlengthconstraint" target="_blank">X509BasicConstraintsExtension.PathLengthConstraint</a></small>
+			</div>
+		</fieldset>
+		<div class="mb-3">
+			<label for="hash-algorithm-input">Hash-algorithm</label>
+			<select asp-items="@Model.HashAlgorithmList" class="form-select" id="hash-algorithm-input" name="@nameof(Model.HashAlgorithm)"></select>
+		</div>
+		<fieldset class="border border-1 border-secondary mb-3 p-3 pb-2 pt-2 rounded-3">
+			<legend>Key-usage</legend>
+			@foreach(var keyUsage in Model.KeyUsageList)
+			{
+				<div class="form-check">
+					<input checked="@(keyUsage.Selected ? "checked" : null)" class="form-check-input" id="key-usage-@(keyUsage.Value.ToLowerInvariant())-input" name="@nameof(Model.KeyUsage)" type="checkbox" value="@keyUsage.Value" />
+					<label class="form-check-label" for="key-usage-@(keyUsage.Value.ToLowerInvariant())-input">@keyUsage.Text</label>
+				</div>
+			}
+		</fieldset>
+		<fieldset class="border border-1 border-secondary mb-3 p-3 pb-2 pt-2 rounded-3">
+			<legend>Enhanced key-usage</legend>
+			@foreach(var enhancedKeyUsage in Model.EnhancedKeyUsageList)
+			{
+				<div class="form-check">
+					<input checked="@(enhancedKeyUsage.Selected ? "checked" : null)" class="form-check-input" id="enhanced-key-usage-@(enhancedKeyUsage.Value.ToLowerInvariant())-input" name="@nameof(Model.EnhancedKeyUsage)" type="checkbox" value="@enhancedKeyUsage.Value" />
+					<label class="form-check-label" for="enhanced-key-usage-@(enhancedKeyUsage.Value.ToLowerInvariant())-input">@enhancedKeyUsage.Text</label>
+				</div>
+			}
+		</fieldset>
+		<fieldset class="border border-1 border-secondary mb-3 p-3 pb-2 pt-2 rounded-3">
+			<legend>Subject alternative name</legend>
+			<div class="mb-3">
+				<label for="dns-names-input">DNS-names</label>
+				<textarea class="form-control" id="dns-names-input" name="@nameof(Model.DnsNames)" placeholder="Enter zero or more dns-names separated by line breaks" rows="5">@Model.DnsNames</textarea>
+				<small class="form-text text-muted">The dns-names for the certificate. Separate them with a line break.</small>
+			</div>
+			<div class="mb-3">
+				<label for="email-addresses-input">Email-addresses</label>
+				<textarea class="form-control" id="email-addresses-input" name="@nameof(Model.EmailAddresses)" placeholder="Enter zero or more email-addresses separated by line breaks" rows="5">@Model.EmailAddresses</textarea>
+				<small class="form-text text-muted">The email-addresses for the certificate. Separate them with a line break.</small>
+			</div>
+			<div class="mb-3">
+				<label for="ip-addresses-input">IP-addresses</label>
+				<textarea class="form-control" id="ip-addresses-input" name="@nameof(Model.IpAddresses)" placeholder="Enter zero or more ip-addresses separated by line breaks" rows="5">@Model.IpAddresses</textarea>
+				<small class="form-text text-muted">The ip-addresses for the certificate. Separate them with a line break.</small>
+			</div>
+			<div class="mb-3">
+				<label for="uris-input">Uris</label>
+				<textarea class="form-control" id="uris-input" name="@nameof(Model.Uris)" placeholder="Enter zero or more uris separated by line breaks" rows="5">@Model.Uris</textarea>
+				<small class="form-text text-muted">The uris for the certificate. Separate them with a line break.</small>
+			</div>
+			<div class="mb-2">
+				<label for="user-principal-names-input">User-principal-names</label>
+				<textarea class="form-control" id="user-principal-names-input" name="@nameof(Model.UserPrincipalNames)" placeholder="Enter zero or more user-principal-names separated by line breaks" rows="5">@Model.UserPrincipalNames</textarea>
+				<small class="form-text text-muted">The user-principal-names for the certificate. Separate them with a line break.</small>
+			</div>
+		</fieldset>
+		<partial model="@Model" name="Forms/Parts/PasswordInput" />
+		<partial model="@("Certificate")" name="Forms/Parts/Buttons" />
+	</form>
+}

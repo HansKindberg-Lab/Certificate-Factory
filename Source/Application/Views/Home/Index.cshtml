@@ -1,0 +1,46 @@
+﻿@model HomeViewModel
+<div class="card">
+	<div class="card-header">
+		<h1 class="h4 m-0 p-0">Certificate-factory</h1>
+	</div>
+	<div class="card-body">
+		<p>Create certificates for development, testing and laborating.</p>
+		<h2 class="h5">Certificate-store</h2>
+		@if(Model.Certificates.Any())
+		{
+			<ul class="list-group">
+				@foreach(var certificate in Model.Certificates)
+				{
+					<li class="list-group-item p-2">
+						<div class="alert alert-info m-0">
+							<h3 class="h6">
+								<a asp-route-id="@certificate.Thumbprint">@certificate.Subject</a>
+							</h3>
+							<span>
+								<strong>Subject:</strong> @certificate.Subject
+							</span><br />
+							<span>
+								<strong>Issued by:</strong> @certificate.Issuer
+							</span><br />
+							<span>
+								<strong>Serial-number:</strong> @certificate.SerialNumber
+							</span><br />
+							<span>
+								<strong>Key-algorithm:</strong> @certificate.KeyAlgorithm
+							</span><br />
+							<span>
+								<strong>Valid from</strong> @certificate.NotBefore.ToShortDateString() <strong>to</strong> @certificate.NotAfter.ToShortDateString()
+							</span>
+						</div>
+					</li>
+				}
+			</ul>
+		}
+		else
+		{
+			<div class="alert alert-warning">
+				<i>There are no certificates in the certificate-store.</i>
+			</div>
+		}
+	</div>
+</div>

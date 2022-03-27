@@ -1,0 +1,9 @@
+﻿@model IIssuedCertificateForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="issuer-input">@nameof(Model.Issuer)</label>
+		<select asp-items="@Model.IssuerList" class="form-select" id="issuer-input" name="@nameof(Model.Issuer)"></select>
+		<small class="form-text text-muted">The issuer for this certificate. You can leave it empty to create a self-signed certificate.</small>
+	</div>
+}

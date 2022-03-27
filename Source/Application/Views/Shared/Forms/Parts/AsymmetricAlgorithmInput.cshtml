@@ -1,0 +1,8 @@
+﻿@model IAsymmetricAlgorithmForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="asymmetric-algorithm-input" title="Required">Asymmetric algorithm <small class="form-text text-muted">*</small></label>
+		<select asp-items="@Model.AsymmetricAlgorithmList" class="form-select" id="asymmetric-algorithm-input" name="@nameof(Model.AsymmetricAlgorithm)"></select>
+	</div>
+}

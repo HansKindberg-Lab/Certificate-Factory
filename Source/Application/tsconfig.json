@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"target": "ES6"
+	},
+	"include": [
+		"Scripts/Site.ts"
+	]
+}

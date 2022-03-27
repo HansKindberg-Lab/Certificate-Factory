@@ -1,0 +1,9 @@
+﻿@model ILifetimeCertificateForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="lifetime-input">@nameof(Model.Lifetime)</label>
+		<input class="form-control" id="lifetime-input" max="1200" min="1" name="@nameof(Model.Lifetime)" placeholder="Enter the lifetime in months or leave blank" value="@Model.Lifetime" />
+		<small class="form-text text-muted">The lifetime of the certificate in months. If left empty the certificate will get a lifetime of 24 months. "NotBefore" will be the current time and "NotAfter" will be calculated using this value.</small>
+	</div>
+}
