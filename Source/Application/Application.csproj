@@ -7,8 +7,8 @@
 		<UserSecretsId>ee695b47-47a8-4bcc-8393-67f5e388d8a3</UserSecretsId>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.3" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.8" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<None_ Include="wwwroot\**\.gitkeep;package.json;package-lock.json;tsconfig.json" />
