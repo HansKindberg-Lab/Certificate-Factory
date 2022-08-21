@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models;
 using Application.Models.Cryptography;
@@ -12,102 +11,14 @@ namespace Application.Controllers
 	// ReSharper disable StaticMemberInGenericType
 	public abstract class BasicCertificateController<TForm> : SiteController where TForm : BasicCertificateForm
 	{
-		#region Fields
-
-		private static IDictionary<string, AsymmetricAlgorithmInformation> _asymmetricAlgorithmDictionary;
-		private static string _asymmetricAlgorithmDictionaryDefaultKey;
-		private static readonly object _asymmetricAlgorithmDictionaryLock = new();
-
-		#endregion
-
 		#region Constructors
 
 		protected BasicCertificateController(IFacade facade) : base(facade) { }
 
 		#endregion
 
-		#region Properties
-
-		[SuppressMessage("Maintainability", "CA1508:Avoid dead conditional code")]
-		protected internal virtual IDictionary<string, AsymmetricAlgorithmInformation> AsymmetricAlgorithmDictionary
-		{
-			get
-			{
-				// ReSharper disable InvertIf
-				if(_asymmetricAlgorithmDictionary == null)
-				{
-					lock(_asymmetricAlgorithmDictionaryLock)
-					{
-						if(_asymmetricAlgorithmDictionary == null)
-						{
-							var asymmetricAlgorithmDictionary = new Dictionary<string, AsymmetricAlgorithmInformation>(StringComparer.OrdinalIgnoreCase);
-
-							const string ecdsaName = nameof(ECDsa);
-
-							asymmetricAlgorithmDictionary.Add(ecdsaName, new AsymmetricAlgorithmInformation
-							{
-								Options = new EcdsaOptions(),
-								Text = $"{ecdsaName} (default)"
-							});
-
-							foreach(var ellipticCurve in Enum.GetValues<EllipticCurve>())
-							{
-								asymmetricAlgorithmDictionary.Add($"{ecdsaName}:{ellipticCurve}", new AsymmetricAlgorithmInformation
-								{
-									Options = new EcdsaOptions { EllipticCurve = ellipticCurve },
-									Text = $"{ecdsaName} - {ellipticCurve}"
-								});
-							}
-
-							const string rsaName = nameof(RSA);
-
-							foreach(var keySize in new[] { 512, 1024, 2048, 4096 })
-							{
-								foreach(var signaturePadding in Enum.GetValues<RSASignaturePaddingMode>())
-								{
-									asymmetricAlgorithmDictionary.Add($"{rsaName}:{keySize}:{signaturePadding}", new AsymmetricAlgorithmInformation
-									{
-										Options = new RsaOptions { KeySize = keySize, SignaturePadding = signaturePadding },
-										Text = $"{rsaName} - {keySize} - {signaturePadding}"
-									});
-								}
-							}
-
-							_asymmetricAlgorithmDictionary = asymmetricAlgorithmDictionary;
-						}
-					}
-				}
-				// ReSharper restore InvertIf
-
-				return _asymmetricAlgorithmDictionary;
-			}
-		}
-
-		protected internal virtual string AsymmetricAlgorithmDictionaryDefaultKey
-		{
-			get
-			{
-				// ReSharper disable InvertIf
-				if(_asymmetricAlgorithmDictionaryDefaultKey == null)
-				{
-					var asymmetricAlgorithmDictionaryDefault = this.AsymmetricAlgorithmDictionary.FirstOrDefault(item => item.Value.Options is RsaOptions { KeySize: 2048, SignaturePadding: RSASignaturePaddingMode.Pkcs1 });
-
-					if(asymmetricAlgorithmDictionaryDefault.Equals(default(KeyValuePair<string, AsymmetricAlgorithmInformation>)))
-						throw new InvalidOperationException("Invalid asymmetric algorithm setup.");
-
-					_asymmetricAlgorithmDictionaryDefaultKey = asymmetricAlgorithmDictionaryDefault.Key;
-				}
-				// ReSharper restore InvertIf
-
-				return _asymmetricAlgorithmDictionaryDefaultKey;
-			}
-		}
-
-		#endregion
-
 		#region Methods
 
-		[SuppressMessage("Design", "CA1031:Do not catch general exception types")]
 		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual IActionResult CertificateArchiveFile(string certificateTypeLabel, TForm form)
@@ -128,7 +39,7 @@ namespace Application.Controllers
 
 			try
 			{
-				if(!this.AsymmetricAlgorithmDictionary.TryGetValue(form.AsymmetricAlgorithm, out var asymmetricAlgorithmInformation))
+				if(!this.Facade.AsymmetricAlgorithmRepository.Dictionary.TryGetValue(form.AsymmetricAlgorithm, out var asymmetricAlgorithmInformation))
 					throw new InvalidOperationException($"Could not find asymmetric algorithm \"{form.AsymmetricAlgorithm}\".");
 
 				var asymmetricAlgorithmOptions = asymmetricAlgorithmInformation.Options.Clone();
@@ -195,7 +106,7 @@ namespace Application.Controllers
 			if(form == null)
 				throw new ArgumentNullException(nameof(form));
 
-			foreach(var (key, information) in this.AsymmetricAlgorithmDictionary)
+			foreach(var (key, information) in this.Facade.AsymmetricAlgorithmRepository.Dictionary)
 			{
 				var selected = string.Equals(form.AsymmetricAlgorithm, key, StringComparison.OrdinalIgnoreCase);
 
@@ -207,7 +118,7 @@ namespace Application.Controllers
 			{
 				try
 				{
-					form.AsymmetricAlgorithmList.First(asymmetricAlgorithm => string.Equals(this.AsymmetricAlgorithmDictionaryDefaultKey, asymmetricAlgorithm.Value, StringComparison.OrdinalIgnoreCase)).Selected = true;
+					form.AsymmetricAlgorithmList.First(asymmetricAlgorithm => string.Equals(this.Facade.AsymmetricAlgorithmRepository.DefaultKey, asymmetricAlgorithm.Value, StringComparison.OrdinalIgnoreCase)).Selected = true;
 				}
 				catch(Exception exception)
 				{
@@ -282,7 +193,7 @@ namespace Application.Controllers
 				if(issuer == null)
 					return;
 
-				if(!this.AsymmetricAlgorithmDictionary.TryGetValue(asymmetricAlgorithm, out var asymmetricAlgorithmInformation))
+				if(!this.Facade.AsymmetricAlgorithmRepository.Dictionary.TryGetValue(asymmetricAlgorithm, out var asymmetricAlgorithmInformation))
 					return;
 
 				const string issuerKey = nameof(IIssuedCertificateForm.Issuer);

@@ -14,6 +14,7 @@ namespace Application.Models
 		#region Properties
 
 		IArchiveFactory ArchiveFactory { get; }
+		IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; }
 		ICertificateExporter CertificateExporter { get; }
 		ICertificateFactory CertificateFactory { get; }
 		IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }

@@ -49,6 +49,7 @@ namespace Application.Models.DependencyInjection.Extensions
 			services.Configure<KeyExporterOptions>(keyExporterSection);
 
 			services.TryAddSingleton<IArchiveFactory, ArchiveFactory>();
+			services.TryAddSingleton<IAsymmetricAlgorithmRepository, AsymmetricAlgorithmRepository>();
 			services.TryAddSingleton<ICertificateExporter, CertificateExporter>();
 			services.TryAddSingleton<ICertificateFactory, CertificateFactory>();
 			services.TryAddSingleton<ICertificateStore, CertificateStore>();
