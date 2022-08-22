@@ -33,7 +33,10 @@ namespace Application.Models.Cryptography
 
 			clone.CertificateAuthority = this.CertificateAuthority?.Clone();
 			clone.Issuer = this.Issuer;
-			clone.Subject = new string(this.Subject);
+
+			if(this.Subject != null)
+				clone.Subject = new string(this.Subject);
+
 			clone.SubjectAlternativeName = this.SubjectAlternativeName?.Clone();
 
 			return clone;
