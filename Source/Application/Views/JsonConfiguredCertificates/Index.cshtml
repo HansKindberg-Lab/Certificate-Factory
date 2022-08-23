@@ -1,0 +1,117 @@
+﻿@model JsonConfiguredCertificatesViewModel
+<div class="card">
+	<div class="card-header">
+		<h1 class="h4 m-0 p-0">Json-configured certificates</h1>
+	</div>
+	<div class="card-body">
+		<p>Create certificates from a json-configuration file. <a href="#example">See example below.</a></p>
+		<partial name="ValidationSummary" />
+		<partial for="Form" name="Form" />
+		<h2 class="h5 mt-5" id="example">Example</h2>
+		<pre class="bg-light mb-0 p-1"><code>{
+    "Defaults": {
+        "HashAlgorithm": "Sha256",
+        "NotAfter": "2050-01-01"
+    },
+    "Roots": {
+        "root-certificate": {
+            "Certificate": {
+                "Subject": "CN=Test Root CA"
+            },
+            "IssuedCertificates": {
+                "https-certificate": {
+                    "Certificate": {
+                        "EnhancedKeyUsage": "ServerAuthentication",
+                        "KeyUsage": "DigitalSignature",
+                        "Subject": "CN=Test Https certificate",
+                        "SubjectAlternativeName": {
+                            "DnsNames": [
+                                "*"
+                            ]
+                        }
+                    }
+                },
+                "intermediate-certificate-1": {
+                    "Certificate": {
+                        "CertificateAuthority": {
+                            "PathLengthConstraint": 0
+                        },
+                        "KeyUsage": "KeyCertSign",
+                        "Subject": "CN=Test Intermediate 1"
+                    },
+                    "IssuedCertificates": {
+                        "client-certificate-1": {
+                            "Certificate": {
+                                "EnhancedKeyUsage": "ClientAuthentication",
+                                "KeyUsage": "DigitalSignature",
+                                "Subject": "CN=Test Client certificate 1"
+                            }
+                        }
+                    }
+                },
+                "intermediate-certificate-2": {
+                    "Certificate": {
+                        "CertificateAuthority": {
+                            "PathLengthConstraint": 0
+                        },
+                        "KeyUsage": "KeyCertSign",
+                        "Subject": "CN=Test Intermediate 2"
+                    },
+                    "IssuedCertificates": {
+                        "client-certificate-2": {
+                            "Certificate": {
+                                "EnhancedKeyUsage": "ClientAuthentication",
+                                "KeyUsage": "DigitalSignature",
+                                "Subject": "CN=Test Client certificate 2"
+                            }
+                        }
+                    }
+                },
+                "intermediate-certificate-3": {
+                    "Certificate": {
+                        "CertificateAuthority": {
+                            "PathLengthConstraint": 0
+                        },
+                        "KeyUsage": "KeyCertSign",
+                        "Subject": "CN=Test Intermediate 3"
+                    },
+                    "IssuedCertificates": {
+                        "client-certificate-3": {
+                            "Certificate": {
+                                "EnhancedKeyUsage": "ClientAuthentication",
+                                "KeyUsage": "DigitalSignature",
+                                "Subject": "CN=Test Client certificate 3"
+                            }
+                        }
+                    }
+                },
+                "intermediate-certificate-4": {
+                    "Certificate": {
+                        "CertificateAuthority": {
+                            "PathLengthConstraint": 0
+                        },
+                        "KeyUsage": "KeyCertSign",
+                        "Subject": "CN=Test Intermediate 4"
+                    },
+                    "IssuedCertificates": {
+                        "client-certificate-4": {
+                            "Certificate": {
+                                "EnhancedKeyUsage": "ClientAuthentication",
+                                "KeyUsage": "DigitalSignature",
+                                "Subject": "CN=Test Client certificate 4"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "RootsDefaults": {
+        "CertificateAuthority": {
+            "PathLengthConstraint": null
+        },
+        "KeyUsage": "KeyCertSign"
+    }
+}</code></pre>
+	</div>
+</div>

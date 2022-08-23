@@ -13,10 +13,11 @@ namespace Application.Models
 	{
 		#region Constructors
 
-		public Facade(IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateStore certificateStore, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock)
+		public Facade(IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateStore certificateStore, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock)
 		{
 			this.ArchiveFactory = archiveFactory ?? throw new ArgumentNullException(nameof(archiveFactory));
 			this.AsymmetricAlgorithmRepository = asymmetricAlgorithmRepository ?? throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
+			this.CertificateConstructionHelper = certificateConstructionHelper ?? throw new ArgumentNullException(nameof(certificateConstructionHelper));
 			this.CertificateExporter = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
 			this.CertificateFactory = certificateFactory ?? throw new ArgumentNullException(nameof(certificateFactory));
 			this.CertificateFormOptionsMonitor = certificateFormOptionsMonitor ?? throw new ArgumentNullException(nameof(certificateFormOptionsMonitor));
@@ -32,6 +33,7 @@ namespace Application.Models
 
 		public virtual IArchiveFactory ArchiveFactory { get; }
 		public virtual IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; }
+		public virtual ICertificateConstructionHelper CertificateConstructionHelper { get; }
 		public virtual ICertificateExporter CertificateExporter { get; }
 		public virtual ICertificateFactory CertificateFactory { get; }
 		public virtual IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }

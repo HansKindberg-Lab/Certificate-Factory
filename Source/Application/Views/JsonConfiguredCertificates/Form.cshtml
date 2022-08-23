@@ -1,0 +1,25 @@
+﻿@model JsonConfiguredCertificatesForm
+@if(Model != null)
+{
+	<form enctype="multipart/form-data" method="post">
+		<div class="mb-3">
+			<label for="file-input" title="Required">
+				@nameof(Model.File) <small class="form-text text-muted">*</small>
+			</label>
+			<input class="form-control" id="file-input" name="@nameof(Model.File)" type="file" />
+			<small class="form-text text-muted">The file containing the configured certificates.</small>
+		</div>
+		<div class="mb-3">
+			<label for="password-input" title="Required">
+				@nameof(Model.Password) <small class="form-text text-muted">*</small>
+			</label>
+			<input autocomplete="off" class="form-control" id="password-input" name="@nameof(Model.Password)" type="password" />
+			<small class="form-text text-muted">The password is used to protect the *.pfx and *.p12 files in the zip-file.</small>
+		</div>
+		<div class="text-end">
+			<button class="btn btn-primary" type="submit">Download</button>
+			<a asp-controller="JsonConfiguredCertificates" class="btn btn-secondary">Clear</a>
+		</div>
+		<small class="form-text text-muted">When clicking download the certificates are created and archived to a zip-file that is downloaded if the configuration-file is valid.</small>
+	</form>
+}

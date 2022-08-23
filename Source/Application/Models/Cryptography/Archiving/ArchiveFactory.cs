@@ -50,6 +50,18 @@ namespace Application.Models.Cryptography.Archiving
 			};
 		}
 
+		public virtual IArchive Create(IDictionary<string, ICertificate> certificates, string password)
+		{
+			if(certificates == null)
+				throw new ArgumentNullException(nameof(certificates));
+
+			return new Archive
+			{
+				Bytes = this.GetBytes(certificates, password),
+				ContentType = MediaTypeNames.Application.Octet
+			};
+		}
+
 		protected internal virtual IEnumerable<byte> GetBytes(ICertificate certificate, string password)
 		{
 			if(certificate == null)
@@ -76,6 +88,36 @@ namespace Application.Models.Cryptography.Archiving
 			}
 		}
 
+		protected internal virtual IEnumerable<byte> GetBytes(IDictionary<string, ICertificate> certificates, string password)
+		{
+			if(certificates == null)
+				throw new ArgumentNullException(nameof(certificates));
+
+			using(var memoryStream = new MemoryStream())
+			{
+				using(var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Update, true))
+				{
+					foreach(var (key, certificate) in certificates)
+					{
+						var certificateTransfer = this.CertificateExporter.Export(certificate, password);
+						var directory = this.FileNameResolver.Resolve(key);
+
+						foreach(var (name, bytes) in this.GetEntries(certificateTransfer, key))
+						{
+							var zipArchiveEntry = zipArchive.CreateEntry($"{directory}/{name}");
+
+							using(var zipArchiveEntryStream = zipArchiveEntry.Open())
+							{
+								zipArchiveEntryStream.Write(bytes.ToArray());
+							}
+						}
+					}
+				}
+
+				return memoryStream.ToArray();
+			}
+		}
+
 		protected internal virtual IEnumerable<byte> GetBytes(string value)
 		{
 			if(value == null)
@@ -84,7 +126,7 @@ namespace Application.Models.Cryptography.Archiving
 			return this.Encoding.GetBytes(value);
 		}
 
-		protected internal virtual IDictionary<string, IEnumerable<byte>> GetEntries(ICertificateTransfer certificateTransfer, string subject)
+		protected internal virtual IDictionary<string, IEnumerable<byte>> GetEntries(ICertificateTransfer certificateTransfer, string key)
 		{
 			if(certificateTransfer == null)
 				throw new ArgumentNullException(nameof(certificateTransfer));
@@ -92,31 +134,31 @@ namespace Application.Models.Cryptography.Archiving
 			var entries = new SortedDictionary<string, IEnumerable<byte>>(StringComparer.OrdinalIgnoreCase);
 
 			const string oneLiner = "one-liner";
-			subject = this.FileNameResolver.Resolve(subject);
+			key = this.FileNameResolver.Resolve(key);
 
 			if(certificateTransfer.CertificatePem != null)
 			{
-				var fileName = $"{subject}.{nameof(certificateTransfer.CertificatePem)}";
+				var fileName = $"{key}.{nameof(certificateTransfer.CertificatePem)}";
 				entries.Add($"{fileName}.crt", this.GetBytes(certificateTransfer.CertificatePem));
 				entries.Add($"{fileName}.{oneLiner}.crt", this.GetBytes(this.RemoveLineBreaks(certificateTransfer.CertificatePem)));
 			}
 
 			if(certificateTransfer.EncryptedPrivateKeyPem != null)
 			{
-				var fileName = $"{subject}.{nameof(certificateTransfer.EncryptedPrivateKeyPem)}";
+				var fileName = $"{key}.{nameof(certificateTransfer.EncryptedPrivateKeyPem)}";
 				entries.Add($"{fileName}.key", this.GetBytes(certificateTransfer.EncryptedPrivateKeyPem));
 				entries.Add($"{fileName}.{oneLiner}.key", this.GetBytes(this.RemoveLineBreaks(certificateTransfer.EncryptedPrivateKeyPem)));
 			}
 
 			if(certificateTransfer.Pfx != null)
-				entries.Add($"{subject}.pfx", certificateTransfer.Pfx);
+				entries.Add($"{key}.pfx", certificateTransfer.Pfx);
 
 			if(certificateTransfer.Pkcs12 != null)
-				entries.Add($"{subject}.p12", certificateTransfer.Pkcs12);
+				entries.Add($"{key}.p12", certificateTransfer.Pkcs12);
 
 			if(certificateTransfer.PrivateKeyPem != null)
 			{
-				var fileName = $"{subject}.{nameof(certificateTransfer.PrivateKeyPem)}";
+				var fileName = $"{key}.{nameof(certificateTransfer.PrivateKeyPem)}";
 				entries.Add($"{fileName}.key", this.GetBytes(certificateTransfer.PrivateKeyPem));
 				entries.Add($"{fileName}.{oneLiner}.key", this.GetBytes(this.RemoveLineBreaks(certificateTransfer.PrivateKeyPem)));
 			}
@@ -124,7 +166,7 @@ namespace Application.Models.Cryptography.Archiving
 			// ReSharper disable InvertIf
 			if(certificateTransfer.PublicKeyPem != null)
 			{
-				var fileName = $"{subject}.{nameof(certificateTransfer.PublicKeyPem)}";
+				var fileName = $"{key}.{nameof(certificateTransfer.PublicKeyPem)}";
 				entries.Add($"{fileName}.key", this.GetBytes(certificateTransfer.PublicKeyPem));
 				entries.Add($"{fileName}.{oneLiner}.key", this.GetBytes(this.RemoveLineBreaks(certificateTransfer.PublicKeyPem)));
 			}

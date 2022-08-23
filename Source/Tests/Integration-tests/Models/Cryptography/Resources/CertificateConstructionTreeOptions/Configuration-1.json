@@ -1,0 +1,19 @@
+{
+	"Defaults": {
+		"HashAlgorithm": "Sha256",
+		"NotAfter": "2050-01-01"
+	},
+	"Roots": {
+		"root-certificate": {
+			"Certificate": {
+				"Subject": "CN=Test Root CA"
+			}
+		}
+	},
+	"RootsDefaults": {
+		"CertificateAuthority": {
+			"PathLengthConstraint": null
+		},
+		"KeyUsage": "KeyCertSign"
+	}
+}

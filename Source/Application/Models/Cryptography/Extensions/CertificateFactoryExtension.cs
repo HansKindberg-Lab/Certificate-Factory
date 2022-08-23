@@ -9,6 +9,52 @@ namespace Application.Models.Cryptography.Extensions
 	{
 		#region Methods
 
+		public static IDictionary<string, ICertificate> Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionTreeOptions constructionTree)
+		{
+			if(certificateFactory == null)
+				throw new ArgumentNullException(nameof(certificateFactory));
+
+			if(asymmetricAlgorithmRepository == null)
+				throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
+
+			if(certificateConstructionHelper == null)
+				throw new ArgumentNullException(nameof(certificateConstructionHelper));
+
+			if(constructionTree == null)
+				throw new ArgumentNullException(nameof(constructionTree));
+
+			try
+			{
+				if(!constructionTree.Roots.Any())
+					throw new ArgumentException("The construction-tree contains no roots.");
+
+				return certificateFactory.Create(asymmetricAlgorithmRepository, certificateConstructionHelper, constructionTree.Defaults, constructionTree.RootsDefaults, constructionTree.Roots);
+			}
+			catch(Exception exception)
+			{
+				throw new InvalidOperationException("Could not create certificates from construction-tree.", exception);
+			}
+		}
+
+		public static IDictionary<string, ICertificate> Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, ICertificate issuer = null)
+		{
+			if(certificateFactory == null)
+				throw new ArgumentNullException(nameof(certificateFactory));
+
+			try
+			{
+				var result = new Dictionary<string, ICertificate>(StringComparer.OrdinalIgnoreCase);
+
+				certificateFactory.Populate(asymmetricAlgorithmRepository, certificateConstructionHelper, defaults, levelDefaults, nodes, result, issuer);
+
+				return result;
+			}
+			catch(Exception exception)
+			{
+				throw new InvalidOperationException("Could not create certificates from construction-nodes.", exception);
+			}
+		}
+
 		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public static ICertificate Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
@@ -120,6 +166,66 @@ namespace Application.Models.Cryptography.Extensions
 			}
 
 			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "TlsCertificate");
+		}
+
+		[SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase")]
+		private static void Populate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, IDictionary<string, ICertificate> result, ICertificate issuer = null)
+		{
+			if(certificateFactory == null)
+				throw new ArgumentNullException(nameof(certificateFactory));
+
+			if(asymmetricAlgorithmRepository == null)
+				throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
+
+			if(certificateConstructionHelper == null)
+				throw new ArgumentNullException(nameof(certificateConstructionHelper));
+
+			if(nodes == null)
+				throw new ArgumentNullException(nameof(nodes));
+
+			if(result == null)
+				throw new ArgumentNullException(nameof(result));
+
+			try
+			{
+				foreach(var (key, node) in nodes)
+				{
+					var certificateConstructionOptions = node.Certificate?.Clone() ?? new CertificateConstructionOptions();
+
+					var defaultOptions = new List<CertificateConstructionOptions>();
+
+					if(levelDefaults != null)
+						defaultOptions.Add(levelDefaults);
+
+					if(defaults != null)
+						defaultOptions.Add(defaults);
+
+					certificateConstructionHelper.SetDefaults(certificateConstructionOptions, defaultOptions);
+
+					if(!asymmetricAlgorithmRepository.Dictionary.TryGetValue(certificateConstructionOptions.AsymmetricAlgorithm, out var asymmetricAlgorithmInformation))
+						throw new InvalidOperationException($"Could not get asymmetric algorithm information for key \"{certificateConstructionOptions.AsymmetricAlgorithm}\".");
+
+					var certificateOptions = certificateConstructionHelper.CreateCertificateOptions(certificateConstructionOptions, issuer);
+
+					var certificate = certificateFactory.Create(asymmetricAlgorithmInformation.Options, certificateOptions);
+
+					var certificateKey = key;
+					var index = 1;
+					while(result.ContainsKey(certificateKey))
+					{
+						certificateKey = $"{certificateKey}-{index}";
+						index++;
+					}
+
+					result.Add(certificateKey, certificate);
+
+					certificateFactory.Populate(asymmetricAlgorithmRepository, certificateConstructionHelper, defaults, node.IssuedCertificatesDefaults, node.IssuedCertificates, result, certificate);
+				}
+			}
+			catch(Exception exception)
+			{
+				throw new InvalidOperationException("Could not populate certificates-result.", exception);
+			}
 		}
 
 		#endregion

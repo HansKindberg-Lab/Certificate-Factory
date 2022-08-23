@@ -1,0 +1,69 @@
+{
+	"Defaults": {
+		"HashAlgorithm": "Sha256",
+		"NotAfter": "2050-01-01"
+	},
+	"Roots": {
+		"root-certificate": {
+			"Certificate": {
+				"Subject": "CN=Test Root CA"
+			},
+			"IssuedCertificates": {
+				"intermediate-certificate-1": {
+					"Certificate": {
+						"Subject": "CN=Test Intermediate 1"
+					},
+					"IssuedCertificates": {
+						"client-certificate-1": {
+							"Certificate": {
+								"EnhancedKeyUsage": "ClientAuthentication",
+								"KeyUsage": "DigitalSignature",
+								"Subject": "CN=Test Client certificate 1"
+							}
+						}
+					}
+				},
+				"intermediate-certificate-2": {
+					"Certificate": {
+						"Subject": "CN=Test Intermediate 2"
+					},
+					"IssuedCertificates": {
+						"client-certificate-2": {
+							"Certificate": {
+								"EnhancedKeyUsage": "ClientAuthentication",
+								"KeyUsage": "DigitalSignature",
+								"Subject": "CN=Test Client certificate 2"
+							}
+						}
+					}
+				},
+				"intermediate-certificate-3": {
+					"Certificate": {
+						"Subject": "CN=Test Intermediate 3"
+					},
+					"IssuedCertificates": {
+						"client-certificate-3": {
+							"Certificate": {
+								"EnhancedKeyUsage": "ClientAuthentication",
+								"KeyUsage": "DigitalSignature",
+								"Subject": "CN=Test Client certificate 3"
+							}
+						}
+					}
+				}
+			},
+			"IssuedCertificatesDefaults": {
+				"CertificateAuthority": {
+					"PathLengthConstraint": 0
+				},
+				"KeyUsage": "KeyCertSign"
+			}
+		}
+	},
+	"RootsDefaults": {
+		"CertificateAuthority": {
+			"PathLengthConstraint": null
+		},
+		"KeyUsage": "KeyCertSign"
+	}
+}

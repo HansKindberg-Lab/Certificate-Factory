@@ -50,6 +50,7 @@ namespace Application.Models.DependencyInjection.Extensions
 
 			services.TryAddSingleton<IArchiveFactory, ArchiveFactory>();
 			services.TryAddSingleton<IAsymmetricAlgorithmRepository, AsymmetricAlgorithmRepository>();
+			services.TryAddSingleton<ICertificateConstructionHelper, CertificateConstructionHelper>();
 			services.TryAddSingleton<ICertificateExporter, CertificateExporter>();
 			services.TryAddSingleton<ICertificateFactory, CertificateFactory>();
 			services.TryAddSingleton<ICertificateStore, CertificateStore>();

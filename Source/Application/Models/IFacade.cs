@@ -15,6 +15,7 @@ namespace Application.Models
 
 		IArchiveFactory ArchiveFactory { get; }
 		IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; }
+		ICertificateConstructionHelper CertificateConstructionHelper { get; }
 		ICertificateExporter CertificateExporter { get; }
 		ICertificateFactory CertificateFactory { get; }
 		IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }

@@ -104,6 +104,116 @@ Google: X509 cn sn serialnumber c l st ou
 	- **T** or **TITLE**, title, 2.5.4.12
 	- **UID**, userID, 0.9.2342.19200300.100.1.1
 
+## Creating certificates from json-configuration files
+
+We can create certificates from json-configuration files. File example:
+
+	{
+		"Defaults": {
+			"HashAlgorithm": "Sha256",
+			"NotAfter": "2050-01-01"
+		},
+		"Roots": {
+			"root-certificate": {
+				"Certificate": {
+					"Subject": "CN=Test Root CA"
+				},
+				"IssuedCertificates": {
+					"https-certificate": {
+						"Certificate": {
+							"EnhancedKeyUsage": "ServerAuthentication",
+							"KeyUsage": "DigitalSignature",
+							"Subject": "CN=Test Https certificate",
+							"SubjectAlternativeName": {
+								"DnsNames": [
+									"*"
+								]
+							}
+						}
+					},
+					"intermediate-certificate-1": {
+						"Certificate": {
+							"CertificateAuthority": {
+								"PathLengthConstraint": 0
+							},
+							"KeyUsage": "KeyCertSign",
+							"Subject": "CN=Test Intermediate 1"
+						},
+						"IssuedCertificates": {
+							"client-certificate-1": {
+								"Certificate": {
+									"EnhancedKeyUsage": "ClientAuthentication",
+									"KeyUsage": "DigitalSignature",
+									"Subject": "CN=Test Client certificate 1"
+								}
+							}
+						}
+					},
+					"intermediate-certificate-2": {
+						"Certificate": {
+							"CertificateAuthority": {
+								"PathLengthConstraint": 0
+							},
+							"KeyUsage": "KeyCertSign",
+							"Subject": "CN=Test Intermediate 2"
+						},
+						"IssuedCertificates": {
+							"client-certificate-2": {
+								"Certificate": {
+									"EnhancedKeyUsage": "ClientAuthentication",
+									"KeyUsage": "DigitalSignature",
+									"Subject": "CN=Test Client certificate 2"
+								}
+							}
+						}
+					},
+					"intermediate-certificate-3": {
+						"Certificate": {
+							"CertificateAuthority": {
+								"PathLengthConstraint": 0
+							},
+							"KeyUsage": "KeyCertSign",
+							"Subject": "CN=Test Intermediate 3"
+						},
+						"IssuedCertificates": {
+							"client-certificate-3": {
+								"Certificate": {
+									"EnhancedKeyUsage": "ClientAuthentication",
+									"KeyUsage": "DigitalSignature",
+									"Subject": "CN=Test Client certificate 3"
+								}
+							}
+						}
+					},
+					"intermediate-certificate-4": {
+						"Certificate": {
+							"CertificateAuthority": {
+								"PathLengthConstraint": 0
+							},
+							"KeyUsage": "KeyCertSign",
+							"Subject": "CN=Test Intermediate 4"
+						},
+						"IssuedCertificates": {
+							"client-certificate-4": {
+								"Certificate": {
+									"EnhancedKeyUsage": "ClientAuthentication",
+									"KeyUsage": "DigitalSignature",
+									"Subject": "CN=Test Client certificate 4"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"RootsDefaults": {
+			"CertificateAuthority": {
+				"PathLengthConstraint": null
+			},
+			"KeyUsage": "KeyCertSign"
+		}
+	}
+
 ## Cryptography
 
 - **Diffie-Hellman** (1977)
