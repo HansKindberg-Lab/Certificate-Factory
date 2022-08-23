@@ -1,7 +1,12 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net;
+using System.Threading.Tasks;
+using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -9,10 +14,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntegrationTests
 {
 	// ReSharper disable All
+	[TestClass]
 	[SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
 	public static class Global
 	{
@@ -87,6 +94,15 @@ namespace IntegrationTests
 			services.AddCertificateFactory(configuration);
 
 			return services;
+		}
+
+		[AssemblyInitialize]
+		public static async Task Initialize(TestContext _)
+		{
+			await Task.CompletedTask;
+
+			TypeDescriptor.AddAttributes(typeof(IPAddress), new TypeConverterAttribute(typeof(IpAddressTypeConverter)));
+			TypeDescriptor.AddAttributes(typeof(IPNetwork), new TypeConverterAttribute(typeof(IpNetworkTypeConverter)));
 		}
 
 		#endregion
