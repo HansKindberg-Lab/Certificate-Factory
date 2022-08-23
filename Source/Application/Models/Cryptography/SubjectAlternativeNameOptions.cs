@@ -1,4 +1,5 @@
-﻿using System.Net;
+using System.Net;
+using Application.Models.Collections;
 using Application.Models.Collections.Generic.Extensions;
 
 namespace Application.Models.Cryptography
@@ -10,8 +11,8 @@ namespace Application.Models.Cryptography
 
 		public virtual ISet<string> DnsNames { get; } = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
 		public virtual ISet<string> EmailAddresses { get; } = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
-		public virtual ISet<IPAddress> IpAddresses { get; } = new SortedSet<IPAddress>();
-		public virtual ISet<Uri> Uris { get; } = new SortedSet<Uri>();
+		public virtual ISet<IPAddress> IpAddresses { get; } = new SortedSet<IPAddress>(new IpAddressComparer());
+		public virtual ISet<Uri> Uris { get; } = new SortedSet<Uri>(new UriComparer());
 		public virtual ISet<string> UserPrincipalNames { get; } = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
 
 		#endregion
