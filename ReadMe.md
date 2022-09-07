@@ -126,7 +126,7 @@ We can create certificates from json-configuration files. File example:
 							"Subject": "CN=Test Https certificate",
 							"SubjectAlternativeName": {
 								"DnsNames": [
-									"*"
+									"localhost"
 								]
 							}
 						}
