@@ -1,10 +1,12 @@
 <Project>
 	<PropertyGroup>
+		<!--
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<AnalysisLevel>6.0</AnalysisLevel>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<NoWarn>CA1014;CS9057</NoWarn>
+		-->
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 </Project>
