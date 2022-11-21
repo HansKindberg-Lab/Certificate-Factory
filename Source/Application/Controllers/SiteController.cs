@@ -33,7 +33,7 @@ namespace Application.Controllers
 
 			foreach(var key in this.ModelState.Keys)
 			{
-				keyOrderMap.Add(key, fieldOrder.ContainsKey(key) ? fieldOrder[key] : index);
+				keyOrderMap.Add(key, fieldOrder.TryGetValue(key, out var value) ? value : index);
 				index++;
 			}
 

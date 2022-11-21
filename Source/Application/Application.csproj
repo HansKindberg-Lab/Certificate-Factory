@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 		<UserSecretsId>ee695b47-47a8-4bcc-8393-67f5e388d8a3</UserSecretsId>
 	</PropertyGroup>
