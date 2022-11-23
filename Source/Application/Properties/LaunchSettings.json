@@ -3,7 +3,7 @@
 		"Kestrel": {
 			"applicationUrl": "https://localhost:5000",
 			"commandName": "Project",
-			"dotnetRunMessages": "true",
+			"dotnetRunMessages": true,
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
 				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
