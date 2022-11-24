@@ -1,0 +1,14 @@
+﻿@model IArchiveKindForm
+@if(Model != null)
+{
+	<div class="mb-3">
+		<label for="archive-kind-input" title="Required">Archive kind <small class="form-text text-muted">*</small></label>
+		<select class="form-select" id="archive-kind-input" name="@nameof(Model.ArchiveKind)">
+			@foreach(var (item, example) in Model.ArchiveKindDictionary)
+			{
+				<option selected="@(item.Selected ? "selected" : null)" title="@($"For example an archive with the following files:{Environment.NewLine}{example}")" value="@item.Value">@item.Text</option>
+			}
+		</select>
+		<small class="form-text text-muted">Affects what files are included in the archive.</small>
+	</div>
+}

@@ -2,6 +2,7 @@
 @if(Model != null)
 {
 	<form method="post">
+		<partial model="@Model" name="Forms/Parts/ArchiveKindInput" />
 		<partial model="@Model" name="Forms/Parts/AsymmetricAlgorithmInput" />
 		<partial model="@Model" name="Forms/Parts/SubjectInput" />
 		<partial model="@Model" name="Forms/Parts/LifetimeInput" />

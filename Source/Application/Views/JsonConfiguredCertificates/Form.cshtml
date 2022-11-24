@@ -9,6 +9,12 @@
 			<input class="form-control" id="file-input" name="@nameof(Model.File)" type="file" />
 			<small class="form-text text-muted">The file containing the configured certificates.</small>
 		</div>
+		<partial model="@Model" name="Forms/Parts/ArchiveKindInput" />
+		<div class="form-check mb-3">
+			<input checked="@(Model.FlatArchive ? "checked" : null)" class="form-check-input" id="flat-archive-input" name="@nameof(Model.FlatArchive)" type="checkbox" value="@bool.TrueString" />
+			<label class="form-check-label" for="flat-archive-input">Flat archive</label>
+			<small class="form-text text-muted ms-n4">A flat archive does not contain any sub-directories.</small>
+		</div>
 		<div class="mb-3">
 			<label for="password-input" title="Required">
 				@nameof(Model.Password) <small class="form-text text-muted">*</small>

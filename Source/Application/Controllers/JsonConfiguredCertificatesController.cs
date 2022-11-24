@@ -3,13 +3,14 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Application.Models;
 using Application.Models.Cryptography;
+using Application.Models.Cryptography.Archiving;
 using Application.Models.Cryptography.Extensions;
 using Application.Models.Views.JsonConfiguredCertificates;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-	public class JsonConfiguredCertificatesController : SiteController
+	public class JsonConfiguredCertificatesController : ArchiveKindController
 	{
 		#region Constructors
 
@@ -21,7 +22,11 @@ namespace Application.Controllers
 
 		public virtual async Task<IActionResult> Index()
 		{
-			return await Task.FromResult(this.View(new JsonConfiguredCertificatesViewModel()));
+			var model = new JsonConfiguredCertificatesViewModel();
+
+			this.PopulateArchiveKindDictionary(model.Form);
+
+			return await Task.FromResult(this.View(model));
 		}
 
 		[HttpPost]
@@ -32,6 +37,8 @@ namespace Application.Controllers
 		{
 			if(form == null)
 				throw new ArgumentNullException(nameof(form));
+
+			this.PopulateArchiveKindDictionary(form);
 
 			CertificateConstructionTreeOptions constructionTree = null;
 
@@ -73,7 +80,9 @@ namespace Application.Controllers
 				{
 					var certificates = this.Facade.CertificateFactory.Create(this.Facade.AsymmetricAlgorithmRepository, this.Facade.CertificateConstructionHelper, constructionTree);
 
-					var archive = this.Facade.ArchiveFactory.Create(certificates, form.Password);
+					// ReSharper disable PossibleInvalidOperationException
+					var archive = this.Facade.ArchiveFactory.Create(certificates, new ArchiveOptions { Flat = form.FlatArchive, Kind = form.ArchiveKind.Value }, form.Password);
+					// ReSharper restore PossibleInvalidOperationException
 
 					var file = this.File(archive.Bytes.ToArray(), archive.ContentType, this.Facade.FileNameResolver.Resolve($"{constructionTree?.Name}.zip"));
 

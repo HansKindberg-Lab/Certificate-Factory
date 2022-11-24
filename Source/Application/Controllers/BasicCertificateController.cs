@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Application.Controllers
 {
 	// ReSharper disable StaticMemberInGenericType
-	public abstract class BasicCertificateController<TForm> : SiteController where TForm : BasicCertificateForm
+	public abstract class BasicCertificateController<TForm> : ArchiveKindController where TForm : BasicCertificateForm
 	{
 		#region Constructors
 
@@ -48,7 +48,9 @@ namespace Application.Controllers
 				{
 					using(var certificate = this.CreateCertificate(asymmetricAlgorithmOptions, form, issuer))
 					{
-						var archive = this.Facade.ArchiveFactory.Create(certificate, form.Password);
+						// ReSharper disable PossibleInvalidOperationException
+						var archive = this.Facade.ArchiveFactory.Create(certificate, form.ArchiveKind.Value, form.Password);
+						// ReSharper restore PossibleInvalidOperationException
 
 						return this.File(archive.Bytes.ToArray(), archive.ContentType, this.Facade.FileNameResolver.Resolve($"{form.Subject}.Certificate.zip"));
 					}
@@ -133,6 +135,7 @@ namespace Application.Controllers
 			if(form == null)
 				throw new ArgumentNullException(nameof(form));
 
+			this.PopulateArchiveKindDictionary(form);
 			this.PopulateAsymmetricAlgorithmList(form);
 
 			if(form is IIssuedCertificateForm issuedCertificateForm)

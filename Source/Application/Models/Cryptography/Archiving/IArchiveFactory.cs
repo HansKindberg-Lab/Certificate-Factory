@@ -4,8 +4,8 @@ namespace Application.Models.Cryptography.Archiving
 	{
 		#region Methods
 
-		IArchive Create(ICertificate certificate, string password);
-		IArchive Create(IDictionary<string, ICertificate> certificates, string password);
+		IArchive Create(ICertificate certificate, ArchiveKind kind, string password);
+		IArchive Create(IDictionary<string, ICertificate> certificates, IArchiveOptions options, string password);
 
 		#endregion
 	}
