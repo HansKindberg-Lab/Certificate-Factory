@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Net;
 using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.HttpOverrides;
+using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
 
 var webApplicationBuilder = WebApplication.CreateBuilder(args);
 

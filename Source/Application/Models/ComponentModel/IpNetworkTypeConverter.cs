@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Net;
-using Microsoft.AspNetCore.HttpOverrides;
+using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
 
 namespace Application.Models.ComponentModel
 {

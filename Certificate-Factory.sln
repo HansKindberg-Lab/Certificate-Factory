@@ -5,6 +5,7 @@ VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{81E3EBB6-536D-4573-8EF6-21F8BC584172}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
@@ -21,9 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FD18B4BF-2871-43F5-8787-97CDA060A8CE}"
-	ProjectSection(SolutionItems) = preProject
-		Source\.dockerignore = Source\.dockerignore
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A20E826C-C5CC-4C85-9938-B661A64CBC6C}"
 	ProjectSection(SolutionItems) = preProject
