@@ -9,7 +9,7 @@ using Microsoft.Extensions.Internal;
 namespace Application.Models.Cryptography.Archiving
 {
 	/// <inheritdoc />
-	public class ArchiveFactory : IArchiveFactory
+	public class ArchiveFactory(ICertificateExporter certificateExporter, IFileNameResolver fileNameResolver, ISystemClock systemClock) : IArchiveFactory
 	{
 		#region Fields
 
@@ -17,23 +17,12 @@ namespace Application.Models.Cryptography.Archiving
 
 		#endregion
 
-		#region Constructors
-
-		public ArchiveFactory(ICertificateExporter certificateExporter, IFileNameResolver fileNameResolver, ISystemClock systemClock)
-		{
-			this.CertificateExporter = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
-			this.FileNameResolver = fileNameResolver ?? throw new ArgumentNullException(nameof(fileNameResolver));
-			this.SystemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
-		}
-
-		#endregion
-
 		#region Properties
 
-		protected internal ICertificateExporter CertificateExporter { get; }
+		protected internal ICertificateExporter CertificateExporter { get; } = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
 		protected internal virtual Encoding Encoding => _encoding;
-		protected internal virtual IFileNameResolver FileNameResolver { get; }
-		protected internal ISystemClock SystemClock { get; }
+		protected internal virtual IFileNameResolver FileNameResolver { get; } = fileNameResolver ?? throw new ArgumentNullException(nameof(fileNameResolver));
+		protected internal ISystemClock SystemClock { get; } = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
 
 		#endregion
 

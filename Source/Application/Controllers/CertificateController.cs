@@ -9,14 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Application.Controllers
 {
-	public class CertificateController : BasicCertificateController<CertificateForm>
+	public class CertificateController(IFacade facade) : BasicCertificateController<CertificateForm>(facade)
 	{
-		#region Constructors
-
-		public CertificateController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		protected internal override ICertificate CreateCertificate(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, CertificateForm form, ICertificate issuer)

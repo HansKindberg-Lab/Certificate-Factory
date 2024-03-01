@@ -9,38 +9,20 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Models
 {
-	public class Facade : IFacade
+	public class Facade(IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateStore certificateStore, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock) : IFacade
 	{
-		#region Constructors
-
-		public Facade(IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateStore certificateStore, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock)
-		{
-			this.ArchiveFactory = archiveFactory ?? throw new ArgumentNullException(nameof(archiveFactory));
-			this.AsymmetricAlgorithmRepository = asymmetricAlgorithmRepository ?? throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
-			this.CertificateConstructionHelper = certificateConstructionHelper ?? throw new ArgumentNullException(nameof(certificateConstructionHelper));
-			this.CertificateExporter = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
-			this.CertificateFactory = certificateFactory ?? throw new ArgumentNullException(nameof(certificateFactory));
-			this.CertificateFormOptionsMonitor = certificateFormOptionsMonitor ?? throw new ArgumentNullException(nameof(certificateFormOptionsMonitor));
-			this.CertificateStore = certificateStore ?? throw new ArgumentNullException(nameof(certificateStore));
-			this.FileNameResolver = fileNameResolver ?? throw new ArgumentNullException(nameof(fileNameResolver));
-			this.LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-			this.SystemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
-		}
-
-		#endregion
-
 		#region Properties
 
-		public virtual IArchiveFactory ArchiveFactory { get; }
-		public virtual IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; }
-		public virtual ICertificateConstructionHelper CertificateConstructionHelper { get; }
-		public virtual ICertificateExporter CertificateExporter { get; }
-		public virtual ICertificateFactory CertificateFactory { get; }
-		public virtual IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }
-		public virtual ICertificateStore CertificateStore { get; }
-		public virtual IFileNameResolver FileNameResolver { get; }
-		public virtual ILoggerFactory LoggerFactory { get; }
-		public virtual ISystemClock SystemClock { get; }
+		public virtual IArchiveFactory ArchiveFactory { get; } = archiveFactory ?? throw new ArgumentNullException(nameof(archiveFactory));
+		public virtual IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; } = asymmetricAlgorithmRepository ?? throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
+		public virtual ICertificateConstructionHelper CertificateConstructionHelper { get; } = certificateConstructionHelper ?? throw new ArgumentNullException(nameof(certificateConstructionHelper));
+		public virtual ICertificateExporter CertificateExporter { get; } = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
+		public virtual ICertificateFactory CertificateFactory { get; } = certificateFactory ?? throw new ArgumentNullException(nameof(certificateFactory));
+		public virtual IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; } = certificateFormOptionsMonitor ?? throw new ArgumentNullException(nameof(certificateFormOptionsMonitor));
+		public virtual ICertificateStore CertificateStore { get; } = certificateStore ?? throw new ArgumentNullException(nameof(certificateStore));
+		public virtual IFileNameResolver FileNameResolver { get; } = fileNameResolver ?? throw new ArgumentNullException(nameof(fileNameResolver));
+		public virtual ILoggerFactory LoggerFactory { get; } = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
+		public virtual ISystemClock SystemClock { get; } = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
 
 		#endregion
 	}

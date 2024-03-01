@@ -5,22 +5,12 @@ using Microsoft.Extensions.Options;
 namespace Application.Models.Cryptography
 {
 	/// <inheritdoc />
-	public class CertificateFactory : ICertificateFactory
+	public class CertificateFactory(IOptionsMonitor<CertificateFactoryOptions> optionsMonitor, ISystemClock systemClock) : ICertificateFactory
 	{
-		#region Constructors
-
-		public CertificateFactory(IOptionsMonitor<CertificateFactoryOptions> optionsMonitor, ISystemClock systemClock)
-		{
-			this.OptionsMonitor = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
-			this.SystemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
-		}
-
-		#endregion
-
 		#region Properties
 
-		protected internal virtual IOptionsMonitor<CertificateFactoryOptions> OptionsMonitor { get; }
-		protected internal virtual ISystemClock SystemClock { get; }
+		protected internal virtual IOptionsMonitor<CertificateFactoryOptions> OptionsMonitor { get; } = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
+		protected internal virtual ISystemClock SystemClock { get; } = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
 
 		#endregion
 

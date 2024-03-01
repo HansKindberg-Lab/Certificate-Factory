@@ -4,17 +4,8 @@ using System.Security.Cryptography.X509Certificates;
 namespace Application.Models.Cryptography
 {
 	/// <inheritdoc />
-	public class X509Certificate2Wrapper : ICertificate
+	public class X509Certificate2Wrapper(X509Certificate2 certificate) : ICertificate
 	{
-		#region Constructors
-
-		public X509Certificate2Wrapper(X509Certificate2 certificate)
-		{
-			this.WrappedCertificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
-		}
-
-		#endregion
-
 		#region Properties
 
 		public virtual bool Archived => this.WrappedCertificate.Archived;
@@ -29,7 +20,7 @@ namespace Application.Models.Cryptography
 		public virtual string SerialNumber => this.WrappedCertificate.SerialNumber;
 		public virtual string Subject => this.WrappedCertificate.Subject;
 		public virtual string Thumbprint => this.WrappedCertificate.Thumbprint;
-		public virtual X509Certificate2 WrappedCertificate { get; }
+		public virtual X509Certificate2 WrappedCertificate { get; } = certificate ?? throw new ArgumentNullException(nameof(certificate));
 
 		#endregion
 

@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using Application.Models.Cryptography.Extensions;
 using Application.Models.Cryptography.Transferring.Configuration;
 using Microsoft.Extensions.Options;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 namespace Application.Models.Cryptography.Transferring
 {
 	/// <inheritdoc />
-	public abstract class KeyExporter<T> : IKeyExporter where T : AsymmetricAlgorithm
+	public abstract class KeyExporter<T>(T asymmetricAlgorithm, IOptionsMonitor<KeyExporterOptions> optionsMonitor) : IKeyExporter where T : AsymmetricAlgorithm
 	{
 		#region Fields
 
@@ -16,23 +16,13 @@ namespace Application.Models.Cryptography.Transferring
 
 		#endregion
 
-		#region Constructors
-
-		protected KeyExporter(T asymmetricAlgorithm, IOptionsMonitor<KeyExporterOptions> optionsMonitor)
-		{
-			this.AsymmetricAlgorithm = asymmetricAlgorithm ?? throw new ArgumentNullException(nameof(asymmetricAlgorithm));
-			this.OptionsMonitor = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
-		}
-
-		#endregion
-
 		#region Properties
 
-		protected internal virtual AsymmetricAlgorithm AsymmetricAlgorithm { get; }
+		protected internal virtual AsymmetricAlgorithm AsymmetricAlgorithm { get; } = asymmetricAlgorithm ?? throw new ArgumentNullException(nameof(asymmetricAlgorithm));
 		protected internal virtual string EncryptedPrivateKeyPemLabel => string.Format(null, this.EncryptedPrivateKeyPemLabelFormat, this.EncryptedPrivateKeyPemLabelPrefix);
 		protected internal virtual string EncryptedPrivateKeyPemLabelFormat => _encryptedPrivateKeyPemLabelFormat;
 		protected internal virtual string EncryptedPrivateKeyPemLabelPrefix => string.Empty;
-		protected internal virtual IOptionsMonitor<KeyExporterOptions> OptionsMonitor { get; }
+		protected internal virtual IOptionsMonitor<KeyExporterOptions> OptionsMonitor { get; } = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
 		protected internal virtual string PrivateKeyPemLabel => string.Format(null, this.PrivateKeyPemLabelFormat, this.PrivateKeyPemLabelPrefix);
 		protected internal virtual string PrivateKeyPemLabelFormat => _privateKeyPemLabelFormat;
 		protected internal virtual string PrivateKeyPemLabelPrefix => string.Empty;

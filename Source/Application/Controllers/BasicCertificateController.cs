@@ -9,14 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Application.Controllers
 {
 	// ReSharper disable StaticMemberInGenericType
-	public abstract class BasicCertificateController<TForm> : ArchiveKindController where TForm : BasicCertificateForm
+	public abstract class BasicCertificateController<TForm>(IFacade facade) : ArchiveKindController(facade) where TForm : BasicCertificateForm
 	{
-		#region Constructors
-
-		protected BasicCertificateController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]

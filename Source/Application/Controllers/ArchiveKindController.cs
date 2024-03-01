@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Application.Controllers
 {
-	public abstract class ArchiveKindController : SiteController
+	public abstract class ArchiveKindController(IFacade facade) : SiteController(facade)
 	{
 		#region Fields
 
@@ -17,12 +17,6 @@ namespace Application.Controllers
 		private static readonly object _archiveKindDescriptionsLock = new();
 		private static IDictionary<ArchiveKind, string> _archiveKindExamples;
 		private static readonly object _archiveKindExamplesLock = new();
-
-		#endregion
-
-		#region Constructors
-
-		protected ArchiveKindController(IFacade facade) : base(facade) { }
 
 		#endregion
 

@@ -4,14 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-	public class AsymmetricAlgorithmsController : SiteController
+	public class AsymmetricAlgorithmsController(IFacade facade) : SiteController(facade)
 	{
-		#region Constructors
-
-		public AsymmetricAlgorithmsController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		public virtual async Task<IActionResult> Index()

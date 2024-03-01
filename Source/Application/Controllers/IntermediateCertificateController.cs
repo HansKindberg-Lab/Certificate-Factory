@@ -6,14 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-	public class IntermediateCertificateController : BasicCertificateController<IntermediateCertificateForm>
+	public class IntermediateCertificateController(IFacade facade) : BasicCertificateController<IntermediateCertificateForm>(facade)
 	{
-		#region Constructors
-
-		public IntermediateCertificateController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		protected internal override ICertificate CreateCertificate(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, IntermediateCertificateForm form, ICertificate issuer)

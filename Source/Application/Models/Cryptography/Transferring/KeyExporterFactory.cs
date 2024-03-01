@@ -1,24 +1,15 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using Application.Models.Cryptography.Transferring.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Application.Models.Cryptography.Transferring
 {
 	/// <inheritdoc />
-	public class KeyExporterFactory : IKeyExporterFactory
+	public class KeyExporterFactory(IOptionsMonitor<KeyExporterOptions> optionsMonitor) : IKeyExporterFactory
 	{
-		#region Constructors
-
-		public KeyExporterFactory(IOptionsMonitor<KeyExporterOptions> optionsMonitor)
-		{
-			this.OptionsMonitor = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
-		}
-
-		#endregion
-
 		#region Properties
 
-		protected internal virtual IOptionsMonitor<KeyExporterOptions> OptionsMonitor { get; }
+		protected internal virtual IOptionsMonitor<KeyExporterOptions> OptionsMonitor { get; } = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
 
 		#endregion
 

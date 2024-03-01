@@ -7,14 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-	public class HomeController : SiteController
+	public class HomeController(IFacade facade) : SiteController(facade)
 	{
-		#region Constructors
-
-		public HomeController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		public virtual async Task<IActionResult> Index(string id)

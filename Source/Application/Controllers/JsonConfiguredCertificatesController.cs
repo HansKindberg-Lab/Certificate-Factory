@@ -10,14 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
-	public class JsonConfiguredCertificatesController : ArchiveKindController
+	public class JsonConfiguredCertificatesController(IFacade facade) : ArchiveKindController(facade)
 	{
-		#region Constructors
-
-		public JsonConfiguredCertificatesController(IFacade facade) : base(facade) { }
-
-		#endregion
-
 		#region Methods
 
 		public virtual async Task<IActionResult> Index()
