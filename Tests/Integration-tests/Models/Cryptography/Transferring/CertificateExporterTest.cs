@@ -1,6 +1,4 @@
-using System;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Application.Models.Cryptography;
 using Application.Models.Cryptography.Extensions;
 using Application.Models.Cryptography.Storing;
@@ -40,7 +38,7 @@ namespace IntegrationTests.Models.Cryptography.Transferring
 
 				using(var issuer = certificateFactory.CreateRootCertificate(asymmetricAlgorithmOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(asymmetricAlgorithmOptions, certificateStore, new[] { "site-1.example.org", "site-2.example.org", "site-3.example.org" }, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(asymmetricAlgorithmOptions, certificateStore, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						var certificateExporter = serviceProvider.GetRequiredService<ICertificateExporter>();
 						var certificateExport = certificateExporter.Export(certificate, "password");

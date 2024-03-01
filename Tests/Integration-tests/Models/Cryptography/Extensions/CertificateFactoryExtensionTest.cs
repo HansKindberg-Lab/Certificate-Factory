@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Application.Models.Cryptography;
 using Application.Models.Cryptography.Extensions;
 using Application.Models.Cryptography.Storing;
@@ -135,7 +133,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 				using(var issuer = certificateFactory.CreateRootCertificate(rsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(rsaOptions, certificateStore, new[] { "site-1.example.org", "site-2.example.org", "site-3.example.org" }, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(rsaOptions, certificateStore, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateTlsCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -145,7 +143,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 				using(var issuer = certificateFactory.CreateRootCertificate(ecdsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(ecdsaOptions, certificateStore, new[] { subject, "site-2.example.org", "site-3.example.org" }, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(ecdsaOptions, certificateStore, [subject, "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateTlsCertificate(certificate, issuer, rootSubject, subject);
 					}
