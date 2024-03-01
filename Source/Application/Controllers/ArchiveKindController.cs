@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Application.Models;
 using Application.Models.ComponentModel;
@@ -29,7 +28,6 @@ namespace Application.Controllers
 
 		#region Properties
 
-		[SuppressMessage("Maintainability", "CA1508:Avoid dead conditional code")]
 		protected internal virtual IDictionary<ArchiveKind, string> ArchiveKindDescriptions
 		{
 			get
@@ -61,7 +59,6 @@ namespace Application.Controllers
 			}
 		}
 
-		[SuppressMessage("Maintainability", "CA1508:Avoid dead conditional code")]
 		protected internal virtual IDictionary<ArchiveKind, string> ArchiveKindExamples
 		{
 			get

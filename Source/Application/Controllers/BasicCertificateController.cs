@@ -205,7 +205,6 @@ namespace Application.Controllers
 			}
 		}
 
-		[SuppressMessage("Design", "CA1031:Do not catch general exception types")]
 		protected internal virtual void ValidateSubject(BasicCertificateForm form)
 		{
 			var subject = form?.Subject;

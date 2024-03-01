@@ -141,7 +141,6 @@ namespace Application.Models.Cryptography.Extensions
 			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "TlsCertificate");
 		}
 
-		[SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase")]
 		private static void Populate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, IDictionary<string, ICertificate> result, ICertificate issuer = null)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
