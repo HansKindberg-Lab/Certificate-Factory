@@ -9,8 +9,8 @@ namespace Application.Models.Cryptography
 
 		ISet<string> DnsNames { get; }
 		ISet<string> EmailAddresses { get; }
-		ISet<IPAddress> IpAddresses { get; }
-		ISet<Uri> Uris { get; }
+		ICollection<IPAddress> IpAddresses { get; }
+		ICollection<Uri> Uris { get; }
 		ISet<string> UserPrincipalNames { get; }
 
 		#endregion
