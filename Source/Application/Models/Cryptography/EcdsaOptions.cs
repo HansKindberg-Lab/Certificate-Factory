@@ -25,8 +25,7 @@ namespace Application.Models.Cryptography
 
 		protected internal override X509Certificate2 CopyCertificateWithPrivateKey(ECDsa asymmetricAlgorithm, X509Certificate2 certificate)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			var certificateWithPrivateKey = certificate.CopyWithPrivateKey(asymmetricAlgorithm);
 
@@ -45,11 +44,8 @@ namespace Application.Models.Cryptography
 
 		protected internal override CertificateRequest CreateCertificateRequest(ECDsa asymmetricAlgorithm, ICertificateOptions certificateOptions)
 		{
-			if(asymmetricAlgorithm == null)
-				throw new ArgumentNullException(nameof(asymmetricAlgorithm));
-
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
+			ArgumentNullException.ThrowIfNull(asymmetricAlgorithm);
+			ArgumentNullException.ThrowIfNull(certificateOptions);
 
 			return new CertificateRequest(certificateOptions.Subject, asymmetricAlgorithm, certificateOptions.HashAlgorithm.ToHashAlgorithmName());
 		}

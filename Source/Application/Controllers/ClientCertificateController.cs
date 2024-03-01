@@ -18,8 +18,7 @@ namespace Application.Controllers
 
 		protected internal override ICertificate CreateCertificate(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ClientCertificateForm form, ICertificate issuer)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			return this.Facade.CertificateFactory.CreateClientCertificate(asymmetricAlgorithmOptions, this.Facade.CertificateStore, issuer, form.Lifetime, this.Logger, form.Subject, this.Facade.SystemClock);
 		}

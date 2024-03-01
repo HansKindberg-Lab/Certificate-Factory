@@ -21,8 +21,7 @@ namespace Application.Controllers
 
 		protected internal override ICertificate CreateCertificate(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, CertificateForm form, ICertificate issuer)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			var certificateOptions = new CertificateOptions
 			{
@@ -107,8 +106,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateEnhancedKeyUsageList(CertificateForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			if(!form.EnhancedKeyUsage.Any() || !Enum.TryParse(form.EnhancedKeyUsage.ToCommaSeparatedString(), true, out EnhancedKeyUsage selectedEnhancedKeyUsage))
 				selectedEnhancedKeyUsage = default;
@@ -133,8 +131,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateHashAlgorithmList(CertificateForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			// MD5 and SHA1 should not be used: https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithmname#remarks
 			foreach(var hashAlgorithm in Enum.GetValues<HashAlgorithm>().Where(hashAlgorithm => hashAlgorithm > HashAlgorithm.Sha1).OrderBy(hashAlgorithm => hashAlgorithm.ToString()))
@@ -148,8 +145,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateKeyUsageList(CertificateForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			if(!form.KeyUsage.Any() || !Enum.TryParse(form.KeyUsage.ToCommaSeparatedString(), true, out X509KeyUsageFlags selectedKeyUsage))
 				selectedKeyUsage = default;

@@ -9,8 +9,7 @@ namespace Application.Models.Cryptography
 
 		public virtual ICertificateOptions CreateCertificateOptions(CertificateConstructionOptions certificateConstructionOptions, ICertificate issuer = null)
 		{
-			if(certificateConstructionOptions == null)
-				throw new ArgumentNullException(nameof(certificateConstructionOptions));
+			ArgumentNullException.ThrowIfNull(certificateConstructionOptions);
 
 			var certificateConstructionOptionsClone = certificateConstructionOptions.Clone();
 			var certificateOptions = new CertificateOptions
@@ -39,11 +38,8 @@ namespace Application.Models.Cryptography
 		[SuppressMessage("Maintainability", "CA1502:Avoid excessive complexity")]
 		public virtual void SetDefaults(CertificateConstructionOptions certificateConstructionOptions, IEnumerable<CertificateConstructionOptions> defaults)
 		{
-			if(certificateConstructionOptions == null)
-				throw new ArgumentNullException(nameof(certificateConstructionOptions));
-
-			if(defaults == null)
-				throw new ArgumentNullException(nameof(defaults));
+			ArgumentNullException.ThrowIfNull(certificateConstructionOptions);
+			ArgumentNullException.ThrowIfNull(defaults);
 
 			foreach(var @default in defaults)
 			{

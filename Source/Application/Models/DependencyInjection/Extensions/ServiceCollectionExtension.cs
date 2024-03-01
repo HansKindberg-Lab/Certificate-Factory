@@ -18,23 +18,12 @@ namespace Application.Models.DependencyInjection.Extensions
 
 		public static IServiceCollection AddCertificateFactory(this IServiceCollection services, IConfiguration configuration, string certificateFactoryConfigurationKey = nameof(CertificateFactory), string certificateFormConfigurationKey = "CertificateForm", string certificateStoreConfigurationKey = nameof(CertificateStore), string keyExporterConfigurationKey = "KeyExporter")
 		{
-			if(services == null)
-				throw new ArgumentNullException(nameof(services));
-
-			if(configuration == null)
-				throw new ArgumentNullException(nameof(configuration));
-
-			if(certificateFactoryConfigurationKey == null)
-				throw new ArgumentNullException(nameof(certificateFactoryConfigurationKey));
-
-			if(certificateFormConfigurationKey == null)
-				throw new ArgumentNullException(nameof(certificateFormConfigurationKey));
-
-			if(certificateStoreConfigurationKey == null)
-				throw new ArgumentNullException(nameof(certificateStoreConfigurationKey));
-
-			if(keyExporterConfigurationKey == null)
-				throw new ArgumentNullException(nameof(keyExporterConfigurationKey));
+			ArgumentNullException.ThrowIfNull(services);
+			ArgumentNullException.ThrowIfNull(configuration);
+			ArgumentNullException.ThrowIfNull(certificateFactoryConfigurationKey);
+			ArgumentNullException.ThrowIfNull(certificateFormConfigurationKey);
+			ArgumentNullException.ThrowIfNull(certificateStoreConfigurationKey);
+			ArgumentNullException.ThrowIfNull(keyExporterConfigurationKey);
 
 			var certificateFactorySection = configuration.GetSection(certificateFactoryConfigurationKey);
 			services.Configure<CertificateFactoryOptions>(certificateFactorySection);

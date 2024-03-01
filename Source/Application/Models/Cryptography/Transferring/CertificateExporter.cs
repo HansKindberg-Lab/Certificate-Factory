@@ -36,8 +36,7 @@ namespace Application.Models.Cryptography.Transferring
 
 		public virtual ICertificateTransfer Export(ICertificate certificate, string password)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			var wrappedCertificate = certificate.Unwrap();
 
@@ -66,24 +65,21 @@ namespace Application.Models.Cryptography.Transferring
 
 		public virtual string GetCertificatePem(ICertificate certificate)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			return new string(PemEncoding.Write(this.CertificatePemLabel, (certificate.RawData ?? Enumerable.Empty<byte>()).ToArray()));
 		}
 
 		protected internal virtual IEnumerable<byte> GetPfx(X509Certificate2 certificate, string password)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			return certificate.Export(X509ContentType.Pfx, password);
 		}
 
 		protected internal virtual IEnumerable<byte> GetPkcs12(X509Certificate2 certificate, string password)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			return certificate.Export(X509ContentType.Pkcs12, password);
 		}
@@ -92,8 +88,7 @@ namespace Application.Models.Cryptography.Transferring
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual AsymmetricAlgorithm GetPrivateKeyAsymmetricAlgorithm(X509Certificate2 certificate)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			if(!certificate.HasPrivateKey)
 			{

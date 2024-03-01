@@ -23,11 +23,8 @@ namespace Application.Controllers
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual IActionResult CertificateArchiveFile(string certificateTypeLabel, TForm form)
 		{
-			if(certificateTypeLabel == null)
-				throw new ArgumentNullException(nameof(certificateTypeLabel));
-
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(certificateTypeLabel);
+			ArgumentNullException.ThrowIfNull(form);
 
 			this.Validate(form);
 
@@ -105,8 +102,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateAsymmetricAlgorithmList(IAsymmetricAlgorithmForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			foreach(var (key, information) in this.Facade.AsymmetricAlgorithmRepository.Dictionary)
 			{
@@ -132,8 +128,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateFormLists(TForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			this.PopulateArchiveKindDictionary(form);
 			this.PopulateAsymmetricAlgorithmList(form);
@@ -144,8 +139,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateIssuerList(IIssuedCertificateForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			form.IssuerList.Add(new SelectListItem(null, null));
 

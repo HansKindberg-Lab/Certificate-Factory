@@ -11,17 +11,10 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static IDictionary<string, ICertificate> Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionTreeOptions constructionTree)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
-
-			if(asymmetricAlgorithmRepository == null)
-				throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
-
-			if(certificateConstructionHelper == null)
-				throw new ArgumentNullException(nameof(certificateConstructionHelper));
-
-			if(constructionTree == null)
-				throw new ArgumentNullException(nameof(constructionTree));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
+			ArgumentNullException.ThrowIfNull(asymmetricAlgorithmRepository);
+			ArgumentNullException.ThrowIfNull(certificateConstructionHelper);
+			ArgumentNullException.ThrowIfNull(constructionTree);
 
 			try
 			{
@@ -38,8 +31,7 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static IDictionary<string, ICertificate> Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, ICertificate issuer = null)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
 
 			try
 			{
@@ -59,26 +51,13 @@ namespace Application.Models.Cryptography.Extensions
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public static ICertificate Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
-
-			if(asymmetricAlgorithmOptions == null)
-				throw new ArgumentNullException(nameof(asymmetricAlgorithmOptions));
-
-			if(certificateOptionsAction == null)
-				throw new ArgumentNullException(nameof(certificateOptionsAction));
-
-			if(certificateStore == null)
-				throw new ArgumentNullException(nameof(certificateStore));
-
-			if(logger == null)
-				throw new ArgumentNullException(nameof(logger));
-
-			if(systemClock == null)
-				throw new ArgumentNullException(nameof(systemClock));
-
-			if(templateName == null)
-				throw new ArgumentNullException(nameof(templateName));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
+			ArgumentNullException.ThrowIfNull(asymmetricAlgorithmOptions);
+			ArgumentNullException.ThrowIfNull(certificateOptionsAction);
+			ArgumentNullException.ThrowIfNull(certificateStore);
+			ArgumentNullException.ThrowIfNull(logger);
+			ArgumentNullException.ThrowIfNull(systemClock);
+			ArgumentNullException.ThrowIfNull(templateName);
 
 			var templates = certificateStore.Templates();
 
@@ -103,8 +82,7 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static ICertificate CreateClientCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
 
 			void SetCertificateOptions(ICertificateOptions certificateOptions)
 			{
@@ -117,11 +95,8 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static ICertificate CreateIntermediateCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
-
-			if(issuer == null)
-				throw new ArgumentNullException(nameof(issuer));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
+			ArgumentNullException.ThrowIfNull(issuer);
 
 			void SetCertificateOptions(ICertificateOptions certificateOptions)
 			{
@@ -134,8 +109,7 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static ICertificate CreateRootCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
 
 			void SetCertificateOptions(ICertificateOptions certificateOptions)
 			{
@@ -147,8 +121,7 @@ namespace Application.Models.Cryptography.Extensions
 
 		public static ICertificate CreateTlsCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, IEnumerable<string> dnsNames, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
 
 			var dnsNamesCopy = (dnsNames ?? Enumerable.Empty<string>()).ToArray();
 
@@ -171,20 +144,11 @@ namespace Application.Models.Cryptography.Extensions
 		[SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase")]
 		private static void Populate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, IDictionary<string, ICertificate> result, ICertificate issuer = null)
 		{
-			if(certificateFactory == null)
-				throw new ArgumentNullException(nameof(certificateFactory));
-
-			if(asymmetricAlgorithmRepository == null)
-				throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
-
-			if(certificateConstructionHelper == null)
-				throw new ArgumentNullException(nameof(certificateConstructionHelper));
-
-			if(nodes == null)
-				throw new ArgumentNullException(nameof(nodes));
-
-			if(result == null)
-				throw new ArgumentNullException(nameof(result));
+			ArgumentNullException.ThrowIfNull(certificateFactory);
+			ArgumentNullException.ThrowIfNull(asymmetricAlgorithmRepository);
+			ArgumentNullException.ThrowIfNull(certificateConstructionHelper);
+			ArgumentNullException.ThrowIfNull(nodes);
+			ArgumentNullException.ThrowIfNull(result);
 
 			try
 			{

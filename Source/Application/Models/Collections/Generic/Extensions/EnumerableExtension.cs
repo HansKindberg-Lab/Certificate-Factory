@@ -6,8 +6,7 @@ namespace Application.Models.Collections.Generic.Extensions
 
 		public static string ToCommaSeparatedString(this IEnumerable<string> enumerableString)
 		{
-			if(enumerableString == null)
-				throw new ArgumentNullException(nameof(enumerableString));
+			ArgumentNullException.ThrowIfNull(enumerableString);
 
 			return string.Join(',', enumerableString);
 		}

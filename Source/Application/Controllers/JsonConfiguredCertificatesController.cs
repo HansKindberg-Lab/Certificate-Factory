@@ -35,8 +35,7 @@ namespace Application.Controllers
 		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		public virtual async Task<IActionResult> Index(JsonConfiguredCertificatesForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			this.PopulateArchiveKindDictionary(form);
 
@@ -106,8 +105,7 @@ namespace Application.Controllers
 
 		protected internal virtual void ValidateConstructionTree(CertificateConstructionTreeOptions constructionTree)
 		{
-			if(constructionTree == null)
-				throw new ArgumentNullException(nameof(constructionTree));
+			ArgumentNullException.ThrowIfNull(constructionTree);
 
 			if(!constructionTree.Roots.Any())
 				throw new InvalidOperationException("There are no root-certificates configured.");

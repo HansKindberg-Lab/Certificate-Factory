@@ -40,14 +40,9 @@ namespace Application.Models.Cryptography
 
 		public virtual ICertificate CreateCertificate(IOptionsMonitor<CertificateFactoryOptions> certificateFactoryOptionsMonitor, ICertificateOptions certificateOptions, ISystemClock systemClock)
 		{
-			if(certificateFactoryOptionsMonitor == null)
-				throw new ArgumentNullException(nameof(certificateFactoryOptionsMonitor));
-
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
-
-			if(systemClock == null)
-				throw new ArgumentNullException(nameof(systemClock));
+			ArgumentNullException.ThrowIfNull(certificateFactoryOptionsMonitor);
+			ArgumentNullException.ThrowIfNull(certificateOptions);
+			ArgumentNullException.ThrowIfNull(systemClock);
 
 			var certificateFactoryOptions = certificateFactoryOptionsMonitor.CurrentValue;
 
@@ -111,11 +106,8 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual DateTimeOffset GetNotAfter(ICertificateOptions certificateOptions, CertificateFactoryOptions certificateFactoryOptions, DateTimeOffset notBefore)
 		{
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
-
-			if(certificateFactoryOptions == null)
-				throw new ArgumentNullException(nameof(certificateFactoryOptions));
+			ArgumentNullException.ThrowIfNull(certificateOptions);
+			ArgumentNullException.ThrowIfNull(certificateFactoryOptions);
 
 			if(certificateOptions.NotAfter != null)
 				return certificateOptions.NotAfter.Value;
@@ -137,11 +129,8 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual DateTimeOffset GetNotBefore(ICertificateOptions certificateOptions, ISystemClock systemClock)
 		{
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
-
-			if(systemClock == null)
-				throw new ArgumentNullException(nameof(systemClock));
+			ArgumentNullException.ThrowIfNull(certificateOptions);
+			ArgumentNullException.ThrowIfNull(systemClock);
 
 			if(certificateOptions.NotBefore != null)
 				return certificateOptions.NotBefore.Value;
@@ -163,8 +152,7 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual void PopulateCertificateAuthority(ICertificateAuthorityOptions certificateAuthorityOptions, CertificateRequest certificateRequest)
 		{
-			if(certificateRequest == null)
-				throw new ArgumentNullException(nameof(certificateRequest));
+			ArgumentNullException.ThrowIfNull(certificateRequest);
 
 			if(certificateAuthorityOptions == null)
 				return;
@@ -174,11 +162,8 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual void PopulateCertificateRequest(ICertificateOptions certificateOptions, CertificateRequest certificateRequest)
 		{
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
-
-			if(certificateRequest == null)
-				throw new ArgumentNullException(nameof(certificateRequest));
+			ArgumentNullException.ThrowIfNull(certificateOptions);
+			ArgumentNullException.ThrowIfNull(certificateRequest);
 
 			this.PopulateSubjectAlternativeName(certificateRequest, certificateOptions.SubjectAlternativeName);
 
@@ -191,8 +176,7 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual void PopulateEnhancedKeyUsage(CertificateRequest certificateRequest, EnhancedKeyUsage enhancedKeyUsage)
 		{
-			if(certificateRequest == null)
-				throw new ArgumentNullException(nameof(certificateRequest));
+			ArgumentNullException.ThrowIfNull(certificateRequest);
 
 			var enhancedKeyUsageDescriptions = this.GetEnhancedKeyUsageDescriptions(enhancedKeyUsage);
 
@@ -211,8 +195,7 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual void PopulateSubjectAlternativeName(CertificateRequest certificateRequest, ISubjectAlternativeNameOptions subjectAlternativeName)
 		{
-			if(certificateRequest == null)
-				throw new ArgumentNullException(nameof(certificateRequest));
+			ArgumentNullException.ThrowIfNull(certificateRequest);
 
 			if(subjectAlternativeName == null)
 				return;

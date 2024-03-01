@@ -28,11 +28,8 @@ namespace Application.Models.Cryptography
 
 		public virtual ICertificate Create(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateOptions certificateOptions)
 		{
-			if(asymmetricAlgorithmOptions == null)
-				throw new ArgumentNullException(nameof(asymmetricAlgorithmOptions));
-
-			if(certificateOptions == null)
-				throw new ArgumentNullException(nameof(certificateOptions));
+			ArgumentNullException.ThrowIfNull(asymmetricAlgorithmOptions);
+			ArgumentNullException.ThrowIfNull(certificateOptions);
 
 			return asymmetricAlgorithmOptions.CreateCertificate(this.OptionsMonitor, certificateOptions, this.SystemClock);
 		}

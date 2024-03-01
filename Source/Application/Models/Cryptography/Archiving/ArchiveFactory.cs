@@ -41,8 +41,7 @@ namespace Application.Models.Cryptography.Archiving
 
 		public virtual IArchive Create(ICertificate certificate, ArchiveKind kind, string password)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			return new Archive
 			{
@@ -53,11 +52,8 @@ namespace Application.Models.Cryptography.Archiving
 
 		public virtual IArchive Create(IDictionary<string, ICertificate> certificates, IArchiveOptions options, string password)
 		{
-			if(certificates == null)
-				throw new ArgumentNullException(nameof(certificates));
-
-			if(options == null)
-				throw new ArgumentNullException(nameof(options));
+			ArgumentNullException.ThrowIfNull(certificates);
+			ArgumentNullException.ThrowIfNull(options);
 
 			return new Archive
 			{
@@ -68,8 +64,7 @@ namespace Application.Models.Cryptography.Archiving
 
 		protected internal virtual IEnumerable<byte> GetBytes(ArchiveKind archiveKind, ICertificate certificate, string password)
 		{
-			if(certificate == null)
-				throw new ArgumentNullException(nameof(certificate));
+			ArgumentNullException.ThrowIfNull(certificate);
 
 			var certificateTransfer = this.CertificateExporter.Export(certificate, password);
 
@@ -94,11 +89,8 @@ namespace Application.Models.Cryptography.Archiving
 
 		protected internal virtual IEnumerable<byte> GetBytes(IArchiveOptions archiveOptions, IDictionary<string, ICertificate> certificates, string password)
 		{
-			if(archiveOptions == null)
-				throw new ArgumentNullException(nameof(archiveOptions));
-
-			if(certificates == null)
-				throw new ArgumentNullException(nameof(certificates));
+			ArgumentNullException.ThrowIfNull(archiveOptions);
+			ArgumentNullException.ThrowIfNull(certificates);
 
 			using(var memoryStream = new MemoryStream())
 			{
@@ -129,16 +121,14 @@ namespace Application.Models.Cryptography.Archiving
 
 		protected internal virtual IEnumerable<byte> GetBytes(string value)
 		{
-			if(value == null)
-				throw new ArgumentNullException(nameof(value));
+			ArgumentNullException.ThrowIfNull(value);
 
 			return this.Encoding.GetBytes(value);
 		}
 
 		protected internal virtual IDictionary<string, IEnumerable<byte>> GetEntries(ArchiveKind archiveKind, ICertificateTransfer certificateTransfer, string key)
 		{
-			if(certificateTransfer == null)
-				throw new ArgumentNullException(nameof(certificateTransfer));
+			ArgumentNullException.ThrowIfNull(certificateTransfer);
 
 			var entries = new SortedDictionary<string, IEnumerable<byte>>(StringComparer.OrdinalIgnoreCase);
 
@@ -203,8 +193,7 @@ namespace Application.Models.Cryptography.Archiving
 
 		protected internal virtual string RemoveLineBreaks(string value)
 		{
-			if(value == null)
-				throw new ArgumentNullException(nameof(value));
+			ArgumentNullException.ThrowIfNull(value);
 
 			const string simpleNewLine = "\n";
 

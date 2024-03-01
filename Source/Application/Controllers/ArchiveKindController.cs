@@ -99,8 +99,7 @@ namespace Application.Controllers
 
 		protected internal virtual void PopulateArchiveKindDictionary(IArchiveKindForm form)
 		{
-			if(form == null)
-				throw new ArgumentNullException(nameof(form));
+			ArgumentNullException.ThrowIfNull(form);
 
 			var selected = form.ArchiveKind ?? ArchiveKind.All;
 
