@@ -9,6 +9,10 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
 	</ItemGroup>
 	<ItemGroup>
+		<InternalsVisibleTo Include="Integration-tests" />
+		<InternalsVisibleTo Include="Unit-tests" />
+	</ItemGroup>
+	<ItemGroup>
 		<None_ Include="wwwroot\**\.gitkeep;package.json;package-lock.json;tsconfig.json" />
 		<Content Remove="@(None_)" />
 		<None Include="@(None_)" />
