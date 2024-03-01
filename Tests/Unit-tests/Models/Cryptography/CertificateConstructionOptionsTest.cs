@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Application.Models.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
