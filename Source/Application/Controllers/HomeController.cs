@@ -53,7 +53,7 @@ namespace Application.Controllers
 			}
 			finally
 			{
-				foreach(var certificate in certificates ?? Enumerable.Empty<ICertificate>())
+				foreach(var certificate in certificates ?? [])
 				{
 					certificate.Dispose();
 				}

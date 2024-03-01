@@ -67,7 +67,7 @@ namespace Application.Models.Cryptography.Transferring
 		{
 			ArgumentNullException.ThrowIfNull(certificate);
 
-			return new string(PemEncoding.Write(this.CertificatePemLabel, (certificate.RawData ?? Enumerable.Empty<byte>()).ToArray()));
+			return new string(PemEncoding.Write(this.CertificatePemLabel, (certificate.RawData ?? []).ToArray()));
 		}
 
 		protected internal virtual IEnumerable<byte> GetPfx(X509Certificate2 certificate, string password)

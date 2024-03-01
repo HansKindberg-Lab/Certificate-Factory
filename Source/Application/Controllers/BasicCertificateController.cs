@@ -151,7 +151,7 @@ namespace Application.Controllers
 		protected internal virtual IEnumerable<string> SplitOnLineBreaks(string value)
 		{
 			if(string.IsNullOrEmpty(value))
-				return Enumerable.Empty<string>();
+				return [];
 
 			const char lineBreak = '\n';
 

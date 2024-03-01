@@ -123,7 +123,7 @@ namespace Application.Models.Cryptography.Extensions
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
 
-			var dnsNamesCopy = (dnsNames ?? Enumerable.Empty<string>()).ToArray();
+			var dnsNamesCopy = (dnsNames ?? []).ToArray();
 
 			void SetCertificateOptions(ICertificateOptions certificateOptions)
 			{

@@ -1,9 +1,6 @@
-using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -59,7 +56,7 @@ namespace IntegrationTests
 			var configurationBuilder = new ConfigurationBuilder();
 			configurationBuilder.Properties.Add("FileProvider", HostEnvironment.ContentRootFileProvider);
 
-			foreach(var path in jsonFilePaths ?? Array.Empty<string>())
+			foreach(var path in jsonFilePaths ?? [])
 			{
 				configurationBuilder.AddJsonFile(path, false, true);
 			}

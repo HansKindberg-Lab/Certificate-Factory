@@ -8,7 +8,7 @@ namespace Application.Models.Collections.Generic.Extensions
 		{
 			ArgumentNullException.ThrowIfNull(collection);
 
-			foreach(var item in items ?? Enumerable.Empty<T>())
+			foreach(var item in items ?? [])
 			{
 				collection.Add(item);
 			}
