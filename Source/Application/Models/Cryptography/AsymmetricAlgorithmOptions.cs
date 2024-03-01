@@ -54,7 +54,7 @@ namespace Application.Models.Cryptography
 
 				X509Certificate2 certificate;
 				var notBefore = this.GetNotBefore(certificateOptions, systemClock);
-				var notAfter = this.GetNotAfter(certificateOptions, certificateFactoryOptions, notBefore);
+				var notAfter = this.GetNotAfter(certificateFactoryOptions, certificateOptions, notBefore);
 
 				if(certificateOptions.Issuer == null)
 				{
@@ -104,10 +104,10 @@ namespace Application.Models.Cryptography
 			return enhancedKeyUsageDescriptions;
 		}
 
-		protected internal virtual DateTimeOffset GetNotAfter(ICertificateOptions certificateOptions, CertificateFactoryOptions certificateFactoryOptions, DateTimeOffset notBefore)
+		protected internal virtual DateTimeOffset GetNotAfter(CertificateFactoryOptions certificateFactoryOptions, ICertificateOptions certificateOptions, DateTimeOffset notBefore)
 		{
-			ArgumentNullException.ThrowIfNull(certificateOptions);
 			ArgumentNullException.ThrowIfNull(certificateFactoryOptions);
+			ArgumentNullException.ThrowIfNull(certificateOptions);
 
 			if(certificateOptions.NotAfter != null)
 				return certificateOptions.NotAfter.Value;
