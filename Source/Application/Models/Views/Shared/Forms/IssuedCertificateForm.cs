@@ -7,7 +7,7 @@ namespace Application.Models.Views.Shared.Forms
 		#region Properties
 
 		public virtual string Issuer { get; set; }
-		public virtual IList<SelectListItem> IssuerList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> IssuerList { get; } = [];
 
 		#endregion
 	}

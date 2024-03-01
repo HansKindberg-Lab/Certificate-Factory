@@ -4,7 +4,7 @@ namespace Application.Models.Views.Home
 	{
 		#region Properties
 
-		public virtual IList<StoreCertificateViewModel> Certificates { get; } = new List<StoreCertificateViewModel>();
+		public virtual IList<StoreCertificateViewModel> Certificates { get; } = [];
 
 		#endregion
 	}

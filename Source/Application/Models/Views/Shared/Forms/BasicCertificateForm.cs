@@ -12,12 +12,12 @@ namespace Application.Models.Views.Shared.Forms
 		public virtual ArchiveKind? ArchiveKind { get; set; }
 
 		public virtual IDictionary<SelectListItem, string> ArchiveKindDictionary { get; } = new Dictionary<SelectListItem, string>();
-		public virtual IList<SelectListItem> ArchiveKindList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> ArchiveKindList { get; } = [];
 
 		[Required(ErrorMessage = "\"Asymmetric algorithm\" is required.")]
 		public virtual string AsymmetricAlgorithm { get; set; }
 
-		public virtual IList<SelectListItem> AsymmetricAlgorithmList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> AsymmetricAlgorithmList { get; } = [];
 
 		[DataType(DataType.Password)]
 		[Required(ErrorMessage = "\"Password\" is required.")]

@@ -6,7 +6,7 @@ namespace Application.Models.Cryptography.Storing.Configuration
 	{
 		#region Properties
 
-		public virtual IList<StoreCertificateOptions> Certificates { get; } = new List<StoreCertificateOptions>();
+		public virtual IList<StoreCertificateOptions> Certificates { get; } = [];
 
 		public virtual IDictionary<string, CertificateOptions> Templates { get; } = new Dictionary<string, CertificateOptions>(StringComparer.OrdinalIgnoreCase)
 		{

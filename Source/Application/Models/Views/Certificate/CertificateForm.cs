@@ -16,21 +16,21 @@ namespace Application.Models.Views.Certificate
 		/// <summary>
 		/// To handle multiple check-boxes.
 		/// </summary>
-		public virtual IList<string> EnhancedKeyUsage { get; } = new List<string>();
+		public virtual IList<string> EnhancedKeyUsage { get; } = [];
 
-		public virtual IList<SelectListItem> EnhancedKeyUsageList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> EnhancedKeyUsageList { get; } = [];
 		public virtual HashAlgorithm HashAlgorithm { get; set; } = HashAlgorithm.Sha256;
-		public virtual IList<SelectListItem> HashAlgorithmList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> HashAlgorithmList { get; } = [];
 		public virtual string IpAddresses { get; set; }
 		public virtual string Issuer { get; set; }
-		public virtual IList<SelectListItem> IssuerList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> IssuerList { get; } = [];
 
 		/// <summary>
 		/// To handle multiple check-boxes.
 		/// </summary>
-		public virtual IList<string> KeyUsage { get; } = new List<string>();
+		public virtual IList<string> KeyUsage { get; } = [];
 
-		public virtual IList<SelectListItem> KeyUsageList { get; } = new List<SelectListItem>();
+		public virtual IList<SelectListItem> KeyUsageList { get; } = [];
 		public virtual DateTimeOffset? NotAfter { get; set; }
 		public virtual DateTimeOffset? NotBefore { get; set; }
 
