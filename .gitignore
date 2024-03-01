@@ -398,13 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Custom
-Source/Application/Scripts/**/*.js.map
-Source/Application/Scripts/**/*.js
-Source/Application/Style/**/*.css
 Source/Application/wwwroot/Scripts/*
 !Source/Application/wwwroot/Scripts/.gitkeep
-Source/Application/wwwroot/Style/*
-!Source/Application/wwwroot/Style/.gitkeep
-!Source/Application/wwwroot/favicon.ico
-Source/Application/package-lock.json
-Source/Application/yarn.lock
+Source/Application/wwwroot/Style/Site.css
+Source/Application/wwwroot/Style/Icons/*

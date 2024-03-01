@@ -17,4 +17,5 @@
 		<Content Remove="@(None_)" />
 		<None Include="@(None_)" />
 	</ItemGroup>
+	<Import Project="Npm.targets" />
 </Project>
