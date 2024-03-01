@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<RootNamespace>UnitTests</RootNamespace>
-		<TargetFramework>net7.0</TargetFramework>
 	</PropertyGroup>
 </Project>

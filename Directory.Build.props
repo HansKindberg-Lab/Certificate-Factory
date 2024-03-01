@@ -1,12 +1,10 @@
 <Project>
 	<PropertyGroup>
-		<!--
-		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
-		<AnalysisLevel>6.0</AnalysisLevel>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<NoWarn>CA1014;CS9057</NoWarn>
-		-->
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!--<LangVersion>latest</LangVersion>-->
+		<!--<Nullable>enable</Nullable>-->
+		<TargetFramework>net7.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 </Project>
