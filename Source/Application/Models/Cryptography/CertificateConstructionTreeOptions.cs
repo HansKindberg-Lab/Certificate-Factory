@@ -1,6 +1,8 @@
+using System.Text;
+
 namespace Application.Models.Cryptography
 {
-	public class CertificateConstructionTreeOptions
+	public class CertificateConstructionTreeOptions : ICloneable<CertificateConstructionTreeOptions>
 	{
 		#region Properties
 
@@ -26,6 +28,32 @@ namespace Application.Models.Cryptography
 		/// Default values for all root-certificate-properties if a property is not set explicitly.
 		/// </summary>
 		public virtual CertificateConstructionOptions RootsDefaults { get; set; }
+
+		#endregion
+
+		#region Methods
+
+		object ICloneable.Clone()
+		{
+			return this.Clone();
+		}
+
+		public virtual CertificateConstructionTreeOptions Clone()
+		{
+			var clone = new CertificateConstructionTreeOptions
+			{
+				Defaults = this.Defaults?.Clone(),
+				Name = this.Name == null ? null : new StringBuilder(this.Name).ToString(),
+				RootsDefaults = this.RootsDefaults?.Clone()
+			};
+
+			foreach(var (key, value) in this.Roots)
+			{
+				clone.Roots.Add(new StringBuilder(key).ToString(), value?.Clone());
+			}
+
+			return clone;
+		}
 
 		#endregion
 	}

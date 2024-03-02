@@ -15,11 +15,13 @@ namespace Application.Models.Cryptography
 
 		#region Methods
 
-		public override IAsymmetricAlgorithmOptions Clone()
+		public override AsymmetricAlgorithmOptions<ECDsa> Clone()
 		{
+			var memberwiseClone = (EcdsaOptions)this.MemberwiseClone();
+
 			return new EcdsaOptions
 			{
-				EllipticCurve = this.EllipticCurve
+				EllipticCurve = memberwiseClone.EllipticCurve
 			};
 		}
 

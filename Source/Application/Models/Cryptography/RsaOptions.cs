@@ -21,12 +21,14 @@ namespace Application.Models.Cryptography
 
 		#region Methods
 
-		public override IAsymmetricAlgorithmOptions Clone()
+		public override AsymmetricAlgorithmOptions<RSA> Clone()
 		{
+			var memberwiseClone = (RsaOptions)this.MemberwiseClone();
+
 			return new RsaOptions
 			{
-				KeySize = this.KeySize,
-				SignaturePadding = this.SignaturePadding
+				KeySize = memberwiseClone.KeySize,
+				SignaturePadding = memberwiseClone.SignaturePadding
 			};
 		}
 

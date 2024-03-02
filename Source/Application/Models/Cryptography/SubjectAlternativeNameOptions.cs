@@ -1,11 +1,12 @@
 using System.Net;
+using System.Text;
 using Application.Models.Collections;
 using Application.Models.Collections.Generic.Extensions;
 
 namespace Application.Models.Cryptography
 {
-	/// <inheritdoc />
-	public class SubjectAlternativeNameOptions : ISubjectAlternativeNameOptions
+	/// <inheritdoc cref="ISubjectAlternativeNameOptions" />
+	public class SubjectAlternativeNameOptions : ISubjectAlternativeNameOptions, ICloneable<SubjectAlternativeNameOptions>
 	{
 		#region Properties
 
@@ -24,15 +25,20 @@ namespace Application.Models.Cryptography
 			return this.Clone();
 		}
 
-		public virtual ISubjectAlternativeNameOptions Clone()
+		ISubjectAlternativeNameOptions ICloneable<ISubjectAlternativeNameOptions>.Clone()
+		{
+			return this.Clone();
+		}
+
+		public virtual SubjectAlternativeNameOptions Clone()
 		{
 			var clone = new SubjectAlternativeNameOptions();
 
-			clone.DnsNames.Add(this.DnsNames.Select(dnsName => new string(dnsName)));
-			clone.EmailAddresses.Add(this.EmailAddresses.Select(emailAddress => new string(emailAddress)));
-			clone.IpAddresses.Add(this.IpAddresses.Select(ipAddress => new IPAddress(ipAddress.GetAddressBytes())));
-			clone.Uris.Add(this.Uris.Select(uri => new Uri(new string(uri.OriginalString))));
-			clone.UserPrincipalNames.Add(this.UserPrincipalNames.Select(userPrincipalName => new string(userPrincipalName)));
+			clone.DnsNames.Add(this.DnsNames.Select(dnsName => dnsName == null ? null : new StringBuilder(dnsName).ToString()));
+			clone.EmailAddresses.Add(this.EmailAddresses.Select(emailAddress => emailAddress == null ? null : new StringBuilder(emailAddress).ToString()));
+			clone.IpAddresses.Add(this.IpAddresses.Select(ipAddress => ipAddress == null ? null : new IPAddress(ipAddress.GetAddressBytes())));
+			clone.Uris.Add(this.Uris.Select(uri => uri == null ? null : new Uri(new StringBuilder(uri.OriginalString).ToString())));
+			clone.UserPrincipalNames.Add(this.UserPrincipalNames.Select(userPrincipalName => userPrincipalName == null ? null : new StringBuilder(userPrincipalName).ToString()));
 
 			return clone;
 		}

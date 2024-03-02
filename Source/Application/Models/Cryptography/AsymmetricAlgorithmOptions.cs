@@ -10,8 +10,8 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Models.Cryptography
 {
-	/// <inheritdoc />
-	public abstract class AsymmetricAlgorithmOptions<T> : IAsymmetricAlgorithmOptions where T : AsymmetricAlgorithm
+	/// <inheritdoc cref="IAsymmetricAlgorithmOptions" />
+	public abstract class AsymmetricAlgorithmOptions<T> : IAsymmetricAlgorithmOptions, ICloneable<AsymmetricAlgorithmOptions<T>> where T : AsymmetricAlgorithm
 	{
 		#region Fields
 
@@ -34,7 +34,12 @@ namespace Application.Models.Cryptography
 			return this.Clone();
 		}
 
-		public abstract IAsymmetricAlgorithmOptions Clone();
+		IAsymmetricAlgorithmOptions ICloneable<IAsymmetricAlgorithmOptions>.Clone()
+		{
+			return this.Clone();
+		}
+
+		public abstract AsymmetricAlgorithmOptions<T> Clone();
 		protected internal abstract X509Certificate2 CopyCertificateWithPrivateKey(T asymmetricAlgorithm, X509Certificate2 certificate);
 		protected internal abstract T CreateAsymmetricAlgorithm();
 

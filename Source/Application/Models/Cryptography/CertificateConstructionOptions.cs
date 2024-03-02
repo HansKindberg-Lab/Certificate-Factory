@@ -1,5 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
-using Application.Models.Collections.Generic.Extensions;
+using System.Text;
 
 namespace Application.Models.Cryptography
 {
@@ -29,27 +29,21 @@ namespace Application.Models.Cryptography
 
 		public virtual CertificateConstructionOptions Clone()
 		{
-			var clone = (CertificateConstructionOptions)this.MemberwiseClone();
+			var memberwiseClone = (CertificateConstructionOptions)this.MemberwiseClone();
 
-			if(this.AsymmetricAlgorithm != null)
-				clone.AsymmetricAlgorithm = new string(this.AsymmetricAlgorithm);
-
-			if(this.CertificateAuthority != null)
-				clone.CertificateAuthority = new CertificateAuthorityOptions { PathLengthConstraint = this.CertificateAuthority.Clone().PathLengthConstraint };
-
-			if(this.Subject != null)
-				clone.Subject = new string(this.Subject);
-
-			if(this.SubjectAlternativeName != null)
+			var clone = new CertificateConstructionOptions
 			{
-				clone.SubjectAlternativeName = new SubjectAlternativeNameOptions();
-				var subjectAlternativeNameClone = this.SubjectAlternativeName.Clone();
-				clone.SubjectAlternativeName.DnsNames.Add(subjectAlternativeNameClone.DnsNames);
-				clone.SubjectAlternativeName.EmailAddresses.Add(subjectAlternativeNameClone.EmailAddresses);
-				clone.SubjectAlternativeName.IpAddresses.Add(subjectAlternativeNameClone.IpAddresses);
-				clone.SubjectAlternativeName.Uris.Add(subjectAlternativeNameClone.Uris);
-				clone.SubjectAlternativeName.UserPrincipalNames.Add(subjectAlternativeNameClone.UserPrincipalNames);
-			}
+				AsymmetricAlgorithm = this.AsymmetricAlgorithm == null ? null : new StringBuilder(this.AsymmetricAlgorithm).ToString(),
+				CertificateAuthority = this.CertificateAuthority?.Clone(),
+				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,
+				HashAlgorithm = memberwiseClone.HashAlgorithm,
+				KeyUsage = memberwiseClone.KeyUsage,
+				NotAfter = memberwiseClone.NotAfter,
+				NotBefore = memberwiseClone.NotBefore,
+				SerialNumberSize = memberwiseClone.SerialNumberSize,
+				Subject = this.Subject == null ? null : new StringBuilder(this.Subject).ToString(),
+				SubjectAlternativeName = this.SubjectAlternativeName?.Clone()
+			};
 
 			return clone;
 		}

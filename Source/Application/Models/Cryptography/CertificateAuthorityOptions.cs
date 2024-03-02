@@ -1,7 +1,7 @@
 namespace Application.Models.Cryptography
 {
-	/// <inheritdoc />
-	public class CertificateAuthorityOptions : ICertificateAuthorityOptions
+	/// <inheritdoc cref="ICertificateAuthorityOptions" />
+	public class CertificateAuthorityOptions : ICertificateAuthorityOptions, ICloneable<CertificateAuthorityOptions>
 	{
 		#region Properties
 
@@ -16,9 +16,19 @@ namespace Application.Models.Cryptography
 			return this.Clone();
 		}
 
-		public ICertificateAuthorityOptions Clone()
+		ICertificateAuthorityOptions ICloneable<ICertificateAuthorityOptions>.Clone()
 		{
-			return (ICertificateAuthorityOptions)this.MemberwiseClone();
+			return this.Clone();
+		}
+
+		public virtual CertificateAuthorityOptions Clone()
+		{
+			var memberwiseClone = (CertificateAuthorityOptions)this.MemberwiseClone();
+
+			return new CertificateAuthorityOptions
+			{
+				PathLengthConstraint = memberwiseClone.PathLengthConstraint
+			};
 		}
 
 		#endregion
