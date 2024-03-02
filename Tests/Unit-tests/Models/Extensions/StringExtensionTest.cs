@@ -9,6 +9,14 @@ namespace UnitTests.Models.Extensions
 		#region Methods
 
 		[TestMethod]
+		public async Task ReplaceStartOfEachLine_Test()
+		{
+			await Task.CompletedTask;
+
+			Assert.AreEqual($"\t\t {Environment.NewLine}\t\tRow 2     {Environment.NewLine}\tRow 3        {Environment.NewLine}Row 4   ", $"     {Environment.NewLine}    Row 2     {Environment.NewLine}  Row 3        {Environment.NewLine}Row 4   ".ReplaceStartOfEachLine("  ", "\t"));
+		}
+
+		[TestMethod]
 		public async Task SplitInParts_Test()
 		{
 			await Task.CompletedTask;
