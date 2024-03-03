@@ -1,9 +1,10 @@
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Application.Models.Cryptography
 {
-	/// <inheritdoc />
-	public class CertificateOptions : ICertificateOptions
+	/// <inheritdoc cref="ICertificateOptions" />
+	public class CertificateOptions : ICertificateOptions, ICloneable<CertificateOptions>
 	{
 		#region Properties
 
@@ -27,19 +28,28 @@ namespace Application.Models.Cryptography
 			return this.Clone();
 		}
 
-		public virtual ICertificateOptions Clone()
+		ICertificateOptions ICloneable<ICertificateOptions>.Clone()
 		{
-			var clone = (CertificateOptions)this.MemberwiseClone();
+			return this.Clone();
+		}
 
-			clone.CertificateAuthority = this.CertificateAuthority?.Clone();
-			clone.Issuer = this.Issuer;
+		public virtual CertificateOptions Clone()
+		{
+			var memberwiseClone = (CertificateOptions)this.MemberwiseClone();
 
-			if(this.Subject != null)
-				clone.Subject = new string(this.Subject);
-
-			clone.SubjectAlternativeName = this.SubjectAlternativeName?.Clone();
-
-			return clone;
+			return new CertificateOptions
+			{
+				CertificateAuthority = this.CertificateAuthority?.Clone(),
+				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,
+				HashAlgorithm = memberwiseClone.HashAlgorithm,
+				Issuer = memberwiseClone.Issuer, // At the moment we do not clone the issuer. Don't know if we have to. Don't think so.
+				KeyUsage = memberwiseClone.KeyUsage,
+				NotAfter = memberwiseClone.NotAfter,
+				NotBefore = memberwiseClone.NotBefore,
+				SerialNumberSize = memberwiseClone.SerialNumberSize,
+				Subject = this.Subject == null ? null : new StringBuilder(this.Subject).ToString(),
+				SubjectAlternativeName = this.SubjectAlternativeName?.Clone()
+			};
 		}
 
 		#endregion
