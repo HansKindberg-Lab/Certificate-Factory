@@ -1,4 +1,7 @@
 using System.Text;
+using System.Text.Json.Serialization;
+using Application.Models.Text.Json;
+using Application.Models.Text.Json.Extensions;
 
 namespace Application.Models.Cryptography
 {
@@ -17,6 +20,7 @@ namespace Application.Models.Cryptography
 		/// <summary>
 		/// The name for the zip-file that is created.
 		/// </summary>
+		[JsonIgnore]
 		public virtual string Name { get; set; } = "Certificates";
 
 		/// <summary>
@@ -53,6 +57,11 @@ namespace Application.Models.Cryptography
 			}
 
 			return clone;
+		}
+
+		public virtual string ToJson()
+		{
+			return JsonSerializerExtension.Serialize(this, JsonSerializerOptionsExtension.Default, JsonIndentationOptions.Default);
 		}
 
 		#endregion

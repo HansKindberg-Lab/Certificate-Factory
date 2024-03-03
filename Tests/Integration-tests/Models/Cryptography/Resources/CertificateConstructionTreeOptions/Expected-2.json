@@ -1,0 +1,32 @@
+{
+	"Defaults": {
+		"AsymmetricAlgorithm": "RSA:2048:Pkcs1",
+		"SubjectAlternativeName": {
+			"DnsNames": [
+				"site-1.example.org",
+				"site-2.example.org",
+				"site-3.example.org"
+			],
+			"EmailAddresses": [
+				"user-1@example.org",
+				"user-2@example.org",
+				"user-3@example.org"
+			],
+			"IpAddresses": [
+				"127.0.0.1",
+				"127.0.0.2",
+				"::1"
+			],
+			"Uris": [
+				"https://site-1.example.org",
+				"https://site-2.example.org",
+				"https://site-3.example.org"
+			],
+			"UserPrincipalNames": [
+				"user-1@example.org",
+				"user-2@example.org",
+				"user-3@example.org"
+			]
+		}
+	}
+}

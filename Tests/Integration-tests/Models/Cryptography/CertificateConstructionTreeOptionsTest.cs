@@ -72,6 +72,34 @@ namespace IntegrationTests.Models.Cryptography
 			return await Task.FromResult(Global.CreateConfiguration(Path.Combine(_resourcesDirectoryRelativePath, jsonFileName)));
 		}
 
+		[TestMethod]
+		public async Task ToJson_Test_1()
+		{
+			var configuration = await this.CreateConfigurationAsync("Configuration-3.json");
+			var constructionTree = new CertificateConstructionTreeOptions();
+			configuration.Bind(constructionTree);
+
+			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectoryPath, _resourcesDirectoryRelativePath, "Expected-1.json"));
+
+			var json = constructionTree.ToJson();
+
+			Assert.AreEqual(expectedJson, json);
+		}
+
+		[TestMethod]
+		public async Task ToJson_Test_2()
+		{
+			var configuration = await this.CreateConfigurationAsync("Configuration-4.json");
+			var constructionTree = new CertificateConstructionTreeOptions();
+			configuration.Bind(constructionTree);
+
+			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectoryPath, _resourcesDirectoryRelativePath, "Expected-2.json"));
+
+			var json = constructionTree.ToJson();
+
+			Assert.AreEqual(expectedJson, json);
+		}
+
 		#endregion
 	}
 }
