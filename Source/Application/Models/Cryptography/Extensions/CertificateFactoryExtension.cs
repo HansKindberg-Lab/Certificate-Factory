@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Application.Models.Collections.Generic.Extensions;
 using Application.Models.Cryptography.Storing;
 using Microsoft.Extensions.Internal;
@@ -47,7 +46,6 @@ namespace Application.Models.Cryptography.Extensions
 			}
 		}
 
-		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public static ICertificate Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Extensions;
@@ -84,7 +83,6 @@ namespace Application.Models.Cryptography.Transferring
 			return certificate.Export(X509ContentType.Pkcs12, password);
 		}
 
-		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual AsymmetricAlgorithm GetPrivateKeyAsymmetricAlgorithm(X509Certificate2 certificate)
 		{
 			ArgumentNullException.ThrowIfNull(certificate);

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models;
 using Application.Models.Cryptography;
@@ -13,7 +12,6 @@ namespace Application.Controllers
 	{
 		#region Methods
 
-		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual IActionResult CertificateArchiveFile(string certificateTypeLabel, TForm form)
 		{
 			ArgumentNullException.ThrowIfNull(certificateTypeLabel);

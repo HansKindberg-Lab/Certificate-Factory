@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Storing.Configuration;
 using Microsoft.Extensions.Options;
@@ -28,7 +27,6 @@ namespace Application.Models.Cryptography.Storing
 
 		#region Methods
 
-		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public virtual IEnumerable<ICertificate> Certificates()
 		{
 			var certificates = new List<ICertificate>();
