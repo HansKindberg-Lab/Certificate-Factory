@@ -28,9 +28,7 @@ namespace Application.Models.Cryptography.Storing
 
 		#region Methods
 
-		[SuppressMessage("Design", "CA1031:Do not catch general exception types")]
 		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
-		[SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposed by the caller.")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public virtual IEnumerable<ICertificate> Certificates()
 		{
