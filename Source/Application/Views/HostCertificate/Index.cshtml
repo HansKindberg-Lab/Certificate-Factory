@@ -1,0 +1,40 @@
+﻿@model HostCertificateViewModel
+<div class="card">
+	<div class="card-header">
+		<h1 class="h4 m-0 p-0">Host-certificate</h1>
+	</div>
+	<div class="card-body">
+		@if(!string.IsNullOrEmpty(Model.Error))
+		{
+			<div class="alert alert-danger mt-3">
+				<h2 class="h4">Error</h2>
+				<p>@Model.Error</p>
+				@if(Model.ErrorDetails.Any())
+				{
+					<ul>
+						@foreach(var detail in Model.ErrorDetails)
+						{
+							<li>@detail</li>
+						}
+					</ul>
+				}
+			</div>
+		}
+
+		@if(Model.Certificate != null)
+		{
+			<h2 class="h4">@Model.Certificate.Subject</h2>
+			@await Html.PartialAsync("~/Views/Shared/CertificateDetails.cshtml", new CertificateDetails { Certificate = Model.Certificate })
+			@if(Model.ValidatedReturnUrl != null)
+			{
+				<div class="text-end">
+					<a class="btn btn-primary" href="@Model.ValidatedReturnUrl">Return</a>
+				</div>
+			}
+		}
+		else if(string.IsNullOrEmpty(Model.Error))
+		{
+			<div class="alert alert-warning mt-3">The certificate does not exist.</div>
+		}
+	</div>
+</div>

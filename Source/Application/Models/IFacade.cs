@@ -19,6 +19,7 @@ namespace Application.Models
 		ICertificateExporter CertificateExporter { get; }
 		ICertificateFactory CertificateFactory { get; }
 		IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }
+		ICertificateLoader CertificateLoader { get; }
 		IFileNameResolver FileNameResolver { get; }
 		ILoggerFactory LoggerFactory { get; }
 		ISystemClock SystemClock { get; }

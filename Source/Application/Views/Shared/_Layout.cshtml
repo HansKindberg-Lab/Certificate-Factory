@@ -1,5 +1,4 @@
-﻿@using Application.Models.Web.Mvc.Razor.Extensions
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
@@ -38,6 +37,9 @@
 						</li>
 						<li class="nav-item">
 							<a asp-controller="AsymmetricAlgorithms" class="nav-link@(this.IsActive("AsymmetricAlgorithms") ? " active" : null)">Asymmetric algorithms</a>
+						</li>
+						<li class="nav-item">
+							<a asp-controller="HostCertificates" class="nav-link@(this.IsActive("HostCertificates") ? " active" : null)">Host certificates</a>
 						</li>
 					</ul>
 				</div>

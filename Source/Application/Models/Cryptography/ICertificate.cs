@@ -9,6 +9,7 @@ namespace Application.Models.Cryptography
 		#region Properties
 
 		bool Archived { get; }
+		string FriendlyName { get; }
 		bool HasPrivateKey { get; }
 		string Issuer { get; }
 
@@ -26,8 +27,11 @@ namespace Application.Models.Cryptography
 		DateTime NotBefore { get; }
 		IEnumerable<byte> RawData { get; }
 		string SerialNumber { get; }
+		Oid SignatureAlgorithm { get; }
+		ICertificateStore Store { get; }
 		string Subject { get; }
 		string Thumbprint { get; }
+		int Version { get; }
 
 		#endregion
 

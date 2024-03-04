@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -22,6 +23,16 @@ namespace Application.Models.Cryptography
 			ArgumentNullException.ThrowIfNull(certificateOptions);
 
 			return asymmetricAlgorithmOptions.CreateCertificate(this.OptionsMonitor, certificateOptions, this.LoggerFactory, this.SystemClock);
+		}
+
+		public virtual ICertificate Create(X509Certificate2 certificate, ICertificateStore store)
+		{
+			ArgumentNullException.ThrowIfNull(certificate);
+
+			return new X509Certificate2Wrapper(certificate, this.LoggerFactory)
+			{
+				Store = store
+			};
 		}
 
 		#endregion

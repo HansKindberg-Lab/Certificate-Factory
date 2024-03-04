@@ -27,6 +27,7 @@ namespace Application.Models.Cryptography
 		public virtual bool Archived => this.WrappedCertificate.Archived;
 		protected internal virtual string CertificatePemLabel => _certificatePemLabel;
 		protected internal virtual bool Disposed { get; set; }
+		public virtual string FriendlyName => this.WrappedCertificate.FriendlyName;
 		public virtual bool HasPrivateKey => this.WrappedCertificate.HasPrivateKey;
 		public virtual string Issuer => this.WrappedCertificate.Issuer;
 		public virtual string KeyAlgorithm => this.WrappedCertificate.GetKeyAlgorithm();
@@ -36,8 +37,11 @@ namespace Application.Models.Cryptography
 		public virtual DateTime NotBefore => this.WrappedCertificate.NotBefore;
 		public virtual IEnumerable<byte> RawData => this.WrappedCertificate.RawData;
 		public virtual string SerialNumber => this.WrappedCertificate.SerialNumber;
+		public virtual Oid SignatureAlgorithm => this.WrappedCertificate.SignatureAlgorithm;
+		public virtual ICertificateStore Store { get; set; }
 		public virtual string Subject => this.WrappedCertificate.Subject;
 		public virtual string Thumbprint => this.WrappedCertificate.Thumbprint;
+		public virtual int Version => this.WrappedCertificate.Version;
 		public virtual X509Certificate2 WrappedCertificate { get; }
 
 		#endregion

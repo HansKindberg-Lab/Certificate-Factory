@@ -23,6 +23,7 @@ indent_style = space
 dotnet_analyzer_diagnostic.severity = error
 
 # Suppress (suppress any rule you need to suppress)
+dotnet_diagnostic.CA1416.severity = none
 dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.CA1848.severity = none
 dotnet_diagnostic.CA1860.severity = none
@@ -34,6 +35,7 @@ dotnet_diagnostic.IDE0046.severity = none
 dotnet_diagnostic.IDE0055.severity = none
 dotnet_diagnostic.IDE0058.severity = none
 dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE0305.severity = none
 
 # Visual Studio
 csharp_space_after_keywords_in_control_flow_statements = false # Avoid space after if in if-statement. Eg. if() and not if ()

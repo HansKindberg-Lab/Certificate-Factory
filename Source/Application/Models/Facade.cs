@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Models
 {
-	public class Facade(IApplicationCertificateStore applicationCertificateStore, IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock) : IFacade
+	public class Facade(IApplicationCertificateStore applicationCertificateStore, IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateLoader certificateLoader, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock) : IFacade
 	{
 		#region Properties
 
@@ -19,6 +19,7 @@ namespace Application.Models
 		public virtual ICertificateExporter CertificateExporter { get; } = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
 		public virtual ICertificateFactory CertificateFactory { get; } = certificateFactory ?? throw new ArgumentNullException(nameof(certificateFactory));
 		public virtual IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; } = certificateFormOptionsMonitor ?? throw new ArgumentNullException(nameof(certificateFormOptionsMonitor));
+		public virtual ICertificateLoader CertificateLoader { get; } = certificateLoader ?? throw new ArgumentNullException(nameof(certificateLoader));
 		public virtual IFileNameResolver FileNameResolver { get; } = fileNameResolver ?? throw new ArgumentNullException(nameof(fileNameResolver));
 		public virtual ILoggerFactory LoggerFactory { get; } = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
 		public virtual ISystemClock SystemClock { get; } = systemClock ?? throw new ArgumentNullException(nameof(systemClock));

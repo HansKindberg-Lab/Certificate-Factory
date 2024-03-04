@@ -42,6 +42,9 @@ namespace Application.Models.DependencyInjection.Extensions
 			services.TryAddSingleton<ICertificateConstructionHelper, CertificateConstructionHelper>();
 			services.TryAddSingleton<ICertificateExporter, CertificateExporter>();
 			services.TryAddSingleton<ICertificateFactory, CertificateFactory>();
+			services.TryAddSingleton<ICertificateLoader, CertificateLoader>();
+			services.TryAddSingleton<ICertificateStoreFactory, CertificateStoreFactory>();
+			services.TryAddSingleton<ICertificateStoreLoader, CertificateStoreLoader>();
 			services.TryAddScoped<IFacade, Facade>();
 			services.TryAddSingleton<IFileNameResolver, FileNameResolver>();
 			services.TryAddSingleton<IKeyExporterFactory, KeyExporterFactory>();

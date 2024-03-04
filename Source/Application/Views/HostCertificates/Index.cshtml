@@ -1,0 +1,92 @@
+﻿@model HostCertificatesViewModel
+@await Html.PartialAsync("~/Views/Shared/Modal.cshtml", new Modal { Text = "Processing..." })
+<div class="card">
+	<div class="card-header">
+		<h1 class="h4 m-0 p-0">Host-certificates</h1>
+	</div>
+	<div class="card-body">
+		<form method="get">
+			<fieldset class="border border-2 border-light p-3 pt-2 rounded-3">
+				<legend>Search</legend>
+				<p>"*" is wildcard.</p>
+				<div class="mb-3">
+					<label asp-for="FriendlyName"></label>
+					<input asp-for="FriendlyName" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="Issuer"></label>
+					<input asp-for="Issuer" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="SerialNumber"></label>
+					<input asp-for="SerialNumber" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="StoreLocation"></label>
+					<select asp-for="StoreLocation" asp-items="@Model.StoreLocations" class="form-control"></select>
+				</div>
+				<div class="mb-3">
+					<label asp-for="StoreName"></label>
+					<input asp-for="StoreName" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="Subject"></label>
+					<input asp-for="Subject" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="Thumbprint"></label>
+					<input asp-for="Thumbprint" class="form-control" />
+				</div>
+				<!-- Timestamp field to make the input fields change all the time. -->
+				<input name="ts" type="hidden" value="@DateTime.UtcNow.Ticks" />
+				<div class="text-end">
+					<button asp-fragment="result" class="btn btn-primary" data-bs-target="#modal" data-bs-toggle="modal" name="FormAction" type="submit" value="Search">Search</button>
+					<button asp-fragment="reset" class="btn btn-secondary" name="FormAction" type="submit" value="Reset">Reset</button>
+				</div>
+			</fieldset>
+		</form>
+		@if(string.IsNullOrEmpty(Model.Error))
+		{
+			if(Model.Action == SearchFormAction.Search)
+			{
+				if(Model.Certificates.Any())
+				{
+					<div class="alert alert-light mt-3" id="result">
+						<h2 class="h4">Search-result</h2>
+						<p>Number of hits: <strong>@Model.Certificates.Count</strong></p>
+						<ul>
+							@foreach(var certificate in Model.Certificates.OrderBy(certificate => certificate.Subject))
+							{
+								var identifier = $"{certificate.Store!.Location}-{certificate.Store.Name}-{certificate.Thumbprint}".ToLowerInvariant();
+								<li>
+									<h3 class="h5">
+										<a aria-controls="@identifier" aria-expanded="false" data-bs-toggle="collapse" href="#@identifier" role="button">
+											@certificate.Subject
+										</a>
+									</h3>
+									<div class="alert alert-info collapse mt-2" id="@identifier">
+										@await Html.PartialAsync("~/Views/Shared/CertificateDetails.cshtml", new CertificateDetails { Certificate = certificate })
+										<div class="text-end">
+											<a asp-controller="HostCertificate" asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()#result" asp-route-storeLocation="@certificate.Store.Location" asp-route-storeName="@certificate.Store.Name" asp-route-thumbprint="@certificate.Thumbprint" class="btn btn-primary">View details</a>
+										</div>
+									</div>
+								</li>
+							}
+						</ul>
+					</div>
+				}
+				else
+				{
+					<div class="alert alert-warning mt-3" id="result">The search gave no hits.</div>
+				}
+			}
+		}
+		else
+		{
+			<div class="alert alert-danger mt-3" id="result">
+				<h2 class="h4">Error</h2>
+				<p>@Model.Error</p>
+			</div>
+		}
+	</div>
+</div>
