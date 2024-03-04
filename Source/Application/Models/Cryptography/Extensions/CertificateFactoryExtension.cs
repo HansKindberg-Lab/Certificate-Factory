@@ -47,7 +47,6 @@ namespace Application.Models.Cryptography.Extensions
 			}
 		}
 
-		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public static ICertificate Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
 		{

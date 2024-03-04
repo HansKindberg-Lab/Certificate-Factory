@@ -84,7 +84,6 @@ namespace Application.Models.Cryptography.Transferring
 			return certificate.Export(X509ContentType.Pkcs12, password);
 		}
 
-		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		protected internal virtual AsymmetricAlgorithm GetPrivateKeyAsymmetricAlgorithm(X509Certificate2 certificate)
 		{

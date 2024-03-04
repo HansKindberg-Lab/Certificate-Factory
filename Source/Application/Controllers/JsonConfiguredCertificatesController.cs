@@ -26,7 +26,6 @@ namespace Application.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling")]
-		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		public virtual async Task<IActionResult> Index(JsonConfiguredCertificatesForm form)
 		{
 			ArgumentNullException.ThrowIfNull(form);

@@ -28,7 +28,6 @@ namespace Application.Models.Cryptography.Storing
 
 		#region Methods
 
-		[SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates")]
 		[SuppressMessage("Usage", "CA2254:Template should be a static expression")]
 		public virtual IEnumerable<ICertificate> Certificates()
 		{
