@@ -39,27 +39,28 @@ namespace Application.Models.Cryptography.Transferring
 
 			var wrappedCertificate = certificate.Unwrap();
 
-			var asymmetricAlgorithm = this.GetPrivateKeyAsymmetricAlgorithm(wrappedCertificate);
-
-			var keyExporter = asymmetricAlgorithm != null ? this.KeyExporterFactory.Create(asymmetricAlgorithm) : null;
-
-			var certificateExport = new CertificateTransfer
+			using(var asymmetricAlgorithm = this.GetPrivateKeyAsymmetricAlgorithm(wrappedCertificate))
 			{
-				CertificatePem = this.GetCertificatePem(certificate),
-				Pfx = this.GetPfx(wrappedCertificate, password),
-				Pkcs12 = this.GetPkcs12(wrappedCertificate, password)
-			};
+				var keyExporter = asymmetricAlgorithm != null ? this.KeyExporterFactory.Create(asymmetricAlgorithm) : null;
 
-			// ReSharper disable InvertIf
-			if(keyExporter != null)
-			{
-				certificateExport.EncryptedPrivateKeyPem = keyExporter.GetEncryptedPrivateKeyPem(password);
-				certificateExport.PrivateKeyPem = keyExporter.GetPrivateKeyPem();
-				certificateExport.PublicKeyPem = keyExporter.GetPublicKeyPem();
+				var certificateExport = new CertificateTransfer
+				{
+					CertificatePem = this.GetCertificatePem(certificate),
+					Pfx = this.GetPfx(wrappedCertificate, password),
+					Pkcs12 = this.GetPkcs12(wrappedCertificate, password)
+				};
+
+				// ReSharper disable InvertIf
+				if(keyExporter != null)
+				{
+					certificateExport.EncryptedPrivateKeyPem = keyExporter.GetEncryptedPrivateKeyPem(password);
+					certificateExport.PrivateKeyPem = keyExporter.GetPrivateKeyPem();
+					certificateExport.PublicKeyPem = keyExporter.GetPublicKeyPem();
+				}
+				// ReSharper restore InvertIf
+
+				return certificateExport;
 			}
-			// ReSharper restore InvertIf
-
-			return certificateExport;
 		}
 
 		public virtual string GetCertificatePem(ICertificate certificate)
