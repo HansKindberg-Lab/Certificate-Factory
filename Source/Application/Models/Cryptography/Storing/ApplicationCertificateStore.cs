@@ -12,7 +12,8 @@ namespace Application.Models.Cryptography.Storing
 
 		public ApplicationCertificateStore(ILoggerFactory loggerFactory, IOptionsMonitor<ApplicationCertificateStoreOptions> optionsMonitor)
 		{
-			this.Logger = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(this.GetType());
+			this.LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
+			this.Logger = loggerFactory.CreateLogger(this.GetType());
 			this.OptionsMonitor = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
 		}
 
@@ -21,6 +22,7 @@ namespace Application.Models.Cryptography.Storing
 		#region Properties
 
 		protected internal virtual ILogger Logger { get; }
+		protected internal virtual ILoggerFactory LoggerFactory { get; }
 		protected internal virtual IOptionsMonitor<ApplicationCertificateStoreOptions> OptionsMonitor { get; }
 
 		#endregion
@@ -38,7 +40,7 @@ namespace Application.Models.Cryptography.Storing
 				{
 					var x509Certificate = X509Certificate2.CreateFromPem(certificateOptions.CertificatePem, certificateOptions.PrivateKeyPem);
 
-					certificates.Add(new X509Certificate2Wrapper(x509Certificate));
+					certificates.Add(new X509Certificate2Wrapper(x509Certificate, this.LoggerFactory));
 				}
 				catch(Exception exception)
 				{

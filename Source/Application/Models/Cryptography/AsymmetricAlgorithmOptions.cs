@@ -42,7 +42,7 @@ namespace Application.Models.Cryptography
 		protected internal abstract X509Certificate2 CopyCertificateWithPrivateKey(T asymmetricAlgorithm, X509Certificate2 certificate);
 		protected internal abstract T CreateAsymmetricAlgorithm();
 
-		public virtual ICertificate CreateCertificate(IOptionsMonitor<CertificateFactoryOptions> certificateFactoryOptionsMonitor, ICertificateOptions certificateOptions, ISystemClock systemClock)
+		public virtual ICertificate CreateCertificate(IOptionsMonitor<CertificateFactoryOptions> certificateFactoryOptionsMonitor, ICertificateOptions certificateOptions, ILoggerFactory loggerFactory, ISystemClock systemClock)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactoryOptionsMonitor);
 			ArgumentNullException.ThrowIfNull(certificateOptions);
@@ -75,7 +75,7 @@ namespace Application.Models.Cryptography
 					certificate = this.CopyCertificateWithPrivateKey(asymmetricAlgorithm, certificateRequest.Create(wrappedIssuerCertificate, notBefore, notAfter, serialNumber));
 				}
 
-				return new X509Certificate2Wrapper(certificate);
+				return new X509Certificate2Wrapper(certificate, loggerFactory);
 			}
 		}
 

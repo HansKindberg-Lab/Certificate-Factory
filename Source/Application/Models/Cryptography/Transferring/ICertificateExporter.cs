@@ -5,7 +5,6 @@ namespace Application.Models.Cryptography.Transferring
 		#region Methods
 
 		ICertificateTransfer Export(ICertificate certificate, string password);
-		string GetCertificatePem(ICertificate certificate);
 
 		#endregion
 	}

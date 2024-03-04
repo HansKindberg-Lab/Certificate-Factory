@@ -25,7 +25,7 @@ namespace Application.Controllers
 
 					if(certificate != null)
 					{
-						var certificatePem = this.Facade.CertificateExporter.GetCertificatePem(certificate);
+						var certificatePem = certificate.GetCertificatePem();
 						var certificatePemBytes = Encoding.UTF8.GetBytes(certificatePem);
 						var file = this.File(certificatePemBytes, MediaTypeNames.Text.Plain, this.Facade.FileNameResolver.Resolve($"{certificate.Subject}.crt"));
 

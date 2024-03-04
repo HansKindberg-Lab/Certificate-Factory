@@ -4,6 +4,9 @@ namespace Application.Models.Cryptography
 	{
 		#region Methods
 
+		/// <summary>
+		/// Create a new certificate.
+		/// </summary>
 		ICertificate Create(IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateOptions certificateOptions);
 
 		#endregion

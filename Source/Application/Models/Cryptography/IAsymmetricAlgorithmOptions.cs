@@ -7,7 +7,7 @@ namespace Application.Models.Cryptography
 	{
 		#region Methods
 
-		ICertificate CreateCertificate(IOptionsMonitor<CertificateFactoryOptions> certificateFactoryOptionsMonitor, ICertificateOptions certificateOptions, ISystemClock systemClock);
+		ICertificate CreateCertificate(IOptionsMonitor<CertificateFactoryOptions> certificateFactoryOptionsMonitor, ICertificateOptions certificateOptions, ILoggerFactory loggerFactory, ISystemClock systemClock);
 
 		#endregion
 	}
