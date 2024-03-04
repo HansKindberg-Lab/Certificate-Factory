@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 
 namespace Application.Models.Cryptography
@@ -35,7 +34,6 @@ namespace Application.Models.Cryptography
 			}
 		}
 
-		[SuppressMessage("Maintainability", "CA1508:Avoid dead conditional code")]
 		public virtual IDictionary<string, AsymmetricAlgorithmInformation> Dictionary
 		{
 			get

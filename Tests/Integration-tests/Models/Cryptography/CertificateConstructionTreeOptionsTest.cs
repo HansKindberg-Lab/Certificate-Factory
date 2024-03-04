@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography;
@@ -19,7 +18,6 @@ namespace IntegrationTests.Models.Cryptography
 		#region Methods
 
 		[TestMethod]
-		[SuppressMessage("Globalization", "CA1305:Specify IFormatProvider")]
 		public async Task Configuration_Bind_Test_1()
 		{
 			var configuration = await this.CreateConfigurationAsync("Configuration-1.json");
@@ -27,7 +25,7 @@ namespace IntegrationTests.Models.Cryptography
 			configuration.Bind(constructionTree);
 			Assert.AreEqual("RSA:2048:Pkcs1", constructionTree.Defaults.AsymmetricAlgorithm);
 			Assert.AreEqual(HashAlgorithm.Sha256, constructionTree.Defaults.HashAlgorithm);
-			Assert.AreEqual(new DateTimeOffset(2050, 1, 1, 0, 0, 0, DateTimeOffset.Parse("2000-01-01").Offset), constructionTree.Defaults.NotAfter);
+			Assert.AreEqual(new DateTimeOffset(2050, 1, 1, 0, 0, 0, DateTimeOffset.Parse("2000-01-01", null).Offset), constructionTree.Defaults.NotAfter);
 			Assert.AreEqual("root-certificate", constructionTree.Roots.Keys.ElementAt(0));
 			Assert.AreEqual("CN=Test Root CA", constructionTree.Roots["root-certificate"].Certificate.Subject);
 			Assert.IsNull(constructionTree.RootsDefaults.CertificateAuthority.PathLengthConstraint);
