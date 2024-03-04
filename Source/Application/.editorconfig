@@ -6,9 +6,3 @@ dotnet_diagnostic.CA2007.severity = none
 [/Controllers/*.cs]
 dotnet_diagnostic.CA1031.severity = none
 dotnet_diagnostic.CA5395.severity = none
-
-[/Models/Views/Shared/*.cs]
-dotnet_diagnostic.CA1716.severity = none
-
-[/Models/Views/Shared/**/*.cs]
-dotnet_diagnostic.CA1716.severity = none

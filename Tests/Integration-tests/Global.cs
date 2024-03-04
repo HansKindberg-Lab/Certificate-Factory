@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
@@ -17,7 +16,6 @@ namespace IntegrationTests
 {
 	// ReSharper disable All
 	[TestClass]
-	[SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]
 	public static class Global
 	{
 		#region Fields
