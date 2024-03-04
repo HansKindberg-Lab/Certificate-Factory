@@ -1,6 +1,5 @@
 using Application.Models.Collections.Generic.Extensions;
 using Application.Models.Cryptography.Storing;
-using Microsoft.Extensions.Internal;
 
 namespace Application.Models.Cryptography.Extensions
 {

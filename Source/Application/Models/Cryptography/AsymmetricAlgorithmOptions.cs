@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Configuration;
 using Application.Models.Cryptography.Extensions;
-using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
 
 namespace Application.Models.Cryptography

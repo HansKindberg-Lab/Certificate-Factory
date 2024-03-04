@@ -1,5 +1,4 @@
 using Application.Models.Cryptography.Configuration;
-using Microsoft.Extensions.Internal;
 using Microsoft.Extensions.Options;
 
 namespace Application.Models.Cryptography

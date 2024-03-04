@@ -8,7 +8,6 @@ using Application.Models.Cryptography.Transferring;
 using Application.Models.Cryptography.Transferring.Configuration;
 using Application.Models.IO;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Internal;
 
 namespace Application.Models.DependencyInjection.Extensions
 {
