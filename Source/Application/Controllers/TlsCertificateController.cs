@@ -14,7 +14,7 @@ namespace Application.Controllers
 		{
 			ArgumentNullException.ThrowIfNull(form);
 
-			return this.Facade.CertificateFactory.CreateTlsCertificate(asymmetricAlgorithmOptions, this.Facade.CertificateStore, this.SplitOnLineBreaks(form.DnsNames), issuer, form.Lifetime, this.Logger, form.Subject, this.Facade.SystemClock);
+			return this.Facade.CertificateFactory.CreateTlsCertificate(this.Facade.ApplicationCertificateStore, asymmetricAlgorithmOptions, this.SplitOnLineBreaks(form.DnsNames), issuer, form.Lifetime, this.Logger, form.Subject, this.Facade.SystemClock);
 		}
 
 		public virtual async Task<IActionResult> Index()

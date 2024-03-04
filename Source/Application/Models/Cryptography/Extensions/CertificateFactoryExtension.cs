@@ -46,17 +46,17 @@ namespace Application.Models.Cryptography.Extensions
 			}
 		}
 
-		public static ICertificate Create(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
+		public static ICertificate Create(this ICertificateFactory certificateFactory, IApplicationCertificateStore applicationCertificateStore, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, Action<ICertificateOptions> certificateOptionsAction, ushort? lifetime, ILogger logger, ISystemClock systemClock, string templateName)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
+			ArgumentNullException.ThrowIfNull(applicationCertificateStore);
 			ArgumentNullException.ThrowIfNull(asymmetricAlgorithmOptions);
 			ArgumentNullException.ThrowIfNull(certificateOptionsAction);
-			ArgumentNullException.ThrowIfNull(certificateStore);
 			ArgumentNullException.ThrowIfNull(logger);
 			ArgumentNullException.ThrowIfNull(systemClock);
 			ArgumentNullException.ThrowIfNull(templateName);
 
-			var templates = certificateStore.Templates();
+			var templates = applicationCertificateStore.Templates();
 
 			if(!templates.TryGetValue(templateName, out var concreteCertificateOptions))
 			{
@@ -77,7 +77,7 @@ namespace Application.Models.Cryptography.Extensions
 			return certificateFactory.Create(asymmetricAlgorithmOptions, certificateOptions);
 		}
 
-		public static ICertificate CreateClientCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
+		public static ICertificate CreateClientCertificate(this ICertificateFactory certificateFactory, IApplicationCertificateStore applicationCertificateStore, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
 
@@ -87,10 +87,10 @@ namespace Application.Models.Cryptography.Extensions
 				certificateOptions.Subject = subject;
 			}
 
-			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "ClientCertificate");
+			return certificateFactory.Create(applicationCertificateStore, asymmetricAlgorithmOptions, SetCertificateOptions, lifetime, logger, systemClock, "ClientCertificate");
 		}
 
-		public static ICertificate CreateIntermediateCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
+		public static ICertificate CreateIntermediateCertificate(this ICertificateFactory certificateFactory, IApplicationCertificateStore applicationCertificateStore, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
 			ArgumentNullException.ThrowIfNull(issuer);
@@ -101,10 +101,10 @@ namespace Application.Models.Cryptography.Extensions
 				certificateOptions.Subject = subject;
 			}
 
-			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "IntermediateCertificate");
+			return certificateFactory.Create(applicationCertificateStore, asymmetricAlgorithmOptions, SetCertificateOptions, lifetime, logger, systemClock, "IntermediateCertificate");
 		}
 
-		public static ICertificate CreateRootCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
+		public static ICertificate CreateRootCertificate(this ICertificateFactory certificateFactory, IApplicationCertificateStore applicationCertificateStore, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
 
@@ -113,10 +113,10 @@ namespace Application.Models.Cryptography.Extensions
 				certificateOptions.Subject = subject;
 			}
 
-			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "RootCertificate");
+			return certificateFactory.Create(applicationCertificateStore, asymmetricAlgorithmOptions, SetCertificateOptions, lifetime, logger, systemClock, "RootCertificate");
 		}
 
-		public static ICertificate CreateTlsCertificate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, ICertificateStore certificateStore, IEnumerable<string> dnsNames, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
+		public static ICertificate CreateTlsCertificate(this ICertificateFactory certificateFactory, IApplicationCertificateStore applicationCertificateStore, IAsymmetricAlgorithmOptions asymmetricAlgorithmOptions, IEnumerable<string> dnsNames, ICertificate issuer, ushort? lifetime, ILogger logger, string subject, ISystemClock systemClock)
 		{
 			ArgumentNullException.ThrowIfNull(certificateFactory);
 
@@ -135,7 +135,7 @@ namespace Application.Models.Cryptography.Extensions
 				certificateOptions.SubjectAlternativeName.DnsNames.Add(dnsNamesCopy);
 			}
 
-			return certificateFactory.Create(asymmetricAlgorithmOptions, SetCertificateOptions, certificateStore, lifetime, logger, systemClock, "TlsCertificate");
+			return certificateFactory.Create(applicationCertificateStore, asymmetricAlgorithmOptions, SetCertificateOptions, lifetime, logger, systemClock, "TlsCertificate");
 		}
 
 		private static void Populate(this ICertificateFactory certificateFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, CertificateConstructionOptions defaults, CertificateConstructionOptions levelDefaults, IDictionary<string, CertificateConstructionNodeOptions> nodes, IDictionary<string, ICertificate> result, ICertificate issuer = null)

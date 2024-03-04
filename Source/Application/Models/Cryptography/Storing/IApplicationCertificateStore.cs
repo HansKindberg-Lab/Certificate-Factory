@@ -1,6 +1,6 @@
 namespace Application.Models.Cryptography.Storing
 {
-	public interface ICertificateStore
+	public interface IApplicationCertificateStore
 	{
 		#region Methods
 

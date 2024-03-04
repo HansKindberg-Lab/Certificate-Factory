@@ -1,6 +1,6 @@
-﻿namespace Application.Models.Cryptography.Storing.Configuration
+namespace Application.Models.Cryptography.Storing.Configuration
 {
-	public class StoreCertificateOptions
+	public class ApplicationStoreCertificateOptions
 	{
 		#region Properties
 

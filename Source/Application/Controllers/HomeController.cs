@@ -17,7 +17,7 @@ namespace Application.Controllers
 
 			try
 			{
-				certificates = this.Facade.CertificateStore.Certificates().ToArray();
+				certificates = this.Facade.ApplicationCertificateStore.Certificates().ToArray();
 
 				if(id != null)
 				{

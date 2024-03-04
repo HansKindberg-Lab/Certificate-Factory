@@ -14,7 +14,7 @@ namespace Application.Controllers
 		{
 			ArgumentNullException.ThrowIfNull(form);
 
-			return this.Facade.CertificateFactory.CreateIntermediateCertificate(asymmetricAlgorithmOptions, this.Facade.CertificateStore, issuer, form.Lifetime, this.Logger, form.Subject, this.Facade.SystemClock);
+			return this.Facade.CertificateFactory.CreateIntermediateCertificate(this.Facade.ApplicationCertificateStore, asymmetricAlgorithmOptions, issuer, form.Lifetime, this.Logger, form.Subject, this.Facade.SystemClock);
 		}
 
 		public virtual async Task<IActionResult> Index()

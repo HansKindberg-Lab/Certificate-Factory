@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 namespace Application.Models.Cryptography.Storing
 {
 	/// <inheritdoc />
-	public class CertificateStore : ICertificateStore
+	public class ApplicationCertificateStore : IApplicationCertificateStore
 	{
 		#region Constructors
 
-		public CertificateStore(ILoggerFactory loggerFactory, IOptionsMonitor<CertificateStoreOptions> optionsMonitor)
+		public ApplicationCertificateStore(ILoggerFactory loggerFactory, IOptionsMonitor<ApplicationCertificateStoreOptions> optionsMonitor)
 		{
 			this.Logger = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(this.GetType());
 			this.OptionsMonitor = optionsMonitor ?? throw new ArgumentNullException(nameof(optionsMonitor));
@@ -21,7 +21,7 @@ namespace Application.Models.Cryptography.Storing
 		#region Properties
 
 		protected internal virtual ILogger Logger { get; }
-		protected internal virtual IOptionsMonitor<CertificateStoreOptions> OptionsMonitor { get; }
+		protected internal virtual IOptionsMonitor<ApplicationCertificateStoreOptions> OptionsMonitor { get; }
 
 		#endregion
 

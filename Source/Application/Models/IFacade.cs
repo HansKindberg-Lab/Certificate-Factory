@@ -13,13 +13,13 @@ namespace Application.Models
 	{
 		#region Properties
 
+		IApplicationCertificateStore ApplicationCertificateStore { get; }
 		IArchiveFactory ArchiveFactory { get; }
 		IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; }
 		ICertificateConstructionHelper CertificateConstructionHelper { get; }
 		ICertificateExporter CertificateExporter { get; }
 		ICertificateFactory CertificateFactory { get; }
 		IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; }
-		ICertificateStore CertificateStore { get; }
 		IFileNameResolver FileNameResolver { get; }
 		ILoggerFactory LoggerFactory { get; }
 		ISystemClock SystemClock { get; }

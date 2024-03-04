@@ -30,15 +30,15 @@ namespace IntegrationTests.Models.Cryptography.Transferring
 
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
 			{
+				var applicationCertificateStore = serviceProvider.GetRequiredService<IApplicationCertificateStore>();
 				var certificateFactory = serviceProvider.GetRequiredService<ICertificateFactory>();
-				var certificateStore = serviceProvider.GetRequiredService<ICertificateStore>();
 				var systemClock = serviceProvider.GetRequiredService<ISystemClock>();
 
 				var asymmetricAlgorithmOptions = new RsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(asymmetricAlgorithmOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, asymmetricAlgorithmOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(asymmetricAlgorithmOptions, certificateStore, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(applicationCertificateStore, asymmetricAlgorithmOptions, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						var certificateExporter = serviceProvider.GetRequiredService<ICertificateExporter>();
 						var certificateExport = certificateExporter.Export(certificate, "password");

@@ -67,7 +67,7 @@ namespace Application.Controllers
 			// ReSharper disable InvertIf
 			if(!string.IsNullOrWhiteSpace(thumbprint))
 			{
-				var certificates = this.Facade.CertificateStore.Certificates().ToList();
+				var certificates = this.Facade.ApplicationCertificateStore.Certificates().ToList();
 
 				for(var i = certificates.Count - 1; i >= 0; i--)
 				{
@@ -134,7 +134,7 @@ namespace Application.Controllers
 
 			form.IssuerList.Add(new SelectListItem(null, null));
 
-			foreach(var certificate in this.Facade.CertificateStore.Certificates().OrderBy(certificate => certificate.Subject))
+			foreach(var certificate in this.Facade.ApplicationCertificateStore.Certificates().OrderBy(certificate => certificate.Subject))
 			{
 				using(certificate)
 				{

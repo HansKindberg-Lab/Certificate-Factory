@@ -16,14 +16,17 @@ namespace Application.Models.DependencyInjection.Extensions
 	{
 		#region Methods
 
-		public static IServiceCollection AddCertificateFactory(this IServiceCollection services, IConfiguration configuration, string certificateFactoryConfigurationKey = nameof(CertificateFactory), string certificateFormConfigurationKey = "CertificateForm", string certificateStoreConfigurationKey = nameof(CertificateStore), string keyExporterConfigurationKey = "KeyExporter")
+		public static IServiceCollection AddCertificateFactory(this IServiceCollection services, IConfiguration configuration, string applicationCertificateStoreConfigurationKey = nameof(ApplicationCertificateStore), string certificateFactoryConfigurationKey = nameof(CertificateFactory), string certificateFormConfigurationKey = "CertificateForm", string keyExporterConfigurationKey = "KeyExporter")
 		{
 			ArgumentNullException.ThrowIfNull(services);
 			ArgumentNullException.ThrowIfNull(configuration);
+			ArgumentNullException.ThrowIfNull(applicationCertificateStoreConfigurationKey);
 			ArgumentNullException.ThrowIfNull(certificateFactoryConfigurationKey);
 			ArgumentNullException.ThrowIfNull(certificateFormConfigurationKey);
-			ArgumentNullException.ThrowIfNull(certificateStoreConfigurationKey);
 			ArgumentNullException.ThrowIfNull(keyExporterConfigurationKey);
+
+			var applicationCertificateStoreSection = configuration.GetSection(applicationCertificateStoreConfigurationKey);
+			services.Configure<ApplicationCertificateStoreOptions>(applicationCertificateStoreSection);
 
 			var certificateFactorySection = configuration.GetSection(certificateFactoryConfigurationKey);
 			services.Configure<CertificateFactoryOptions>(certificateFactorySection);
@@ -31,18 +34,15 @@ namespace Application.Models.DependencyInjection.Extensions
 			var certificateFormSection = configuration.GetSection(certificateFormConfigurationKey);
 			services.Configure<CertificateFormOptions>(certificateFormSection);
 
-			var certificateStoreSection = configuration.GetSection(certificateStoreConfigurationKey);
-			services.Configure<CertificateStoreOptions>(certificateStoreSection);
-
 			var keyExporterSection = configuration.GetSection(keyExporterConfigurationKey);
 			services.Configure<KeyExporterOptions>(keyExporterSection);
 
+			services.TryAddSingleton<IApplicationCertificateStore, ApplicationCertificateStore>();
 			services.TryAddSingleton<IArchiveFactory, ArchiveFactory>();
 			services.TryAddSingleton<IAsymmetricAlgorithmRepository, AsymmetricAlgorithmRepository>();
 			services.TryAddSingleton<ICertificateConstructionHelper, CertificateConstructionHelper>();
 			services.TryAddSingleton<ICertificateExporter, CertificateExporter>();
 			services.TryAddSingleton<ICertificateFactory, CertificateFactory>();
-			services.TryAddSingleton<ICertificateStore, CertificateStore>();
 			services.TryAddScoped<IFacade, Facade>();
 			services.TryAddSingleton<IFileNameResolver, FileNameResolver>();
 			services.TryAddSingleton<IKeyExporterFactory, KeyExporterFactory>();

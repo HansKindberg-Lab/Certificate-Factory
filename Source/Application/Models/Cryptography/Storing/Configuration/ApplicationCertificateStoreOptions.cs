@@ -2,11 +2,11 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Application.Models.Cryptography.Storing.Configuration
 {
-	public class CertificateStoreOptions
+	public class ApplicationCertificateStoreOptions
 	{
 		#region Properties
 
-		public virtual IList<StoreCertificateOptions> Certificates { get; } = [];
+		public virtual IList<ApplicationStoreCertificateOptions> Certificates { get; } = [];
 
 		public virtual IDictionary<string, CertificateOptions> Templates { get; } = new Dictionary<string, CertificateOptions>(StringComparer.OrdinalIgnoreCase)
 		{

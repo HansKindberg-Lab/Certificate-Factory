@@ -22,15 +22,15 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
 			{
+				var applicationCertificateStore = serviceProvider.GetRequiredService<IApplicationCertificateStore>();
 				var certificateFactory = serviceProvider.GetRequiredService<ICertificateFactory>();
-				var certificateStore = serviceProvider.GetRequiredService<ICertificateStore>();
 				var systemClock = serviceProvider.GetRequiredService<ISystemClock>();
 
 				var rsaOptions = new RsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(rsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, rsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateClientCertificate(rsaOptions, certificateStore, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateClientCertificate(applicationCertificateStore, rsaOptions, issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateClientCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -38,9 +38,9 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 				var ecdsaOptions = new EcdsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(ecdsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, ecdsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateClientCertificate(ecdsaOptions, certificateStore, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateClientCertificate(applicationCertificateStore, ecdsaOptions, issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateClientCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -56,15 +56,15 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
 			{
+				var applicationCertificateStore = serviceProvider.GetRequiredService<IApplicationCertificateStore>();
 				var certificateFactory = serviceProvider.GetRequiredService<ICertificateFactory>();
-				var certificateStore = serviceProvider.GetRequiredService<ICertificateStore>();
 				var systemClock = serviceProvider.GetRequiredService<ISystemClock>();
 
 				var rsaOptions = new RsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(rsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, rsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateIntermediateCertificate(rsaOptions, certificateStore, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateIntermediateCertificate(applicationCertificateStore, rsaOptions, issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateIntermediateCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -72,9 +72,9 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 				var ecdsaOptions = new EcdsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(ecdsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, ecdsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateIntermediateCertificate(ecdsaOptions, certificateStore, issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateIntermediateCertificate(applicationCertificateStore, ecdsaOptions, issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateIntermediateCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -89,20 +89,20 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
 			{
+				var applicationCertificateStore = serviceProvider.GetRequiredService<IApplicationCertificateStore>();
 				var certificateFactory = serviceProvider.GetRequiredService<ICertificateFactory>();
-				var certificateStore = serviceProvider.GetRequiredService<ICertificateStore>();
 				var systemClock = serviceProvider.GetRequiredService<ISystemClock>();
 
 				var rsaOptions = new RsaOptions();
 
-				using(var certificate = certificateFactory.CreateRootCertificate(rsaOptions, certificateStore, null, NullLogger.Instance, subject, systemClock))
+				using(var certificate = certificateFactory.CreateRootCertificate(applicationCertificateStore, rsaOptions, null, NullLogger.Instance, subject, systemClock))
 				{
 					await this.ValidateRootCertificate(certificate, subject);
 				}
 
 				var ecdsaOptions = new EcdsaOptions();
 
-				using(var certificate = certificateFactory.CreateRootCertificate(ecdsaOptions, certificateStore, null, NullLogger.Instance, subject, systemClock))
+				using(var certificate = certificateFactory.CreateRootCertificate(applicationCertificateStore, ecdsaOptions, null, NullLogger.Instance, subject, systemClock))
 				{
 					await this.ValidateRootCertificate(certificate, subject);
 				}
@@ -124,15 +124,15 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
 			{
+				var applicationCertificateStore = serviceProvider.GetRequiredService<IApplicationCertificateStore>();
 				var certificateFactory = serviceProvider.GetRequiredService<ICertificateFactory>();
-				var certificateStore = serviceProvider.GetRequiredService<ICertificateStore>();
 				var systemClock = serviceProvider.GetRequiredService<ISystemClock>();
 
 				var rsaOptions = new RsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(rsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, rsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(rsaOptions, certificateStore, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(applicationCertificateStore, rsaOptions, ["site-1.example.org", "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateTlsCertificate(certificate, issuer, rootSubject, subject);
 					}
@@ -140,9 +140,9 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 				var ecdsaOptions = new EcdsaOptions();
 
-				using(var issuer = certificateFactory.CreateRootCertificate(ecdsaOptions, certificateStore, null, NullLogger.Instance, rootSubject, systemClock))
+				using(var issuer = certificateFactory.CreateRootCertificate(applicationCertificateStore, ecdsaOptions, null, NullLogger.Instance, rootSubject, systemClock))
 				{
-					using(var certificate = certificateFactory.CreateTlsCertificate(ecdsaOptions, certificateStore, [subject, "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
+					using(var certificate = certificateFactory.CreateTlsCertificate(applicationCertificateStore, ecdsaOptions, [subject, "site-2.example.org", "site-3.example.org"], issuer, null, NullLogger.Instance, subject, systemClock))
 					{
 						await this.ValidateTlsCertificate(certificate, issuer, rootSubject, subject);
 					}
