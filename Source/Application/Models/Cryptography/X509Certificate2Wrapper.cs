@@ -77,12 +77,12 @@ namespace Application.Models.Cryptography
 		{
 			var basicConstraintsExtension = this.WrappedCertificate.Extensions.OfType<X509BasicConstraintsExtension>().FirstOrDefault();
 
-			if(basicConstraintsExtension is not { HasPathLengthConstraint: true })
+			if(basicConstraintsExtension is not { CertificateAuthority: true })
 				return null;
 
 			return new CertificateAuthorityOptions
 			{
-				PathLengthConstraint = basicConstraintsExtension.PathLengthConstraint
+				PathLengthConstraint = basicConstraintsExtension.HasPathLengthConstraint ? basicConstraintsExtension.PathLengthConstraint : null
 			};
 		}
 
