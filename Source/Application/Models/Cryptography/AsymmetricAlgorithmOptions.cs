@@ -1,6 +1,3 @@
-using System.Collections.Concurrent;
-using System.ComponentModel;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Configuration;
@@ -12,20 +9,6 @@ namespace Application.Models.Cryptography
 	/// <inheritdoc cref="IAsymmetricAlgorithmOptions" />
 	public abstract class AsymmetricAlgorithmOptions<T> : IAsymmetricAlgorithmOptions, ICloneable<AsymmetricAlgorithmOptions<T>> where T : AsymmetricAlgorithm
 	{
-		#region Fields
-
-		// ReSharper disable StaticMemberInGenericType
-		private static readonly ConcurrentDictionary<EnhancedKeyUsage, string> _enhancedKeyUsageCache = new();
-		// ReSharper restore StaticMemberInGenericType
-
-		#endregion
-
-		#region Properties
-
-		protected internal virtual ConcurrentDictionary<EnhancedKeyUsage, string> EnhancedKeyUsageCache => _enhancedKeyUsageCache;
-
-		#endregion
-
 		#region Methods
 
 		object ICloneable.Clone()
@@ -80,33 +63,6 @@ namespace Application.Models.Cryptography
 		}
 
 		protected internal abstract CertificateRequest CreateCertificateRequest(T asymmetricAlgorithm, ICertificateOptions certificateOptions);
-
-		protected internal virtual ISet<string> GetEnhancedKeyUsageDescriptions(EnhancedKeyUsage enhancedKeyUsage)
-		{
-			var enhancedKeyUsageDescriptions = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
-
-			foreach(var value in Enum.GetValues<EnhancedKeyUsage>())
-			{
-				if(!enhancedKeyUsage.HasFlag(value))
-					continue;
-
-				var description = this.EnhancedKeyUsageCache.GetOrAdd(value, (key) =>
-				{
-					var field = value.GetType().GetField(value.ToString());
-					// ReSharper disable AssignNullToNotNullAttribute
-					var descriptionAttribute = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute), false);
-					// ReSharper restore AssignNullToNotNullAttribute
-					return descriptionAttribute?.Description;
-				});
-
-				if(string.IsNullOrWhiteSpace(description))
-					continue;
-
-				enhancedKeyUsageDescriptions.Add(description);
-			}
-
-			return enhancedKeyUsageDescriptions;
-		}
 
 		protected internal virtual DateTimeOffset GetNotAfter(CertificateFactoryOptions certificateFactoryOptions, ICertificateOptions certificateOptions, DateTimeOffset notBefore)
 		{
@@ -182,7 +138,7 @@ namespace Application.Models.Cryptography
 		{
 			ArgumentNullException.ThrowIfNull(certificateRequest);
 
-			var enhancedKeyUsageDescriptions = this.GetEnhancedKeyUsageDescriptions(enhancedKeyUsage);
+			var enhancedKeyUsageDescriptions = enhancedKeyUsage.Descriptions();
 
 			if(enhancedKeyUsageDescriptions == null || !enhancedKeyUsageDescriptions.Any())
 				return;

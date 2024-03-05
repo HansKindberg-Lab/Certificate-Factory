@@ -1,8 +1,6 @@
-using System.ComponentModel;
-using System.Reflection;
 using Application.Models;
-using Application.Models.ComponentModel;
 using Application.Models.Cryptography.Archiving;
+using Application.Models.Cryptography.Archiving.Extensions;
 using Application.Models.Views.Shared.Forms;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,81 +9,6 @@ namespace Application.Controllers
 {
 	public abstract class ArchiveKindController(IFacade facade) : SiteController(facade)
 	{
-		#region Fields
-
-		private static IDictionary<ArchiveKind, string> _archiveKindDescriptions;
-		private static readonly object _archiveKindDescriptionsLock = new();
-		private static IDictionary<ArchiveKind, string> _archiveKindExamples;
-		private static readonly object _archiveKindExamplesLock = new();
-
-		#endregion
-
-		#region Properties
-
-		protected internal virtual IDictionary<ArchiveKind, string> ArchiveKindDescriptions
-		{
-			get
-			{
-				// ReSharper disable All
-				if(_archiveKindDescriptions == null)
-				{
-					lock(_archiveKindDescriptionsLock)
-					{
-						if(_archiveKindDescriptions == null)
-						{
-							var archiveKindDescriptions = new Dictionary<ArchiveKind, string>();
-							var archiveKindType = typeof(ArchiveKind);
-
-							foreach(var archiveKind in Enum.GetValues<ArchiveKind>())
-							{
-								var field = archiveKindType.GetField(archiveKind.ToString());
-								var descriptionAttribute = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute), false);
-								archiveKindDescriptions.Add(archiveKind, descriptionAttribute.Description);
-							}
-
-							_archiveKindDescriptions = archiveKindDescriptions;
-						}
-					}
-				}
-				// ReSharper restore All
-
-				return _archiveKindDescriptions;
-			}
-		}
-
-		protected internal virtual IDictionary<ArchiveKind, string> ArchiveKindExamples
-		{
-			get
-			{
-				// ReSharper disable All
-				if(_archiveKindExamples == null)
-				{
-					lock(_archiveKindExamplesLock)
-					{
-						if(_archiveKindExamples == null)
-						{
-							var archiveKindExamples = new Dictionary<ArchiveKind, string>();
-							var archiveKindType = typeof(ArchiveKind);
-
-							foreach(var archiveKind in Enum.GetValues<ArchiveKind>())
-							{
-								var field = archiveKindType.GetField(archiveKind.ToString());
-								var ExampleAttribute = (ExampleAttribute)field.GetCustomAttribute(typeof(ExampleAttribute), false);
-								archiveKindExamples.Add(archiveKind, ExampleAttribute.Example);
-							}
-
-							_archiveKindExamples = archiveKindExamples;
-						}
-					}
-				}
-				// ReSharper restore All
-
-				return _archiveKindExamples;
-			}
-		}
-
-		#endregion
-
 		#region Methods
 
 		protected internal virtual void PopulateArchiveKindDictionary(IArchiveKindForm form)
@@ -94,9 +17,9 @@ namespace Application.Controllers
 
 			var selected = form.ArchiveKind ?? ArchiveKind.All;
 
-			foreach(var (archiveKind, description) in this.ArchiveKindDescriptions)
+			foreach(var archiveKind in Enum.GetValues<ArchiveKind>())
 			{
-				form.ArchiveKindDictionary.Add(new SelectListItem(description, archiveKind.ToString(), archiveKind == selected), this.ArchiveKindExamples[archiveKind]);
+				form.ArchiveKindDictionary.Add(new SelectListItem(archiveKind.Description(), archiveKind.ToString(), archiveKind == selected), archiveKind.Example());
 			}
 		}
 
