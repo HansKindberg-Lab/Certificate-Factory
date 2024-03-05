@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Application.Models.Cryptography.Extensions;
 
 namespace Application.Models.Cryptography
 {
@@ -17,7 +18,8 @@ namespace Application.Models.Cryptography
 		public X509Certificate2Wrapper(X509Certificate2 certificate, ILoggerFactory loggerFactory)
 		{
 			this.WrappedCertificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
-			this.Logger = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(this.GetType());
+			this.LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
+			this.Logger = loggerFactory.CreateLogger(this.GetType());
 		}
 
 		#endregion
@@ -33,6 +35,7 @@ namespace Application.Models.Cryptography
 		public virtual string KeyAlgorithm => this.WrappedCertificate.GetKeyAlgorithm();
 		public virtual string KeyAlgorithmName => new Oid(this.WrappedCertificate.GetKeyAlgorithm()).FriendlyName;
 		protected internal virtual ILogger Logger { get; }
+		protected internal virtual ILoggerFactory LoggerFactory { get; }
 		public virtual DateTime NotAfter => this.WrappedCertificate.NotAfter;
 		public virtual DateTime NotBefore => this.WrappedCertificate.NotBefore;
 		public virtual IEnumerable<byte> RawData => this.WrappedCertificate.RawData;
@@ -70,9 +73,51 @@ namespace Application.Models.Cryptography
 			return this.WrappedCertificate.Export(contentType, password);
 		}
 
+		public virtual CertificateAuthorityOptions GetCertificateAuthorityInformation()
+		{
+			var basicConstraintsExtension = this.WrappedCertificate.Extensions.OfType<X509BasicConstraintsExtension>().FirstOrDefault();
+
+			if(basicConstraintsExtension is not { HasPathLengthConstraint: true })
+				return null;
+
+			return new CertificateAuthorityOptions
+			{
+				PathLengthConstraint = basicConstraintsExtension.PathLengthConstraint
+			};
+		}
+
 		public virtual string GetCertificatePem()
 		{
 			return new string(PemEncoding.Write(this.CertificatePemLabel, (this.RawData ?? []).ToArray()));
+		}
+
+		public virtual IEnumerable<ICertificate> GetChain()
+		{
+			using(var chain = this.GetChainInternal())
+			{
+				return chain.ChainElements.Select(element => new X509Certificate2Wrapper(element.Certificate, this.LoggerFactory));
+			}
+		}
+
+		protected internal virtual X509Chain GetChainInternal()
+		{
+			var chain = new X509Chain();
+
+			chain.Build(this.WrappedCertificate);
+
+			return chain;
+		}
+
+		public virtual EnhancedKeyUsage? GetEnhancedKeyUsage()
+		{
+			return EnhancedKeyUsageExtension.GetByExtension(this.WrappedCertificate.Extensions.OfType<X509EnhancedKeyUsageExtension>().FirstOrDefault());
+		}
+
+		public virtual X509KeyUsageFlags GetKeyUsage()
+		{
+			var keyUsageExtension = this.WrappedCertificate.Extensions.OfType<X509KeyUsageExtension>().FirstOrDefault();
+
+			return keyUsageExtension?.KeyUsages ?? X509KeyUsageFlags.None;
 		}
 
 		public virtual IEnumerable<byte> GetPfx(string password)
@@ -109,6 +154,28 @@ namespace Application.Models.Cryptography
 				this.Logger.LogWarning($"The private-key asymmetric algorithm for certificate \"{this.WrappedCertificate}\" is not supported.");
 
 			return null;
+		}
+
+		public virtual SubjectAlternativeNameOptions GetSubjectAlternativeNameInformation()
+		{
+			var subjectAlternativeNameExtension = this.WrappedCertificate.Extensions.OfType<X509SubjectAlternativeNameExtension>().FirstOrDefault();
+
+			if(subjectAlternativeNameExtension == null || (!subjectAlternativeNameExtension.EnumerateDnsNames().Any() && !subjectAlternativeNameExtension.EnumerateIPAddresses().Any()))
+				return null;
+
+			var subjectAlternativeNameInformation = new SubjectAlternativeNameOptions();
+
+			foreach(var dnsName in subjectAlternativeNameExtension.EnumerateDnsNames())
+			{
+				subjectAlternativeNameInformation.DnsNames.Add(dnsName);
+			}
+
+			foreach(var ipAddress in subjectAlternativeNameExtension.EnumerateIPAddresses())
+			{
+				subjectAlternativeNameInformation.IpAddresses.Add(ipAddress);
+			}
+
+			return subjectAlternativeNameInformation;
 		}
 
 		public override string ToString()

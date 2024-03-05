@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Application.Models
 {
-	public class Facade(IApplicationCertificateStore applicationCertificateStore, IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateLoader certificateLoader, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock) : IFacade
+	public class Facade(IApplicationCertificateStore applicationCertificateStore, IArchiveFactory archiveFactory, IAsymmetricAlgorithmRepository asymmetricAlgorithmRepository, ICertificateConstructionHelper certificateConstructionHelper, ICertificateConstructionTreeOptionsFactory certificateConstructionTreeOptionsFactory, ICertificateExporter certificateExporter, ICertificateFactory certificateFactory, IOptionsMonitor<CertificateFormOptions> certificateFormOptionsMonitor, ICertificateLoader certificateLoader, IFileNameResolver fileNameResolver, ILoggerFactory loggerFactory, ISystemClock systemClock) : IFacade
 	{
 		#region Properties
 
@@ -16,6 +16,7 @@ namespace Application.Models
 		public virtual IArchiveFactory ArchiveFactory { get; } = archiveFactory ?? throw new ArgumentNullException(nameof(archiveFactory));
 		public virtual IAsymmetricAlgorithmRepository AsymmetricAlgorithmRepository { get; } = asymmetricAlgorithmRepository ?? throw new ArgumentNullException(nameof(asymmetricAlgorithmRepository));
 		public virtual ICertificateConstructionHelper CertificateConstructionHelper { get; } = certificateConstructionHelper ?? throw new ArgumentNullException(nameof(certificateConstructionHelper));
+		public virtual ICertificateConstructionTreeOptionsFactory CertificateConstructionTreeOptionsFactory { get; } = certificateConstructionTreeOptionsFactory ?? throw new ArgumentNullException(nameof(certificateConstructionTreeOptionsFactory));
 		public virtual ICertificateExporter CertificateExporter { get; } = certificateExporter ?? throw new ArgumentNullException(nameof(certificateExporter));
 		public virtual ICertificateFactory CertificateFactory { get; } = certificateFactory ?? throw new ArgumentNullException(nameof(certificateFactory));
 		public virtual IOptionsMonitor<CertificateFormOptions> CertificateFormOptionsMonitor { get; } = certificateFormOptionsMonitor ?? throw new ArgumentNullException(nameof(certificateFormOptionsMonitor));

@@ -38,10 +38,15 @@ namespace Application.Models.Cryptography
 		#region Methods
 
 		IEnumerable<byte> Export(X509ContentType contentType, string password);
+		CertificateAuthorityOptions GetCertificateAuthorityInformation();
 		string GetCertificatePem();
+		IEnumerable<ICertificate> GetChain();
+		EnhancedKeyUsage? GetEnhancedKeyUsage();
+		X509KeyUsageFlags GetKeyUsage();
 		IEnumerable<byte> GetPfx(string password);
 		IEnumerable<byte> GetPkcs12(string password);
 		AsymmetricAlgorithm GetPrivateKeyAsymmetricAlgorithm();
+		SubjectAlternativeNameOptions GetSubjectAlternativeNameInformation();
 		string ToString(bool verbose);
 
 		#endregion

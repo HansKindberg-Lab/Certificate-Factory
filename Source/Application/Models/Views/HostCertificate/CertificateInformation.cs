@@ -5,6 +5,7 @@ namespace Application.Models.Views.HostCertificate
 		#region Properties
 
 		public virtual bool Archived { get; set; }
+		public virtual string ConstructionTree { get; set; }
 		public virtual string FriendlyName { get; set; }
 		public virtual bool HasPrivateKey { get; set; }
 		public virtual string Issuer { get; set; }

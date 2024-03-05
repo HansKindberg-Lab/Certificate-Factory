@@ -60,6 +60,9 @@ namespace Application.Controllers
 					// ReSharper restore PossibleInvalidOperationException
 
 					model.Certificate = this.CreateCertificateInformation(certificate);
+
+					var constructionTree = this.Facade.CertificateConstructionTreeOptionsFactory.Create(certificate);
+					model.Certificate.ConstructionTree = constructionTree.ToJson();
 				}
 				catch(Exception exception)
 				{
