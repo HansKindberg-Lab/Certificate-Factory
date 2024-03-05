@@ -36,7 +36,7 @@ namespace Application.Models.Cryptography
 
 				this.PopulateCertificateConstructionOptions(certificateNode, certificateConstructionOptions);
 
-				var key = certificateNode.Subject;
+				var key = certificateNode.Thumbprint.ToLowerInvariant();
 
 				var value = new CertificateConstructionNodeOptions
 				{
