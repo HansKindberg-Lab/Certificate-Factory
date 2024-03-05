@@ -1,5 +1,5 @@
 ﻿@model HostCertificatesViewModel
-@await Html.PartialAsync("~/Views/Shared/Modal.cshtml", new Modal { Text = "Processing..." })
+@await Html.PartialAsync("~/Views/Shared/Modal.cshtml", new Modal { Text = "Searching..." })
 <div class="card">
 	<div class="card-header">
 		<h1 class="h4 m-0 p-0">Host-certificates</h1>
@@ -53,26 +53,22 @@
 				{
 					<div class="alert alert-light mt-3" id="result">
 						<h2 class="h4">Search-result</h2>
-						<p>Number of hits: <strong>@Model.Certificates.Count</strong></p>
-						<ul>
-							@foreach(var certificate in Model.Certificates.OrderBy(certificate => certificate.Subject))
+						<p>Number of hits: <strong>@Model.Certificates.SelectMany(item => item.Value).Count()</strong></p>
+						@foreach(var (store, certificates) in Model.Certificates)
+						{
+							<h3 class="h5">@store</h3>
+							@if(certificates.Any())
 							{
-								var identifier = $"{certificate.Store!.Location}-{certificate.Store.Name}-{certificate.Thumbprint}".ToLowerInvariant();
-								<li>
-									<h3 class="h5">
-										<a aria-controls="@identifier" aria-expanded="false" data-bs-toggle="collapse" href="#@identifier" role="button">
-											@certificate.Subject
-										</a>
-									</h3>
-									<div class="alert alert-info collapse mt-2" id="@identifier">
-										@await Html.PartialAsync("~/Views/Shared/CertificateDetails.cshtml", new CertificateDetails { Certificate = certificate })
-										<div class="text-end">
-											<a asp-controller="HostCertificate" asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()#result" asp-route-storeLocation="@certificate.Store.Location" asp-route-storeName="@certificate.Store.Name" asp-route-thumbprint="@certificate.Thumbprint" class="btn btn-primary">View details</a>
-										</div>
-									</div>
-								</li>
+								<ul>
+									@foreach(var certificate in certificates.OrderBy(certificate => certificate.Subject))
+									{
+										<li id="@certificate.Identifier">
+											<a asp-controller="HostCertificate" asp-route-returnUrl="@Context.Request.GetEncodedPathAndQuery()#@certificate.Identifier" asp-route-storeLocation="@certificate.StoreLocation" asp-route-storeName="@certificate.StoreName" asp-route-thumbprint="@certificate.Thumbprint">@certificate.Subject</a>
+										</li>
+									}
+								</ul>
 							}
-						</ul>
+						}
 					</div>
 				}
 				else

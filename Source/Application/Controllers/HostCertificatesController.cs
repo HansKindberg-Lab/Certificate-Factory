@@ -36,7 +36,26 @@ namespace Application.Controllers
 				{
 					foreach(var certificate in this.Facade.CertificateLoader.Find(friendlyName, issuer, serialNumber, storeLocation, storeName, subject, thumbprint))
 					{
-						model.Certificates.Add(certificate);
+						var identifierPrefix = certificate.Store != null ? $"{certificate.Store.Location}-{certificate.Store.Name}-" : "?-?-";
+						var key = certificate.Store != null ? $"{certificate.Store.Location} / {certificate.Store.Name}" : "?";
+
+						if(!model.Certificates.TryGetValue(key, out var certificates))
+						{
+							certificates = [];
+
+							model.Certificates.Add(key, certificates);
+						}
+
+						certificates.Add(new CertificateInformation
+						{
+							Identifier = $"{identifierPrefix}{certificate.Thumbprint}".ToLowerInvariant(),
+							StoreLocation = certificate.Store?.Location.ToString(),
+							StoreName = certificate.Store?.Name,
+							Subject = certificate.Subject,
+							Thumbprint = certificate.Thumbprint
+						});
+
+						certificate.Dispose();
 					}
 				}
 				catch(Exception exception)

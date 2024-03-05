@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
-using Application.Models.Cryptography;
 using Application.Models.Web;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -17,7 +16,7 @@ namespace Application.Models.Views.HostCertificates
 		#region Properties
 
 		public virtual SearchFormAction? Action { get; set; }
-		public virtual IList<ICertificate> Certificates { get; } = [];
+		public virtual IDictionary<string, IList<CertificateInformation>> Certificates { get; } = new SortedDictionary<string, IList<CertificateInformation>>(StringComparer.OrdinalIgnoreCase);
 		public virtual string Error { get; set; }
 
 		[Display(Name = "Friendly name")]
