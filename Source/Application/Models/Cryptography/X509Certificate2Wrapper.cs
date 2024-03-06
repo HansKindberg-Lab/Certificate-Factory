@@ -73,7 +73,7 @@ namespace Application.Models.Cryptography
 			return this.WrappedCertificate.Export(contentType, password);
 		}
 
-		public virtual CertificateAuthorityOptions GetCertificateAuthorityInformation()
+		public virtual CertificateAuthorityOptions GetCertificateAuthority()
 		{
 			var basicConstraintsExtension = this.WrappedCertificate.Extensions.OfType<X509BasicConstraintsExtension>().FirstOrDefault();
 
@@ -156,7 +156,7 @@ namespace Application.Models.Cryptography
 			return null;
 		}
 
-		public virtual SubjectAlternativeNameOptions GetSubjectAlternativeNameInformation()
+		public virtual SubjectAlternativeNameOptions GetSubjectAlternativeName()
 		{
 			var subjectAlternativeNameExtension = this.WrappedCertificate.Extensions.OfType<X509SubjectAlternativeNameExtension>().FirstOrDefault();
 

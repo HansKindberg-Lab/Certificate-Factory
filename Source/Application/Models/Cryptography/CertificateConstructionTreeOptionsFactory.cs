@@ -61,7 +61,7 @@ namespace Application.Models.Cryptography
 			ArgumentNullException.ThrowIfNull(certificate);
 			ArgumentNullException.ThrowIfNull(certificateConstructionOptions);
 
-			certificateConstructionOptions.CertificateAuthority = certificate.GetCertificateAuthorityInformation();
+			certificateConstructionOptions.CertificateAuthority = certificate.GetCertificateAuthority();
 			certificateConstructionOptions.EnhancedKeyUsage = certificate.GetEnhancedKeyUsage();
 
 			var keyUsage = certificate.GetKeyUsage();
@@ -71,7 +71,7 @@ namespace Application.Models.Cryptography
 			certificateConstructionOptions.NotAfter = certificate.NotAfter;
 			certificateConstructionOptions.NotBefore = certificate.NotBefore;
 			certificateConstructionOptions.Subject = certificate.Subject;
-			certificateConstructionOptions.SubjectAlternativeName = certificate.GetSubjectAlternativeNameInformation();
+			certificateConstructionOptions.SubjectAlternativeName = certificate.GetSubjectAlternativeName();
 		}
 
 		#endregion
