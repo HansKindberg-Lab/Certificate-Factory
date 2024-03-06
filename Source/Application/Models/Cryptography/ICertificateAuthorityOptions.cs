@@ -5,7 +5,9 @@ namespace Application.Models.Cryptography
 	{
 		#region Properties
 
-		int? PathLengthConstraint { get; set; }
+		bool CertificateAuthority { get; set; }
+		bool HasPathLengthConstraint { get; set; }
+		int PathLengthConstraint { get; set; }
 
 		#endregion
 	}

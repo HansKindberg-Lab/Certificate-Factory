@@ -27,7 +27,8 @@
 				"intermediate-certificate-1": {
 					"Certificate": {
 						"CertificateAuthority": {
-							"PathLengthConstraint": 0
+							"CertificateAuthority": true,
+							"HasPathLengthConstraint": true
 						},
 						"KeyUsage": "KeyCertSign",
 						"Subject": "CN=Test Intermediate 1"
@@ -45,7 +46,8 @@
 				"intermediate-certificate-2": {
 					"Certificate": {
 						"CertificateAuthority": {
-							"PathLengthConstraint": 0
+							"CertificateAuthority": true,
+							"HasPathLengthConstraint": true
 						},
 						"KeyUsage": "KeyCertSign",
 						"Subject": "CN=Test Intermediate 2"
@@ -63,7 +65,8 @@
 				"intermediate-certificate-3": {
 					"Certificate": {
 						"CertificateAuthority": {
-							"PathLengthConstraint": 0
+							"CertificateAuthority": true,
+							"HasPathLengthConstraint": true
 						},
 						"KeyUsage": "KeyCertSign",
 						"Subject": "CN=Test Intermediate 3"
@@ -81,7 +84,8 @@
 				"intermediate-certificate-4": {
 					"Certificate": {
 						"CertificateAuthority": {
-							"PathLengthConstraint": 0
+							"CertificateAuthority": true,
+							"HasPathLengthConstraint": true
 						},
 						"KeyUsage": "KeyCertSign",
 						"Subject": "CN=Test Intermediate 4"
@@ -100,7 +104,9 @@
 		}
 	},
 	"RootsDefaults": {
-		"CertificateAuthority": {},
+		"CertificateAuthority": {
+			"CertificateAuthority": true
+		},
 		"KeyUsage": "KeyCertSign"
 	}
 }

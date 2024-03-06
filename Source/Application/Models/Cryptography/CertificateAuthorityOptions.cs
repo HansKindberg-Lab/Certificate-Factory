@@ -5,7 +5,9 @@ namespace Application.Models.Cryptography
 	{
 		#region Properties
 
-		public virtual int? PathLengthConstraint { get; set; }
+		public virtual bool CertificateAuthority { get; set; } = true;
+		public virtual bool HasPathLengthConstraint { get; set; }
+		public virtual int PathLengthConstraint { get; set; }
 
 		#endregion
 
@@ -27,6 +29,8 @@ namespace Application.Models.Cryptography
 
 			return new CertificateAuthorityOptions
 			{
+				CertificateAuthority = memberwiseClone.CertificateAuthority,
+				HasPathLengthConstraint = memberwiseClone.HasPathLengthConstraint,
 				PathLengthConstraint = memberwiseClone.PathLengthConstraint
 			};
 		}

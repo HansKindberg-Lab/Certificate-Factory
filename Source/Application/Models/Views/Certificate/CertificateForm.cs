@@ -9,7 +9,22 @@ namespace Application.Models.Views.Certificate
 	{
 		#region Properties
 
+		/// <summary>
+		/// Has to do with certificate authorities (CA).
+		/// </summary>
 		public virtual bool CertificateAuthorityEnabled { get; set; }
+
+		/// <summary>
+		/// Has to do with certificate authorities (CA).
+		/// </summary>
+		public virtual bool CertificateAuthorityHasPathLengthConstraint { get; set; }
+
+		/// <summary>
+		/// Has to do with certificate authorities (CA).
+		/// </summary>
+		[Range(0, 1000, ErrorMessage = "\"Path-length constraint\" must be between 0 and 1000.")]
+		public virtual int CertificateAuthorityPathLengthConstraint { get; set; }
+
 		public virtual string DnsNames { get; set; }
 		public virtual string EmailAddresses { get; set; }
 
@@ -33,13 +48,6 @@ namespace Application.Models.Views.Certificate
 		public virtual IList<SelectListItem> KeyUsageList { get; } = [];
 		public virtual DateTimeOffset? NotAfter { get; set; }
 		public virtual DateTimeOffset? NotBefore { get; set; }
-
-		/// <summary>
-		/// Has to do with certificate authorities (CA).
-		/// </summary>
-		[Range(0, 1000, ErrorMessage = "\"Path-length constraint\" must be between 0 and 1000.")]
-		public virtual int? PathLengthConstraint { get; set; }
-
 		public virtual string Uris { get; set; }
 		public virtual string UserPrincipalNames { get; set; }
 

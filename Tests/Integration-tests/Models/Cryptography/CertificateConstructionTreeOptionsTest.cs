@@ -28,7 +28,9 @@ namespace IntegrationTests.Models.Cryptography
 			Assert.AreEqual(new DateTimeOffset(2050, 1, 1, 0, 0, 0, DateTimeOffset.Parse("2000-01-01", null).Offset), constructionTree.Defaults.NotAfter);
 			Assert.AreEqual("root-certificate", constructionTree.Roots.Keys.ElementAt(0));
 			Assert.AreEqual("CN=Test Root CA", constructionTree.Roots["root-certificate"].Certificate.Subject);
-			Assert.IsNull(constructionTree.RootsDefaults.CertificateAuthority.PathLengthConstraint);
+			Assert.IsTrue(constructionTree.RootsDefaults.CertificateAuthority.CertificateAuthority);
+			Assert.IsFalse(constructionTree.RootsDefaults.CertificateAuthority.HasPathLengthConstraint);
+			Assert.AreEqual(0, constructionTree.RootsDefaults.CertificateAuthority.PathLengthConstraint);
 			Assert.AreEqual(X509KeyUsageFlags.KeyCertSign, constructionTree.RootsDefaults.KeyUsage);
 		}
 

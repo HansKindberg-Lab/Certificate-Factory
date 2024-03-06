@@ -29,7 +29,9 @@ namespace Application.Controllers
 			{
 				certificateOptions.CertificateAuthority = new CertificateAuthorityOptions
 				{
-					PathLengthConstraint = form.PathLengthConstraint
+					CertificateAuthority = true,
+					HasPathLengthConstraint = form.CertificateAuthorityHasPathLengthConstraint,
+					PathLengthConstraint = form.CertificateAuthorityPathLengthConstraint
 				};
 			}
 

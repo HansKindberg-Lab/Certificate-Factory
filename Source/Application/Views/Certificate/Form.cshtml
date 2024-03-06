@@ -22,9 +22,13 @@
 				<input checked="@(Model.CertificateAuthorityEnabled ? "checked" : null)" class="form-check-input" id="certificate-authority-input" name="@nameof(Model.CertificateAuthorityEnabled)" type="checkbox" value="true" />
 				<label class="form-check-label" for="certificate-authority-input">Enabled</label>
 			</div>
+			<div class="form-check mb-1">
+				<input checked="@(Model.CertificateAuthorityHasPathLengthConstraint ? "checked" : null)" class="form-check-input" id="has-path-length-constraint-input" name="@nameof(Model.CertificateAuthorityHasPathLengthConstraint)" type="checkbox" value="true" />
+				<label class="form-check-label" for="has-path-length-constraint-input">Has path-length constraint</label>
+			</div>
 			<div class="mb-2">
 				<label for="path-length-constraint-input">Path-length constraint</label>
-				<input class="form-control" id="path-length-constraint-input" max="1000" min="0" name="@nameof(Model.PathLengthConstraint)" placeholder="Enter a path-length constraint or leave blank" type="number" value="@Model.PathLengthConstraint" />
+				<input class="form-control" id="path-length-constraint-input" max="1000" min="0" name="@nameof(Model.CertificateAuthorityPathLengthConstraint)" placeholder="Enter a path-length constraint or leave blank" type="number" value="@Model.CertificateAuthorityPathLengthConstraint" />
 				<small class="form-text text-muted"><a href="http://www.pkiglobe.org/" target="_blank">Basic Constraint Extension</a>, <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509basicconstraintsextension.pathlengthconstraint" target="_blank">X509BasicConstraintsExtension.PathLengthConstraint</a></small>
 			</div>
 		</fieldset>

@@ -22,6 +22,7 @@ namespace Application.Models.Cryptography.Storing.Configuration
 				{
 					CertificateAuthority = new CertificateAuthorityOptions
 					{
+						HasPathLengthConstraint = true,
 						PathLengthConstraint = 0
 					},
 					KeyUsage = X509KeyUsageFlags.KeyCertSign

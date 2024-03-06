@@ -134,6 +134,7 @@ We can create certificates from json-configuration files. File example:
 					"intermediate-certificate-1": {
 						"Certificate": {
 							"CertificateAuthority": {
+								"HasPathLengthConstraint": true,
 								"PathLengthConstraint": 0
 							},
 							"KeyUsage": "KeyCertSign",
@@ -152,6 +153,7 @@ We can create certificates from json-configuration files. File example:
 					"intermediate-certificate-2": {
 						"Certificate": {
 							"CertificateAuthority": {
+								"HasPathLengthConstraint": true,
 								"PathLengthConstraint": 0
 							},
 							"KeyUsage": "KeyCertSign",
@@ -170,6 +172,7 @@ We can create certificates from json-configuration files. File example:
 					"intermediate-certificate-3": {
 						"Certificate": {
 							"CertificateAuthority": {
+								"HasPathLengthConstraint": true,
 								"PathLengthConstraint": 0
 							},
 							"KeyUsage": "KeyCertSign",
@@ -188,6 +191,7 @@ We can create certificates from json-configuration files. File example:
 					"intermediate-certificate-4": {
 						"Certificate": {
 							"CertificateAuthority": {
+								"HasPathLengthConstraint": true,
 								"PathLengthConstraint": 0
 							},
 							"KeyUsage": "KeyCertSign",
@@ -208,7 +212,7 @@ We can create certificates from json-configuration files. File example:
 		},
 		"RootsDefaults": {
 			"CertificateAuthority": {
-				"PathLengthConstraint": null
+				"HasPathLengthConstraint": false
 			},
 			"KeyUsage": "KeyCertSign"
 		}

@@ -16,13 +16,14 @@ namespace Application.Models.Configuration
 			{ "KeyUsage", 80 },
 			{ "EnhancedKeyUsage", 90 },
 			{ "CertificateAuthorityEnabled", 100 },
-			{ "PathLengthConstraint", 110 },
-			{ "DnsNames", 120 },
-			{ "EmailAddresses", 130 },
-			{ "IpAddresses", 140 },
-			{ "Uris", 150 },
-			{ "UserPrincipalNames", 160 },
-			{ "Password", 170 }
+			{ "CertificateAuthorityHasPathLengthConstraint", 110 },
+			{ "CertificateAuthorityPathLengthConstraint", 120 },
+			{ "DnsNames", 130 },
+			{ "EmailAddresses", 140 },
+			{ "IpAddresses", 150 },
+			{ "Uris", 160 },
+			{ "UserPrincipalNames", 170 },
+			{ "Password", 180 }
 		};
 
 		#endregion

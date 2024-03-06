@@ -54,6 +54,7 @@
 			},
 			"IssuedCertificatesDefaults": {
 				"CertificateAuthority": {
+					"HasPathLengthConstraint": true,
 					"PathLengthConstraint": 0
 				},
 				"KeyUsage": "KeyCertSign"
@@ -62,7 +63,7 @@
 	},
 	"RootsDefaults": {
 		"CertificateAuthority": {
-			"PathLengthConstraint": null
+			"HasPathLengthConstraint": false
 		},
 		"KeyUsage": "KeyCertSign"
 	}

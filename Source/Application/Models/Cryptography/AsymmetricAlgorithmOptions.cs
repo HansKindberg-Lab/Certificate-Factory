@@ -117,7 +117,7 @@ namespace Application.Models.Cryptography
 			if(certificateAuthorityOptions == null)
 				return;
 
-			certificateRequest.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, certificateAuthorityOptions.PathLengthConstraint != null, certificateAuthorityOptions.PathLengthConstraint ?? -1, true));
+			certificateRequest.CertificateExtensions.Add(new X509BasicConstraintsExtension(certificateAuthorityOptions.CertificateAuthority, certificateAuthorityOptions.HasPathLengthConstraint, certificateAuthorityOptions.PathLengthConstraint, true));
 		}
 
 		protected internal virtual void PopulateCertificateRequest(ICertificateOptions certificateOptions, CertificateRequest certificateRequest)
