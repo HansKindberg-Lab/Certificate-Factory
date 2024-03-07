@@ -162,19 +162,43 @@ namespace Application.Models.Cryptography
 		{
 			var subjectAlternativeNameExtension = this.WrappedCertificate.Extensions.OfType<X509SubjectAlternativeNameExtension>().FirstOrDefault();
 
-			if(subjectAlternativeNameExtension == null || (!subjectAlternativeNameExtension.EnumerateDnsNames().Any() && !subjectAlternativeNameExtension.EnumerateIPAddresses().Any()))
+			if(subjectAlternativeNameExtension == null)
+				return null;
+
+			var dnsNames = subjectAlternativeNameExtension.EnumerateDnsNames().ToList();
+			var emailAddresses = subjectAlternativeNameExtension.EnumerateEmailAddresses().ToList();
+			var ipAddresses = subjectAlternativeNameExtension.EnumerateIPAddresses().ToList();
+			var uris = subjectAlternativeNameExtension.EnumerateUris().ToList();
+			var userPrincipalNames = subjectAlternativeNameExtension.EnumerateUserPrincipalNames().ToList();
+
+			if(!dnsNames.Any() && !emailAddresses.Any() && !ipAddresses.Any() && !uris.Any() && !userPrincipalNames.Any())
 				return null;
 
 			var subjectAlternativeNameInformation = new SubjectAlternativeNameOptions();
 
-			foreach(var dnsName in subjectAlternativeNameExtension.EnumerateDnsNames())
+			foreach(var dnsName in dnsNames)
 			{
 				subjectAlternativeNameInformation.DnsNames.Add(dnsName);
 			}
 
-			foreach(var ipAddress in subjectAlternativeNameExtension.EnumerateIPAddresses())
+			foreach(var emailAddress in emailAddresses)
+			{
+				subjectAlternativeNameInformation.EmailAddresses.Add(emailAddress);
+			}
+
+			foreach(var ipAddress in ipAddresses)
 			{
 				subjectAlternativeNameInformation.IpAddresses.Add(ipAddress);
+			}
+
+			foreach(var uri in uris)
+			{
+				subjectAlternativeNameInformation.Uris.Add(uri);
+			}
+
+			foreach(var userPrincipalName in userPrincipalNames)
+			{
+				subjectAlternativeNameInformation.UserPrincipalNames.Add(userPrincipalName);
 			}
 
 			return subjectAlternativeNameInformation;
