@@ -255,6 +255,7 @@ The explanations for this:
 
 ## Links
 
+- [Cross-Platform Cryptography in .NET - X509Store](https://learn.microsoft.com/en-us/dotnet/standard/security/cross-platform-cryptography#x509store)
 - [Create and add certificate to certificate store in .NET 5](https://charlehsin.github.io/coding/dotnet5/2021/11/18/create-correct-cert-for-store-in-net5.html)
 - [PEM Loading in .NET Core and .NET 5](https://www.scottbrady91.com/c-sharp/pem-loading-in-dotnet-core-and-dotnet)
 - [Cryptography Improvements in .NET 5 - Support for PEM](https://www.tpeczek.com/2020/12/cryptography-improvements-in-net-5.html)
