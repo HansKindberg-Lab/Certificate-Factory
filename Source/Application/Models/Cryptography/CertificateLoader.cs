@@ -3,11 +3,13 @@ using Application.Models.Extensions;
 
 namespace Application.Models.Cryptography
 {
-	public class CertificateLoader(ICertificateFactory factory, ICertificateStoreLoader storeLoader) : ICertificateLoader
+	public class CertificateLoader(ICertificateFactory factory, ILoggerFactory loggerFactory, ICertificateStoreLoader storeLoader) : ICertificateLoader
 	{
 		#region Properties
 
 		protected internal virtual ICertificateFactory Factory { get; } = factory ?? throw new ArgumentNullException(nameof(factory));
+		protected internal virtual ILogger Logger { get; } = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(typeof(CertificateLoader));
+		protected internal virtual OpenFlags OpenFlags => OperatingSystem.IsWindows() ? OpenFlags.OpenExistingOnly : OpenFlags.ReadOnly;
 		protected internal virtual ICertificateStoreLoader StoreLoader { get; } = storeLoader ?? throw new ArgumentNullException(nameof(storeLoader));
 
 		#endregion
@@ -40,7 +42,18 @@ namespace Application.Models.Cryptography
 
 				using(var x509Store = new X509Store(store.Name, store.Location))
 				{
-					x509Store.Open(OpenFlags.OpenExistingOnly);
+					var openFlags = this.OpenFlags;
+
+					try
+					{
+						x509Store.Open(openFlags);
+					}
+					catch(Exception exception)
+					{
+						this.HandleOpenStoreException(exception, store.Location, store.Name, openFlags);
+
+						continue;
+					}
 
 					foreach(var certificate in x509Store.Certificates)
 					{
@@ -64,12 +77,33 @@ namespace Application.Models.Cryptography
 
 			using(var x509Store = new X509Store(storeName, storeLocation))
 			{
-				x509Store.Open(OpenFlags.OpenExistingOnly);
+				var openFlags = this.OpenFlags;
+
+				try
+				{
+					x509Store.Open(openFlags);
+				}
+				catch(Exception exception)
+				{
+					this.HandleOpenStoreException(exception, storeLocation, storeName, openFlags);
+
+					return null;
+				}
 
 				var certificate = x509Store.Certificates.FirstOrDefault(certificate => string.Equals(certificate.Thumbprint, thumbprint, StringComparison.OrdinalIgnoreCase));
 
 				return certificate != null ? this.Factory.Create(certificate, store) : null;
 			}
+		}
+
+		protected internal virtual void HandleOpenStoreException(Exception exception, StoreLocation location, string name, OpenFlags openFlags)
+		{
+			var message = $"Could not open store \"{location}/{name}\" (OpenFlags = {openFlags}).";
+
+			if(OperatingSystem.IsWindows())
+				throw new InvalidOperationException(message, exception);
+
+			this.Logger.LogWarning(message);
 		}
 
 		protected internal virtual bool Include(X509Certificate2 certificate, string friendlyName = null, string issuer = null, string serialNumber = null, string subject = null, string thumbprint = null)

@@ -8,6 +8,7 @@ namespace Application.Models.Cryptography
 	{
 		#region Fields
 
+		private static readonly IDictionary<string, StoreName?> _nonWindowsNames = GetNonWindowsNames();
 		private ISet<ICertificateStore> _standardStores;
 
 		#endregion
@@ -59,7 +60,7 @@ namespace Application.Models.Cryptography
 
 		protected internal virtual IDictionary<string, StoreName?> GetNames(StoreLocation location)
 		{
-			return this.GetNames(this.GetRegistryKey(location), location);
+			return OperatingSystem.IsWindows() ? this.GetNames(this.GetRegistryKey(location), location) : _nonWindowsNames;
 		}
 
 		protected internal virtual IDictionary<string, StoreName?> GetNames(RegistryKey registryKey, StoreLocation location)
@@ -75,6 +76,24 @@ namespace Application.Models.Cryptography
 					names.Add(subKey, name);
 				}
 			}
+
+			return names;
+		}
+
+		/// <summary>
+		/// The only names that seem to work on Linux is "CA" & "Root".
+		/// </summary>
+		private static SortedDictionary<string, StoreName?> GetNonWindowsNames()
+		{
+			var names = new SortedDictionary<string, StoreName?>(StringComparer.Ordinal);
+
+			foreach(var value in Enum.GetValues<StoreName>())
+			{
+				names.Add(value.ToString(), value);
+			}
+
+			names.Add("CA", null);
+			names.Add("Intermediate", null);
 
 			return names;
 		}
