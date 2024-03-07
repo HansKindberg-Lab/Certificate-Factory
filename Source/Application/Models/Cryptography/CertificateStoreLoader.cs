@@ -81,7 +81,7 @@ namespace Application.Models.Cryptography
 		}
 
 		/// <summary>
-		/// The only names that seem to work on Linux is "CA" & "Root".
+		/// The only names that seem to work on Linux is "CA" and "Root".
 		/// </summary>
 		private static SortedDictionary<string, StoreName?> GetNonWindowsNames()
 		{
