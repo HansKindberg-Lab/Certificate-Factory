@@ -74,7 +74,7 @@ namespace Application.Models.Cryptography.Extensions
 							if(value.StartsWith("!", StringComparison.OrdinalIgnoreCase))
 								value = value[1..];
 
-							list.Add(value);
+							list.Add(value.Trim());
 						}
 					}
 				}
