@@ -38,6 +38,9 @@
 							"Certificate": {
 								"EnhancedKeyUsage": "ClientAuthentication",
 								"KeyUsage": "DigitalSignature",
+								"SerialNumber": {
+									"Value": "00AB49221A30C8AAE9497D3BB0FD2A63396E33B046"
+								},
 								"Subject": "CN=Test Client certificate 1"
 							}
 						}
@@ -57,6 +60,10 @@
 							"Certificate": {
 								"EnhancedKeyUsage": "ClientAuthentication",
 								"KeyUsage": "DigitalSignature",
+								"SerialNumber": {
+									"Size": 15,
+									"Value": "00d63c23df87a790dc4ed72c09172487ea8bde25a3"
+								},
 								"Subject": "CN=Test Client certificate 2"
 							}
 						}
@@ -76,6 +83,9 @@
 							"Certificate": {
 								"EnhancedKeyUsage": "ClientAuthentication",
 								"KeyUsage": "DigitalSignature",
+								"SerialNumber": {
+									"Size": 10
+								},
 								"Subject": "CN=Test Client certificate 3"
 							}
 						}

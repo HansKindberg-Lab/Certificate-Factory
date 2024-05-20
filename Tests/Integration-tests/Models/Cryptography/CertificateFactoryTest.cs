@@ -22,12 +22,17 @@ namespace IntegrationTests.Models.Cryptography
 				{
 					NotAfter = new DateTimeOffset(2030, 1, 1, 0, 0, 0, TimeSpan.Zero),
 					NotBefore = new DateTimeOffset(2020, 1, 1, 0, 0, 0, TimeSpan.Zero),
+					SerialNumber = new SerialNumberOptions
+					{
+						Value = "00d63c23df87a790dc4ed72c09172487ea8bde25a3"
+					},
 					Subject = "CN=Test"
 				};
 
 				using(var certificate = certificateFactory.Create(rsaOptions, certificateOptions))
 				{
 					Assert.IsNotNull(certificate);
+					Assert.AreEqual("00D63C23DF87A790DC4ED72C09172487EA8BDE25A3", certificate.SerialNumber);
 					//Assert.AreEqual(string.Empty, certificate.ToString());
 				}
 			}
