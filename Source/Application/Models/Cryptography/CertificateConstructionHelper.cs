@@ -15,6 +15,7 @@ namespace Application.Models.Cryptography
 			var certificateOptions = new CertificateOptions
 			{
 				CertificateAuthority = certificateConstructionOptionsClone.CertificateAuthority,
+				CrlDistributionPoint = certificateConstructionOptionsClone.CrlDistributionPoint,
 				Issuer = issuer,
 				NotAfter = certificateConstructionOptionsClone.NotAfter,
 				NotBefore = certificateConstructionOptionsClone.NotBefore,
@@ -53,6 +54,19 @@ namespace Application.Models.Cryptography
 
 				if(certificateConstructionOptions.CertificateAuthority == null && defaultClone.CertificateAuthority != null)
 					certificateConstructionOptions.CertificateAuthority = defaultClone.CertificateAuthority;
+
+				if(defaultClone != null)
+				{
+					if(certificateConstructionOptions.CrlDistributionPoint == null)
+					{
+						certificateConstructionOptions.CrlDistributionPoint = defaultClone.CrlDistributionPoint;
+					}
+					else
+					{
+						if(!certificateConstructionOptions.CrlDistributionPoint.Uris.Any())
+							certificateConstructionOptions.CrlDistributionPoint.Uris.Add(defaultClone.CrlDistributionPoint.Uris);
+					}
+				}
 
 				if(certificateConstructionOptions.EnhancedKeyUsage == null && defaultClone.EnhancedKeyUsage != null)
 					certificateConstructionOptions.EnhancedKeyUsage = defaultClone.EnhancedKeyUsage;

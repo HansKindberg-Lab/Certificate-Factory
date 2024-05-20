@@ -30,12 +30,24 @@
 							"CertificateAuthority": true,
 							"HasPathLengthConstraint": true
 						},
+						"CrlDistributionPoint": {
+							"Uris": [
+								"http://crl.example.org/list-1.crl"
+							]
+						},
 						"KeyUsage": "KeyCertSign",
 						"Subject": "CN=Test Intermediate 1"
 					},
 					"IssuedCertificates": {
 						"client-certificate-1": {
 							"Certificate": {
+								"CrlDistributionPoint": {
+									"Uris": [
+										"http://crl.example.org/list-1.crl",
+										"http://crl.example.org/list-2.crl",
+										"http://crl.example.org/list-3.crl"
+									]
+								},
 								"EnhancedKeyUsage": "ClientAuthentication",
 								"KeyUsage": "DigitalSignature",
 								"SerialNumber": {

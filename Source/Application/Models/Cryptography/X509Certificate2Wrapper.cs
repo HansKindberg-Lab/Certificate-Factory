@@ -1,6 +1,10 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Extensions;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.X509;
+using Org.BouncyCastle.X509.Extension;
 
 namespace Application.Models.Cryptography
 {
@@ -108,6 +112,53 @@ namespace Application.Models.Cryptography
 			chain.Build(this.WrappedCertificate);
 
 			return chain;
+		}
+
+		public virtual CrlDistributionPointOptions GetCrlDistributionPoint()
+		{
+			var certificateParser = new X509CertificateParser();
+			var parsedCertificate = certificateParser.ReadCertificate(this.WrappedCertificate.RawData);
+
+			var crlDistributionPointExtension = parsedCertificate.GetExtensionValue(X509Extensions.CrlDistributionPoints);
+			if(crlDistributionPointExtension == null)
+				return null;
+
+			var uris = new List<Uri>();
+
+			var asn = X509ExtensionUtilities.FromExtensionValue(crlDistributionPointExtension);
+			var crlDistributionPoint = CrlDistPoint.GetInstance(asn);
+			var distributionPoints = crlDistributionPoint.GetDistributionPoints();
+
+			foreach(var distributionPoint in distributionPoints)
+			{
+				var distributionPointName = distributionPoint.DistributionPointName;
+
+				if(distributionPointName.PointType != DistributionPointName.FullName)
+					continue;
+
+				var generalNames = GeneralNames.GetInstance(distributionPointName.Name);
+
+				foreach(var generalName in generalNames.GetNames())
+				{
+					if(generalName.TagNo != GeneralName.UniformResourceIdentifier)
+						continue;
+
+					var value = ((DerIA5String)generalName.Name).GetString();
+					uris.Add(new Uri(value));
+				}
+			}
+
+			if(!uris.Any())
+				return null;
+
+			var crlDistributionPointInformation = new CrlDistributionPointOptions();
+
+			foreach(var uri in uris)
+			{
+				crlDistributionPointInformation.Uris.Add(uri);
+			}
+
+			return crlDistributionPointInformation;
 		}
 
 		public virtual EnhancedKeyUsage? GetEnhancedKeyUsage()

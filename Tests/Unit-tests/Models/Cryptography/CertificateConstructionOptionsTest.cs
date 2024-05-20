@@ -18,6 +18,7 @@ namespace UnitTests.Models.Cryptography
 			Assert.IsNotNull(certificateConstructionOptions);
 			Assert.IsNull(certificateConstructionOptions.AsymmetricAlgorithm);
 			Assert.IsNull(certificateConstructionOptions.CertificateAuthority);
+			Assert.IsNull(certificateConstructionOptions.CrlDistributionPoint);
 			Assert.IsNull(certificateConstructionOptions.EnhancedKeyUsage);
 			Assert.IsNull(certificateConstructionOptions.HashAlgorithm);
 			Assert.IsNull(certificateConstructionOptions.KeyUsage);
@@ -32,6 +33,7 @@ namespace UnitTests.Models.Cryptography
 			Assert.IsFalse(ReferenceEquals(certificateConstructionOptions, clone));
 			Assert.IsNull(clone.AsymmetricAlgorithm);
 			Assert.IsNull(clone.CertificateAuthority);
+			Assert.IsNull(clone.CrlDistributionPoint);
 			Assert.IsNull(clone.EnhancedKeyUsage);
 			Assert.IsNull(clone.HashAlgorithm);
 			Assert.IsNull(clone.KeyUsage);

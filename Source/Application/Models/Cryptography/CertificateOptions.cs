@@ -9,6 +9,7 @@ namespace Application.Models.Cryptography
 		#region Properties
 
 		public virtual ICertificateAuthorityOptions CertificateAuthority { get; set; }
+		public virtual ICrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		public virtual EnhancedKeyUsage EnhancedKeyUsage { get; set; }
 		public virtual HashAlgorithm HashAlgorithm { get; set; } = HashAlgorithm.Sha256;
 		public virtual ICertificate Issuer { get; set; }
@@ -40,6 +41,7 @@ namespace Application.Models.Cryptography
 			return new CertificateOptions
 			{
 				CertificateAuthority = this.CertificateAuthority?.Clone(),
+				CrlDistributionPoint = this.CrlDistributionPoint?.Clone(),
 				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,
 				HashAlgorithm = memberwiseClone.HashAlgorithm,
 				Issuer = memberwiseClone.Issuer, // At the moment we do not clone the issuer. Don't know if we have to. Don't think so.

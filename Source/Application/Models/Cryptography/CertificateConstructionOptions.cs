@@ -9,6 +9,7 @@ namespace Application.Models.Cryptography
 
 		public virtual string AsymmetricAlgorithm { get; set; }
 		public virtual CertificateAuthorityOptions CertificateAuthority { get; set; }
+		public virtual CrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		public virtual EnhancedKeyUsage? EnhancedKeyUsage { get; set; }
 		public virtual HashAlgorithm? HashAlgorithm { get; set; }
 		public virtual X509KeyUsageFlags? KeyUsage { get; set; }
@@ -35,6 +36,7 @@ namespace Application.Models.Cryptography
 			{
 				AsymmetricAlgorithm = this.AsymmetricAlgorithm == null ? null : new StringBuilder(this.AsymmetricAlgorithm).ToString(),
 				CertificateAuthority = this.CertificateAuthority?.Clone(),
+				CrlDistributionPoint = this.CrlDistributionPoint?.Clone(),
 				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,
 				HashAlgorithm = memberwiseClone.HashAlgorithm,
 				KeyUsage = memberwiseClone.KeyUsage,

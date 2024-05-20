@@ -62,6 +62,7 @@ namespace Application.Models.Cryptography
 			ArgumentNullException.ThrowIfNull(certificateConstructionOptions);
 
 			certificateConstructionOptions.CertificateAuthority = certificate.GetCertificateAuthority();
+			certificateConstructionOptions.CrlDistributionPoint = certificate.GetCrlDistributionPoint();
 			certificateConstructionOptions.EnhancedKeyUsage = certificate.GetEnhancedKeyUsage();
 
 			var keyUsage = certificate.GetKeyUsage();

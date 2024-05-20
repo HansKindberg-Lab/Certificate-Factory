@@ -143,11 +143,25 @@ namespace Application.Models.Cryptography
 
 			this.PopulateSubjectAlternativeName(certificateRequest, certificateOptions.SubjectAlternativeName);
 
+			this.PopulateCrlDistributionPoint(certificateRequest, certificateOptions.CrlDistributionPoint);
+
 			this.PopulateCertificateAuthority(certificateOptions.CertificateAuthority, certificateRequest);
 
 			this.PopulateEnhancedKeyUsage(certificateRequest, certificateOptions.EnhancedKeyUsage);
 
 			certificateRequest.CertificateExtensions.Add(new X509KeyUsageExtension(certificateOptions.KeyUsage, false));
+		}
+
+		protected internal virtual void PopulateCrlDistributionPoint(CertificateRequest certificateRequest, ICrlDistributionPointOptions crlDistributionPoint)
+		{
+			ArgumentNullException.ThrowIfNull(certificateRequest);
+
+			if(crlDistributionPoint == null)
+				return;
+
+			var crlDistributionPointExtension = CertificateRevocationListBuilder.BuildCrlDistributionPointExtension(crlDistributionPoint.Uris.Select(uri => uri.ToString()));
+
+			certificateRequest.CertificateExtensions.Add(crlDistributionPointExtension);
 		}
 
 		protected internal virtual void PopulateEnhancedKeyUsage(CertificateRequest certificateRequest, EnhancedKeyUsage enhancedKeyUsage)

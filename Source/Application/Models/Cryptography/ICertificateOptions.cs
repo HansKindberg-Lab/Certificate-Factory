@@ -8,6 +8,7 @@ namespace Application.Models.Cryptography
 		#region Properties
 
 		ICertificateAuthorityOptions CertificateAuthority { get; set; }
+		ICrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		EnhancedKeyUsage EnhancedKeyUsage { get; set; }
 		HashAlgorithm HashAlgorithm { get; set; }
 		ICertificate Issuer { get; set; }

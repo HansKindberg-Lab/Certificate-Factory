@@ -41,6 +41,7 @@ namespace Application.Models.Cryptography
 		CertificateAuthorityOptions GetCertificateAuthority();
 		string GetCertificatePem();
 		IEnumerable<ICertificate> GetChain();
+		CrlDistributionPointOptions GetCrlDistributionPoint();
 		EnhancedKeyUsage? GetEnhancedKeyUsage();
 		X509KeyUsageFlags GetKeyUsage();
 		IEnumerable<byte> GetPfx(string password);
