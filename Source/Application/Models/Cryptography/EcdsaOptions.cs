@@ -77,6 +77,11 @@ namespace Application.Models.Cryptography
 			};
 		}
 
+		protected internal override X509SignatureGenerator CreateSignatureGenerator(ECDsa asymmetricAlgorithm)
+		{
+			return X509SignatureGenerator.CreateForECDsa(asymmetricAlgorithm);
+		}
+
 		#endregion
 	}
 }

@@ -56,6 +56,11 @@ namespace Application.Models.Cryptography
 			return new CertificateRequest(certificateOptions.Subject, asymmetricAlgorithm, certificateOptions.HashAlgorithm.ToHashAlgorithmName(), this.GetRsaSignaturePadding());
 		}
 
+		protected internal override X509SignatureGenerator CreateSignatureGenerator(RSA asymmetricAlgorithm)
+		{
+			return X509SignatureGenerator.CreateForRSA(asymmetricAlgorithm, this.GetRsaSignaturePadding());
+		}
+
 		protected internal virtual RSASignaturePadding GetRsaSignaturePadding()
 		{
 			return this.SignaturePadding switch

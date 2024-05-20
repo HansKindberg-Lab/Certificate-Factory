@@ -43,26 +43,30 @@ namespace Application.Models.Cryptography
 				var notBefore = this.GetNotBefore(certificateOptions, systemClock);
 				var notAfter = this.GetNotAfter(certificateFactoryOptions, certificateOptions, notBefore);
 
+				var serialNumberSize = certificateOptions.SerialNumberSize ?? certificateFactoryOptions.DefaultSerialNumberSize;
+				var serialNumber = new byte[serialNumberSize];
+				RandomNumberGenerator.Fill(serialNumber);
+
 				if(certificateOptions.Issuer == null)
 				{
-					certificate = certificateRequest.CreateSelfSigned(notBefore, notAfter);
+					// We could have used "certificateRequest.CreateSelfSigned(notBefore, notAfter)" here but then we can not set the serial number explicit.
+					certificate = certificateRequest.Create(new X500DistinguishedName(certificateOptions.Subject), this.CreateSignatureGenerator(asymmetricAlgorithm), notBefore, notAfter, serialNumber);
 				}
 				else
 				{
 					var wrappedIssuerCertificate = certificateOptions.Issuer.Unwrap();
 
-					var serialNumberSize = certificateOptions.SerialNumberSize ?? certificateFactoryOptions.DefaultSerialNumberSize;
-					var serialNumber = new byte[serialNumberSize];
-					RandomNumberGenerator.Fill(serialNumber);
-
-					certificate = this.CopyCertificateWithPrivateKey(asymmetricAlgorithm, certificateRequest.Create(wrappedIssuerCertificate, notBefore, notAfter, serialNumber));
+					certificate = certificateRequest.Create(wrappedIssuerCertificate, notBefore, notAfter, serialNumber);
 				}
+
+				certificate = this.CopyCertificateWithPrivateKey(asymmetricAlgorithm, certificate);
 
 				return new X509Certificate2Wrapper(certificate, loggerFactory);
 			}
 		}
 
 		protected internal abstract CertificateRequest CreateCertificateRequest(T asymmetricAlgorithm, ICertificateOptions certificateOptions);
+		protected internal abstract X509SignatureGenerator CreateSignatureGenerator(T asymmetricAlgorithm);
 
 		protected internal virtual DateTimeOffset GetNotAfter(CertificateFactoryOptions certificateFactoryOptions, ICertificateOptions certificateOptions, DateTimeOffset notBefore)
 		{
