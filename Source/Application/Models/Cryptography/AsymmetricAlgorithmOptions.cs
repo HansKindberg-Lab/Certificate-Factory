@@ -126,6 +126,18 @@ namespace Application.Models.Cryptography
 			return serialNumber;
 		}
 
+		protected internal virtual void PopulateAuthorityInformationAccess(CertificateRequest certificateRequest, IAuthorityInformationAccessOptions authorityInformationAccess)
+		{
+			ArgumentNullException.ThrowIfNull(certificateRequest);
+
+			if(authorityInformationAccess == null)
+				return;
+
+			var authorityInformationAccessExtension = new X509AuthorityInformationAccessExtension(authorityInformationAccess.OcspUris.Select(uri => uri.ToString()), authorityInformationAccess.CaIssuerUris.Select(uri => uri.ToString()));
+
+			certificateRequest.CertificateExtensions.Add(authorityInformationAccessExtension);
+		}
+
 		protected internal virtual void PopulateCertificateAuthority(ICertificateAuthorityOptions certificateAuthorityOptions, CertificateRequest certificateRequest)
 		{
 			ArgumentNullException.ThrowIfNull(certificateRequest);
@@ -144,6 +156,8 @@ namespace Application.Models.Cryptography
 			this.PopulateSubjectAlternativeName(certificateRequest, certificateOptions.SubjectAlternativeName);
 
 			this.PopulateCrlDistributionPoint(certificateRequest, certificateOptions.CrlDistributionPoint);
+
+			this.PopulateAuthorityInformationAccess(certificateRequest, certificateOptions.AuthorityInformationAccess);
 
 			this.PopulateCertificateAuthority(certificateOptions.CertificateAuthority, certificateRequest);
 

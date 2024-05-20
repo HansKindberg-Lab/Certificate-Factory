@@ -38,6 +38,7 @@ namespace Application.Models.Cryptography
 		#region Methods
 
 		IEnumerable<byte> Export(X509ContentType contentType, string password);
+		AuthorityInformationAccessOptions GetAuthorityInformationAccess();
 		CertificateAuthorityOptions GetCertificateAuthority();
 		string GetCertificatePem();
 		IEnumerable<ICertificate> GetChain();

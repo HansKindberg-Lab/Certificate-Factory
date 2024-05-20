@@ -14,6 +14,7 @@ namespace Application.Models.Cryptography
 			var certificateConstructionOptionsClone = certificateConstructionOptions.Clone();
 			var certificateOptions = new CertificateOptions
 			{
+				AuthorityInformationAccess = certificateConstructionOptionsClone.AuthorityInformationAccess,
 				CertificateAuthority = certificateConstructionOptionsClone.CertificateAuthority,
 				CrlDistributionPoint = certificateConstructionOptionsClone.CrlDistributionPoint,
 				Issuer = issuer,
@@ -51,6 +52,22 @@ namespace Application.Models.Cryptography
 
 				if(certificateConstructionOptions.AsymmetricAlgorithm == null && defaultClone.AsymmetricAlgorithm != null)
 					certificateConstructionOptions.AsymmetricAlgorithm = defaultClone.AsymmetricAlgorithm;
+
+				if(defaultClone != null)
+				{
+					if(certificateConstructionOptions.AuthorityInformationAccess == null)
+					{
+						certificateConstructionOptions.AuthorityInformationAccess = defaultClone.AuthorityInformationAccess;
+					}
+					else
+					{
+						if(!certificateConstructionOptions.AuthorityInformationAccess.CaIssuerUris.Any())
+							certificateConstructionOptions.AuthorityInformationAccess.CaIssuerUris.Add(defaultClone.AuthorityInformationAccess.CaIssuerUris);
+
+						if(!certificateConstructionOptions.AuthorityInformationAccess.OcspUris.Any())
+							certificateConstructionOptions.AuthorityInformationAccess.OcspUris.Add(defaultClone.AuthorityInformationAccess.OcspUris);
+					}
+				}
 
 				if(certificateConstructionOptions.CertificateAuthority == null && defaultClone.CertificateAuthority != null)
 					certificateConstructionOptions.CertificateAuthority = defaultClone.CertificateAuthority;

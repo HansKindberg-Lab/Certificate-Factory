@@ -7,6 +7,7 @@ namespace Application.Models.Cryptography
 	{
 		#region Properties
 
+		IAuthorityInformationAccessOptions AuthorityInformationAccess { get; set; }
 		ICertificateAuthorityOptions CertificateAuthority { get; set; }
 		ICrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		EnhancedKeyUsage EnhancedKeyUsage { get; set; }

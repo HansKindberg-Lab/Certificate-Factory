@@ -8,6 +8,7 @@ namespace Application.Models.Cryptography
 		#region Properties
 
 		public virtual string AsymmetricAlgorithm { get; set; }
+		public virtual AuthorityInformationAccessOptions AuthorityInformationAccess { get; set; }
 		public virtual CertificateAuthorityOptions CertificateAuthority { get; set; }
 		public virtual CrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		public virtual EnhancedKeyUsage? EnhancedKeyUsage { get; set; }
@@ -35,6 +36,7 @@ namespace Application.Models.Cryptography
 			var clone = new CertificateConstructionOptions
 			{
 				AsymmetricAlgorithm = this.AsymmetricAlgorithm == null ? null : new StringBuilder(this.AsymmetricAlgorithm).ToString(),
+				AuthorityInformationAccess = this.AuthorityInformationAccess?.Clone(),
 				CertificateAuthority = this.CertificateAuthority?.Clone(),
 				CrlDistributionPoint = this.CrlDistributionPoint?.Clone(),
 				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,

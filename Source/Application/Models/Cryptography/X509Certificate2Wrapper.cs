@@ -77,6 +77,34 @@ namespace Application.Models.Cryptography
 			return this.WrappedCertificate.Export(contentType, password);
 		}
 
+		public virtual AuthorityInformationAccessOptions GetAuthorityInformationAccess()
+		{
+			var authorityInformationAccessExtension = this.WrappedCertificate.Extensions.OfType<X509AuthorityInformationAccessExtension>().FirstOrDefault();
+
+			if(authorityInformationAccessExtension == null)
+				return null;
+
+			var caIssuerUris = authorityInformationAccessExtension.EnumerateCAIssuersUris().ToList();
+			var ocspUris = authorityInformationAccessExtension.EnumerateOcspUris().ToList();
+
+			if(!caIssuerUris.Any() && !ocspUris.Any())
+				return null;
+
+			var authorityInformationAccessInformation = new AuthorityInformationAccessOptions();
+
+			foreach(var caIssuerUri in caIssuerUris)
+			{
+				authorityInformationAccessInformation.CaIssuerUris.Add(new Uri(caIssuerUri));
+			}
+
+			foreach(var ocspUri in ocspUris)
+			{
+				authorityInformationAccessInformation.OcspUris.Add(new Uri(ocspUri));
+			}
+
+			return authorityInformationAccessInformation;
+		}
+
 		public virtual CertificateAuthorityOptions GetCertificateAuthority()
 		{
 			var basicConstraintsExtension = this.WrappedCertificate.Extensions.OfType<X509BasicConstraintsExtension>().FirstOrDefault();

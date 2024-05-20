@@ -8,6 +8,7 @@ namespace Application.Models.Cryptography
 	{
 		#region Properties
 
+		public virtual IAuthorityInformationAccessOptions AuthorityInformationAccess { get; set; }
 		public virtual ICertificateAuthorityOptions CertificateAuthority { get; set; }
 		public virtual ICrlDistributionPointOptions CrlDistributionPoint { get; set; }
 		public virtual EnhancedKeyUsage EnhancedKeyUsage { get; set; }
@@ -40,6 +41,7 @@ namespace Application.Models.Cryptography
 
 			return new CertificateOptions
 			{
+				AuthorityInformationAccess = this.AuthorityInformationAccess?.Clone(),
 				CertificateAuthority = this.CertificateAuthority?.Clone(),
 				CrlDistributionPoint = this.CrlDistributionPoint?.Clone(),
 				EnhancedKeyUsage = memberwiseClone.EnhancedKeyUsage,

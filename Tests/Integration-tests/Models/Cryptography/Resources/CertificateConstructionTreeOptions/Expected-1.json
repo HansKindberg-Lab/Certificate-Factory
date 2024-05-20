@@ -26,6 +26,14 @@
 				},
 				"intermediate-certificate-1": {
 					"Certificate": {
+						"AuthorityInformationAccess": {
+							"CaIssuerUris": [
+								"http://aia.example.org/certificate.cer"
+							],
+							"OcspUris": [
+								"http://ocsp.example.org"
+							]
+						},
 						"CertificateAuthority": {
 							"CertificateAuthority": true,
 							"HasPathLengthConstraint": true
@@ -41,6 +49,18 @@
 					"IssuedCertificates": {
 						"client-certificate-1": {
 							"Certificate": {
+								"AuthorityInformationAccess": {
+									"CaIssuerUris": [
+										"http://aia-1.example.org/certificate.cer",
+										"http://aia-2.example.org/certificate.cer",
+										"http://aia-3.example.org/certificate.cer"
+									],
+									"OcspUris": [
+										"http://ocsp-1.example.org",
+										"http://ocsp-2.example.org",
+										"http://ocsp-3.example.org"
+									]
+								},
 								"CrlDistributionPoint": {
 									"Uris": [
 										"http://crl.example.org/list-1.crl",
