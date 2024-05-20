@@ -18,7 +18,7 @@ namespace Application.Models.Cryptography
 				Issuer = issuer,
 				NotAfter = certificateConstructionOptionsClone.NotAfter,
 				NotBefore = certificateConstructionOptionsClone.NotBefore,
-				SerialNumberSize = certificateConstructionOptionsClone.SerialNumberSize,
+				SerialNumber = certificateConstructionOptionsClone.SerialNumber,
 				Subject = certificateConstructionOptionsClone.Subject,
 				SubjectAlternativeName = certificateConstructionOptionsClone.SubjectAlternativeName
 			};
@@ -69,8 +69,8 @@ namespace Application.Models.Cryptography
 				if(certificateConstructionOptions.NotBefore == null && defaultClone.NotBefore != null)
 					certificateConstructionOptions.NotBefore = defaultClone.NotBefore;
 
-				if(certificateConstructionOptions.SerialNumberSize == null && defaultClone.SerialNumberSize != null)
-					certificateConstructionOptions.SerialNumberSize = defaultClone.SerialNumberSize;
+				if(certificateConstructionOptions.SerialNumber == null && defaultClone.SerialNumber != null)
+					certificateConstructionOptions.SerialNumber = defaultClone.SerialNumber;
 
 				if(certificateConstructionOptions.Subject == null && defaultClone.Subject != null)
 					certificateConstructionOptions.Subject = defaultClone.Subject;

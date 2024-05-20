@@ -14,7 +14,7 @@ namespace Application.Models.Cryptography
 		public virtual X509KeyUsageFlags? KeyUsage { get; set; }
 		public virtual DateTimeOffset? NotAfter { get; set; }
 		public virtual DateTimeOffset? NotBefore { get; set; }
-		public virtual byte? SerialNumberSize { get; set; }
+		public virtual SerialNumberOptions SerialNumber { get; set; }
 		public virtual string Subject { get; set; }
 		public virtual SubjectAlternativeNameOptions SubjectAlternativeName { get; set; }
 
@@ -40,7 +40,7 @@ namespace Application.Models.Cryptography
 				KeyUsage = memberwiseClone.KeyUsage,
 				NotAfter = memberwiseClone.NotAfter,
 				NotBefore = memberwiseClone.NotBefore,
-				SerialNumberSize = memberwiseClone.SerialNumberSize,
+				SerialNumber = this.SerialNumber?.Clone(),
 				Subject = this.Subject == null ? null : new StringBuilder(this.Subject).ToString(),
 				SubjectAlternativeName = this.SubjectAlternativeName?.Clone()
 			};

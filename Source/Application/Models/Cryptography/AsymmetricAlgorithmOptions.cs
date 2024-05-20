@@ -42,10 +42,7 @@ namespace Application.Models.Cryptography
 				X509Certificate2 certificate;
 				var notBefore = this.GetNotBefore(certificateOptions, systemClock);
 				var notAfter = this.GetNotAfter(certificateFactoryOptions, certificateOptions, notBefore);
-
-				var serialNumberSize = certificateOptions.SerialNumberSize ?? certificateFactoryOptions.DefaultSerialNumberSize;
-				var serialNumber = new byte[serialNumberSize];
-				RandomNumberGenerator.Fill(serialNumber);
+				var serialNumber = this.GetSerialNumber(certificateFactoryOptions, certificateOptions);
 
 				if(certificateOptions.Issuer == null)
 				{
@@ -112,6 +109,21 @@ namespace Application.Models.Cryptography
 			// ReSharper restore InvertIf
 
 			return notBefore;
+		}
+
+		protected internal virtual byte[] GetSerialNumber(CertificateFactoryOptions certificateFactoryOptions, ICertificateOptions certificateOptions)
+		{
+			ArgumentNullException.ThrowIfNull(certificateFactoryOptions);
+			ArgumentNullException.ThrowIfNull(certificateOptions);
+
+			if(!string.IsNullOrEmpty(certificateOptions.SerialNumber?.Value))
+				return Convert.FromHexString(certificateOptions.SerialNumber.Value);
+
+			var serialNumberSize = certificateOptions.SerialNumber?.Size ?? certificateFactoryOptions.DefaultSerialNumberSize;
+			var serialNumber = new byte[serialNumberSize];
+			RandomNumberGenerator.Fill(serialNumber);
+
+			return serialNumber;
 		}
 
 		protected internal virtual void PopulateCertificateAuthority(ICertificateAuthorityOptions certificateAuthorityOptions, CertificateRequest certificateRequest)
