@@ -70,6 +70,7 @@ namespace Application.Models.Cryptography
 
 			certificateConstructionOptions.NotAfter = certificate.NotAfter;
 			certificateConstructionOptions.NotBefore = certificate.NotBefore;
+			certificateConstructionOptions.SerialNumber = new SerialNumberOptions { Value = certificate.SerialNumber };
 			certificateConstructionOptions.Subject = certificate.Subject;
 			certificateConstructionOptions.SubjectAlternativeName = certificate.GetSubjectAlternativeName();
 		}
