@@ -8,7 +8,7 @@
 		<!-- Below is for the same workaround as above. -->
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<!--<Nullable>enable</Nullable>-->
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 </Project>

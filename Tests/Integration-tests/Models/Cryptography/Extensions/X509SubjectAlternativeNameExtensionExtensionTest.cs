@@ -14,7 +14,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			await Task.CompletedTask;
 
 			var crtFilePath = Path.Combine(Global.ProjectDirectoryPath, "Models", "Cryptography", "Extensions", "Resources", "X509SubjectAlternativeNameExtensionExtension", crtFileName);
-			var certificate = new X509Certificate2(crtFilePath);
+			var certificate = X509CertificateLoader.LoadCertificateFromFile(crtFilePath);
 
 			return certificate;
 		}

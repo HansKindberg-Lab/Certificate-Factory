@@ -30,7 +30,7 @@ namespace Application.Models.ComponentModel
 							foreach(var enumeration in Enum.GetValues<TEnumeration>())
 							{
 								var field = type.GetField(enumeration.ToString());
-								var attribute = (TAttribute)field.GetCustomAttribute(typeof(TAttribute), false);
+								var attribute = field.GetCustomAttribute<TAttribute>(false);
 								dictionary.Add(enumeration, attribute);
 							}
 

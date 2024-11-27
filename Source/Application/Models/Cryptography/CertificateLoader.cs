@@ -8,7 +8,7 @@ namespace Application.Models.Cryptography
 		#region Properties
 
 		protected internal virtual ICertificateFactory Factory { get; } = factory ?? throw new ArgumentNullException(nameof(factory));
-		protected internal virtual ILogger Logger { get; } = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger(typeof(CertificateLoader));
+		protected internal virtual ILogger Logger { get; } = (loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory))).CreateLogger<CertificateLoader>();
 		protected internal virtual OpenFlags OpenFlags => OperatingSystem.IsWindows() ? OpenFlags.OpenExistingOnly : OpenFlags.ReadOnly;
 		protected internal virtual ICertificateStoreLoader StoreLoader { get; } = storeLoader ?? throw new ArgumentNullException(nameof(storeLoader));
 

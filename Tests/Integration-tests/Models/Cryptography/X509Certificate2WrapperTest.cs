@@ -16,7 +16,7 @@ namespace IntegrationTests.Models.Cryptography
 			await Task.CompletedTask;
 
 			var crtFilePath = Path.Combine(Global.ProjectDirectoryPath, "Models", "Cryptography", "Resources", "X509Certificate2Wrapper", crtFileName);
-			var certificate = new X509Certificate2(crtFilePath);
+			var certificate = X509CertificateLoader.LoadCertificateFromFile(crtFilePath);
 
 			return new X509Certificate2Wrapper(certificate, new NullLoggerFactory());
 		}
