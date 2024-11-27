@@ -8,7 +8,7 @@ namespace Application.Models.Cryptography
 
 		private static string _defaultKey;
 		private static IDictionary<string, AsymmetricAlgorithmInformation> _dictionary;
-		private static readonly object _dictionaryLock = new();
+		private static readonly Lock _dictionaryLock = new();
 
 		#endregion
 

@@ -7,7 +7,7 @@ namespace Application.Models.ComponentModel
 		#region Fields
 
 		private IDictionary<TEnumeration, TAttribute> _dictionary;
-		private readonly object _lock = new();
+		private readonly Lock _lock = new();
 
 		#endregion
 
