@@ -27,6 +27,11 @@ namespace Application.Models.Cryptography
 			}
 		}
 
+		public override string ToString()
+		{
+			return $"{this.Location} / {this.Name}";
+		}
+
 		#endregion
 	}
 }
