@@ -7,7 +7,7 @@
 		<LangVersion>13.0</LangVersion>
 		<!-- Below is for the same workaround as above. -->
 		<NoWarn>$(NoWarn);CS1591</NoWarn>
-		<!--<Nullable>enable</Nullable>-->
+		<Nullable>enable</Nullable>
 		<TargetFramework>net10.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
