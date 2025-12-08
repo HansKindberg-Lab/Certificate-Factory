@@ -12,46 +12,53 @@ namespace Application.Models.Cryptography.Archiving.Extensions
 
 		#endregion
 
-		#region Methods
+		#region Nested types
 
-		public static bool CertificatePemIncluded(this ArchiveKind kind)
+		extension(ArchiveKind kind)
 		{
-			return kind is not ArchiveKind.P12 and not ArchiveKind.Pfx;
-		}
+			#region Methods
 
-		public static string Description(this ArchiveKind kind)
-		{
-			return _descriptionRetriever.GetAttribute(kind)?.Description;
-		}
+			public bool CertificatePemIncluded()
+			{
+				return kind is not ArchiveKind.P12 and not ArchiveKind.Pfx;
+			}
 
-		public static bool EncryptedPrivateKeyPemIncluded(this ArchiveKind kind)
-		{
-			return kind == ArchiveKind.All;
-		}
+			public string Description()
+			{
+				return _descriptionRetriever.GetAttribute(kind)?.Description;
+			}
 
-		public static string Example(this ArchiveKind kind)
-		{
-			return _exampleRetriever.GetAttribute(kind)?.Example;
-		}
+			public bool EncryptedPrivateKeyPemIncluded()
+			{
+				return kind == ArchiveKind.All;
+			}
 
-		public static bool P12Included(this ArchiveKind kind)
-		{
-			return kind is ArchiveKind.All or ArchiveKind.CrtAndKeyAndP12 or ArchiveKind.CrtAndKeyAndP12AndPfx or ArchiveKind.P12;
-		}
+			public string Example()
+			{
+				return _exampleRetriever.GetAttribute(kind)?.Example;
+			}
 
-		public static bool PfxIncluded(this ArchiveKind kind)
-		{
-			return kind is ArchiveKind.All or ArchiveKind.CrtAndKeyAndP12AndPfx or ArchiveKind.CrtAndKeyAndPfx or ArchiveKind.Pfx;
-		}
+			public bool P12Included()
+			{
+				return kind is ArchiveKind.All or ArchiveKind.CrtAndKeyAndP12 or ArchiveKind.CrtAndKeyAndP12AndPfx or ArchiveKind.P12;
+			}
 
-		public static bool PrivateKeyPemIncluded(this ArchiveKind kind)
-		{
-			return kind is not ArchiveKind.P12 and not ArchiveKind.Pfx;
-		}
+			public bool PfxIncluded()
+			{
+				return kind is ArchiveKind.All or ArchiveKind.CrtAndKeyAndP12AndPfx or ArchiveKind.CrtAndKeyAndPfx or ArchiveKind.Pfx;
+			}
 
-		public static bool PublicKeyPemIncluded(this ArchiveKind kind)
-		{
-			return kind == ArchiveKind.All;
+			public bool PrivateKeyPemIncluded()
+			{
+				return kind is not ArchiveKind.P12 and not ArchiveKind.Pfx;
+			}
+
+			public bool PublicKeyPemIncluded()
+			{
+				return kind == ArchiveKind.All;
+			}
+
+			#endregion
 		}
 
 		#endregion

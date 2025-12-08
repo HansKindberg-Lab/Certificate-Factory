@@ -20,76 +20,83 @@ namespace Application.Models.Cryptography.Extensions
 
 		#endregion
 
-		#region Methods
+		#region Nested types
 
-		private static void EnsureEnumeration(this X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
+		extension(X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
 		{
-			ArgumentNullException.ThrowIfNull(subjectAlternativeNameExtension);
+			#region Methods
 
-			_ = subjectAlternativeNameExtension.EnumerateDnsNames().ToList();
-		}
-
-		public static IEnumerable<string> EnumerateEmailAddresses(this X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
-		{
-			var list = new List<string>();
-
-			foreach(var item in subjectAlternativeNameExtension.GetInternalList())
+			private void EnsureEnumeration()
 			{
-				if(_generalNameAsnTypeRfc822NameField.GetValue(item) is string email)
-					list.Add(email);
+				ArgumentNullException.ThrowIfNull(subjectAlternativeNameExtension);
+
+				_ = subjectAlternativeNameExtension.EnumerateDnsNames().ToList();
 			}
 
-			return list;
-		}
-
-		public static IEnumerable<Uri> EnumerateUris(this X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
-		{
-			var list = new List<Uri>();
-
-			foreach(var item in subjectAlternativeNameExtension.GetInternalList())
+			public IEnumerable<string> EnumerateEmailAddresses()
 			{
-				if(_generalNameAsnTypeUriField.GetValue(item) is string uri)
-					list.Add(new Uri(uri));
-			}
+				var list = new List<string>();
 
-			return list;
-		}
-
-		public static IEnumerable<string> EnumerateUserPrincipalNames(this X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
-		{
-			var list = new List<string>();
-
-			foreach(var item in subjectAlternativeNameExtension.GetInternalList())
-			{
-				var otherName = _generalNameAsnTypeOtherNameField.GetValue(item);
-
-				if(otherName != null && otherName.GetType() == _otherNameAsnType)
+				foreach(var item in subjectAlternativeNameExtension.GetInternalList())
 				{
-					if(_otherNameAsnTypeTypeIdField.GetValue(otherName) is "1.3.6.1.4.1.311.20.2.3")
+					if(_generalNameAsnTypeRfc822NameField.GetValue(item) is string email)
+						list.Add(email);
+				}
+
+				return list;
+			}
+
+			public IEnumerable<Uri> EnumerateUris()
+			{
+				var list = new List<Uri>();
+
+				foreach(var item in subjectAlternativeNameExtension.GetInternalList())
+				{
+					if(_generalNameAsnTypeUriField.GetValue(item) is string uri)
+						list.Add(new Uri(uri));
+				}
+
+				return list;
+			}
+
+			public IEnumerable<string> EnumerateUserPrincipalNames()
+			{
+				var list = new List<string>();
+
+				foreach(var item in subjectAlternativeNameExtension.GetInternalList())
+				{
+					var otherName = _generalNameAsnTypeOtherNameField.GetValue(item);
+
+					if(otherName != null && otherName.GetType() == _otherNameAsnType)
 					{
-						if(_otherNameAsnTypeValueField.GetValue(otherName) is ReadOnlyMemory<byte> bytes)
+						if(_otherNameAsnTypeTypeIdField.GetValue(otherName) is "1.3.6.1.4.1.311.20.2.3")
 						{
-							var value = Encoding.UTF8.GetString(bytes.ToArray()).TrimStart('\f');
+							if(_otherNameAsnTypeValueField.GetValue(otherName) is ReadOnlyMemory<byte> bytes)
+							{
+								var value = Encoding.UTF8.GetString(bytes.ToArray()).TrimStart('\f');
 
-							if(value.StartsWith("!", StringComparison.OrdinalIgnoreCase))
-								value = value[1..];
+								if(value.StartsWith("!", StringComparison.OrdinalIgnoreCase))
+									value = value[1..];
 
-							list.Add(value.Trim());
+								list.Add(value.Trim());
+							}
 						}
 					}
 				}
+
+				return list;
 			}
 
-			return list;
-		}
+			private IEnumerable<object> GetInternalList()
+			{
+				ArgumentNullException.ThrowIfNull(subjectAlternativeNameExtension);
 
-		private static IEnumerable<object> GetInternalList(this X509SubjectAlternativeNameExtension subjectAlternativeNameExtension)
-		{
-			ArgumentNullException.ThrowIfNull(subjectAlternativeNameExtension);
+				subjectAlternativeNameExtension.EnsureEnumeration();
 
-			subjectAlternativeNameExtension.EnsureEnumeration();
+				return (_decodedField.GetValue(subjectAlternativeNameExtension) as IEnumerable)!.OfType<object>();
+			}
 
-			return (_decodedField.GetValue(subjectAlternativeNameExtension) as IEnumerable)!.OfType<object>();
+			#endregion
 		}
 
 		#endregion
