@@ -1,5 +1,4 @@
 using Application.Models.Cryptography;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Models.Cryptography
 {

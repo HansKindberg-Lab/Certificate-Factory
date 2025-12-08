@@ -1,6 +1,5 @@
 using Application.Models.Cryptography;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntegrationTests.Models.Cryptography
 {

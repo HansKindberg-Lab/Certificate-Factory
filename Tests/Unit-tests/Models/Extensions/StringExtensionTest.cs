@@ -1,5 +1,4 @@
 using Application.Models.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Models.Extensions
 {

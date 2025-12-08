@@ -6,7 +6,6 @@ using Application.Models.Cryptography.Storing;
 using Application.Models.Cryptography.Transferring;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntegrationTests.Models.Cryptography.Transferring
 {

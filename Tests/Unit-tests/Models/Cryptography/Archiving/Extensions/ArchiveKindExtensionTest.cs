@@ -1,6 +1,5 @@
 using Application.Models.Cryptography.Archiving;
 using Application.Models.Cryptography.Archiving.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Models.Cryptography.Archiving.Extensions
 {

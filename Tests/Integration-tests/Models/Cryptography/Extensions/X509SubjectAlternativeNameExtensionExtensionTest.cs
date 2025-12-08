@@ -1,6 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntegrationTests.Models.Cryptography.Extensions
 {

@@ -5,7 +5,6 @@ using Application.Models.Cryptography.Extensions;
 using Application.Models.Cryptography.Storing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IntegrationTests.Models.Cryptography.Extensions
 {

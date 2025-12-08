@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using Application.Models.Cryptography;
 using Application.Models.Cryptography.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Models.Cryptography.Extensions
 {
