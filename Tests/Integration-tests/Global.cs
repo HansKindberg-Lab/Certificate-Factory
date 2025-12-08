@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
+[assembly: DoNotParallelize]
+
 namespace IntegrationTests
 {
 	// ReSharper disable All
