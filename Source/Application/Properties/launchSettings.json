@@ -1,11 +1,13 @@
 {
+	"$schema": "http://json.schemastore.org/launchsettings.json",
 	"profiles": {
 		"Kestrel": {
-			"applicationUrl": "https://localhost:5000",
+			"applicationUrl": "https://certificate-factory.dev.localhost",
 			"commandName": "Project",
 			"dotnetRunMessages": true,
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
+				// Below may cause longer startup time when running locally (only during development). If it is a problem comment it out.
 				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
 			},
 			"launchBrowser": true
@@ -14,13 +16,11 @@
 			"commandName": "Docker",
 			"environmentVariables": {
 				"ASPNETCORE_ENVIRONMENT": "Development",
-				"ASPNETCORE_URLS": "https://+:5001"
+				// Below may cause longer startup time when running locally (only during development). If it is a problem comment it out.
+				"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
 			},
 			"launchBrowser": true,
-			"launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-			"publishAllPorts": false,
-			"sslPort": 5001,
-			"useSSL": true
+			"launchUrl": "https://certificate-factory.dev.localhost"
 		}
 	}
 }
