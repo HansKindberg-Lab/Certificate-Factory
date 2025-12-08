@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.Net;
 using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
-using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
 
 var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +13,7 @@ webApplicationBuilder.Services.AddCertificateFactory(webApplicationBuilder.Confi
 webApplicationBuilder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
 	options.AllowedHosts.Clear();
-	options.KnownNetworks.Clear();
+	options.KnownIPNetworks.Clear();
 	options.KnownProxies.Clear();
 });
 

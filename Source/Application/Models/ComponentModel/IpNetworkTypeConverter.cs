@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Net;
-using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
 
 namespace Application.Models.ComponentModel
 {
@@ -55,7 +54,7 @@ namespace Application.Models.ComponentModel
 			ArgumentNullException.ThrowIfNull(destinationType);
 
 			if(destinationType == typeof(string) && value is IPNetwork ipNetwork)
-				return $"{ipNetwork.Prefix}{this.Delimiter}{ipNetwork.PrefixLength}";
+				return $"{ipNetwork.BaseAddress}{this.Delimiter}{ipNetwork.PrefixLength}";
 
 			return base.ConvertTo(context, culture, value, destinationType);
 		}
