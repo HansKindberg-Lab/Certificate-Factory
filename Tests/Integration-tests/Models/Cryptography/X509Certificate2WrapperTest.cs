@@ -50,7 +50,7 @@ namespace IntegrationTests.Models.Cryptography
 			{
 				var chain = certificateWrapper.GetChain().ToList();
 
-				Assert.AreEqual(3, chain.Count);
+				Assert.HasCount(3, chain);
 
 				Assert.AreEqual(certificateWrapper.WrappedCertificate, ((X509Certificate2Wrapper)chain[0]).WrappedCertificate);
 			}
@@ -69,7 +69,7 @@ namespace IntegrationTests.Models.Cryptography
 
 					var certificates = chain.ChainElements.Select(element => element.Certificate).ToList();
 
-					Assert.AreEqual(3, certificates.Count);
+					Assert.HasCount(3, certificates);
 
 					Assert.AreEqual(certificateWrapper.WrappedCertificate, certificates[0]);
 				}
@@ -96,17 +96,17 @@ namespace IntegrationTests.Models.Cryptography
 
 			Assert.IsNotNull(subjectAlternativeName);
 
-			Assert.AreEqual(3, subjectAlternativeName.DnsNames.Count);
+			Assert.HasCount(3, subjectAlternativeName.DnsNames);
 			Assert.AreEqual("dns-name-1.example.org", subjectAlternativeName.DnsNames.ElementAt(0));
 			Assert.AreEqual("dns-name-2.example.org", subjectAlternativeName.DnsNames.ElementAt(1));
 			Assert.AreEqual("dns-name-3.example.org", subjectAlternativeName.DnsNames.ElementAt(2));
 
-			Assert.AreEqual(3, subjectAlternativeName.EmailAddresses.Count);
+			Assert.HasCount(3, subjectAlternativeName.EmailAddresses);
 			Assert.AreEqual("email-address-1@example.org", subjectAlternativeName.EmailAddresses.ElementAt(0));
 			Assert.AreEqual("email-address-2@example.org", subjectAlternativeName.EmailAddresses.ElementAt(1));
 			Assert.AreEqual("email-address-3@example.org", subjectAlternativeName.EmailAddresses.ElementAt(2));
 
-			Assert.AreEqual(6, subjectAlternativeName.IpAddresses.Count);
+			Assert.HasCount(6, subjectAlternativeName.IpAddresses);
 			Assert.AreEqual(IPAddress.Parse("10.10.10.10"), subjectAlternativeName.IpAddresses.ElementAt(0));
 			Assert.AreEqual(IPAddress.Parse("11.11.11.11"), subjectAlternativeName.IpAddresses.ElementAt(1));
 			Assert.AreEqual(IPAddress.Parse("12.12.12.12"), subjectAlternativeName.IpAddresses.ElementAt(2));
@@ -114,12 +114,12 @@ namespace IntegrationTests.Models.Cryptography
 			Assert.AreEqual(IPAddress.Parse("127.0.0.2"), subjectAlternativeName.IpAddresses.ElementAt(4));
 			Assert.AreEqual(IPAddress.Parse("127.0.0.3"), subjectAlternativeName.IpAddresses.ElementAt(5));
 
-			Assert.AreEqual(3, subjectAlternativeName.Uris.Count);
+			Assert.HasCount(3, subjectAlternativeName.Uris);
 			Assert.AreEqual(new Uri("https://uri-1.example.org"), subjectAlternativeName.Uris.ElementAt(0));
 			Assert.AreEqual(new Uri("https://uri-2.example.org"), subjectAlternativeName.Uris.ElementAt(1));
 			Assert.AreEqual(new Uri("https://uri-3.example.org"), subjectAlternativeName.Uris.ElementAt(2));
 
-			Assert.AreEqual(3, subjectAlternativeName.UserPrincipalNames.Count);
+			Assert.HasCount(3, subjectAlternativeName.UserPrincipalNames);
 			Assert.AreEqual("user-principal-name-1@example.org", subjectAlternativeName.UserPrincipalNames.ElementAt(0));
 			Assert.AreEqual("user-principal-name-2@example.org", subjectAlternativeName.UserPrincipalNames.ElementAt(1));
 			Assert.AreEqual("user-principal-name-3@example.org", subjectAlternativeName.UserPrincipalNames.ElementAt(2));

@@ -31,32 +31,32 @@ namespace UnitTests.Models.Cryptography.Extensions
 			Assert.IsFalse(descriptions.Any());
 
 			descriptions = EnhancedKeyUsage.ClientAuthentication.Descriptions();
-			Assert.AreEqual(1, descriptions.Count);
+			Assert.HasCount(1, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.CodeSigning.Descriptions();
-			Assert.AreEqual(1, descriptions.Count);
+			Assert.HasCount(1, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.3", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.SecureEmail.Descriptions();
-			Assert.AreEqual(1, descriptions.Count);
+			Assert.HasCount(1, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.4", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.ServerAuthentication.Descriptions();
-			Assert.AreEqual(1, descriptions.Count);
+			Assert.HasCount(1, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.TimestampSigning.Descriptions();
-			Assert.AreEqual(1, descriptions.Count);
+			Assert.HasCount(1, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.8", descriptions.First());
 
 			descriptions = (EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.ServerAuthentication).Descriptions();
-			Assert.AreEqual(2, descriptions.Count);
+			Assert.HasCount(2, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
 			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
 
 			descriptions = (EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.CodeSigning | EnhancedKeyUsage.None | EnhancedKeyUsage.SecureEmail | EnhancedKeyUsage.ServerAuthentication | EnhancedKeyUsage.TimestampSigning).Descriptions();
-			Assert.AreEqual(5, descriptions.Count);
+			Assert.HasCount(5, descriptions);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
 			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
 			Assert.AreEqual("1.3.6.1.5.5.7.3.3", descriptions.ElementAt(2));

@@ -40,27 +40,27 @@ namespace IntegrationTests.Models.Cryptography
 			var constructionTree = new CertificateConstructionTreeOptions();
 			configuration.Bind(constructionTree);
 
-			Assert.AreEqual(3, constructionTree.Defaults.SubjectAlternativeName.DnsNames.Count);
+			Assert.HasCount(3, constructionTree.Defaults.SubjectAlternativeName.DnsNames);
 			Assert.AreEqual("site-1.example.org", constructionTree.Defaults.SubjectAlternativeName.DnsNames.ElementAt(0));
 			Assert.AreEqual("site-2.example.org", constructionTree.Defaults.SubjectAlternativeName.DnsNames.ElementAt(1));
 			Assert.AreEqual("site-3.example.org", constructionTree.Defaults.SubjectAlternativeName.DnsNames.ElementAt(2));
 
-			Assert.AreEqual(3, constructionTree.Defaults.SubjectAlternativeName.EmailAddresses.Count);
+			Assert.HasCount(3, constructionTree.Defaults.SubjectAlternativeName.EmailAddresses);
 			Assert.AreEqual("user-1@example.org", constructionTree.Defaults.SubjectAlternativeName.EmailAddresses.ElementAt(0));
 			Assert.AreEqual("user-2@example.org", constructionTree.Defaults.SubjectAlternativeName.EmailAddresses.ElementAt(1));
 			Assert.AreEqual("user-3@example.org", constructionTree.Defaults.SubjectAlternativeName.EmailAddresses.ElementAt(2));
 
-			Assert.AreEqual(3, constructionTree.Defaults.SubjectAlternativeName.IpAddresses.Count);
+			Assert.HasCount(3, constructionTree.Defaults.SubjectAlternativeName.IpAddresses);
 			Assert.AreEqual(IPAddress.Parse("127.0.0.1"), constructionTree.Defaults.SubjectAlternativeName.IpAddresses.ElementAt(0));
 			Assert.AreEqual(IPAddress.Parse("127.0.0.2"), constructionTree.Defaults.SubjectAlternativeName.IpAddresses.ElementAt(1));
 			Assert.AreEqual(IPAddress.Parse("::1"), constructionTree.Defaults.SubjectAlternativeName.IpAddresses.ElementAt(2));
 
-			Assert.AreEqual(3, constructionTree.Defaults.SubjectAlternativeName.Uris.Count);
+			Assert.HasCount(3, constructionTree.Defaults.SubjectAlternativeName.Uris);
 			Assert.AreEqual(new Uri("https://site-1.example.org"), constructionTree.Defaults.SubjectAlternativeName.Uris.ElementAt(0));
 			Assert.AreEqual(new Uri("https://site-2.example.org"), constructionTree.Defaults.SubjectAlternativeName.Uris.ElementAt(1));
 			Assert.AreEqual(new Uri("https://site-3.example.org"), constructionTree.Defaults.SubjectAlternativeName.Uris.ElementAt(2));
 
-			Assert.AreEqual(3, constructionTree.Defaults.SubjectAlternativeName.UserPrincipalNames.Count);
+			Assert.HasCount(3, constructionTree.Defaults.SubjectAlternativeName.UserPrincipalNames);
 			Assert.AreEqual("user-1@example.org", constructionTree.Defaults.SubjectAlternativeName.UserPrincipalNames.ElementAt(0));
 			Assert.AreEqual("user-2@example.org", constructionTree.Defaults.SubjectAlternativeName.UserPrincipalNames.ElementAt(1));
 			Assert.AreEqual("user-3@example.org", constructionTree.Defaults.SubjectAlternativeName.UserPrincipalNames.ElementAt(2));

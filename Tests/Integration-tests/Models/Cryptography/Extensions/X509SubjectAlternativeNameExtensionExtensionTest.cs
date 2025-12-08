@@ -32,7 +32,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			var emailAddresses = subjectAlternativeNameExtension.EnumerateEmailAddresses().ToList();
 
-			Assert.AreEqual(3, emailAddresses.Count);
+			Assert.HasCount(3, emailAddresses);
 			Assert.AreEqual("email-address-1@example.org", emailAddresses[0]);
 			Assert.AreEqual("email-address-2@example.org", emailAddresses[1]);
 			Assert.AreEqual("email-address-3@example.org", emailAddresses[2]);
@@ -45,7 +45,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			var uris = subjectAlternativeNameExtension.EnumerateUris().ToList();
 
-			Assert.AreEqual(3, uris.Count);
+			Assert.HasCount(3, uris);
 			Assert.AreEqual(new Uri("https://uri-1.example.org"), uris[0]);
 			Assert.AreEqual(new Uri("https://uri-2.example.org"), uris[1]);
 			Assert.AreEqual(new Uri("https://uri-3.example.org"), uris[2]);
@@ -58,7 +58,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 
 			var userPrincipalNames = subjectAlternativeNameExtension.EnumerateUserPrincipalNames().ToList();
 
-			Assert.AreEqual(3, userPrincipalNames.Count);
+			Assert.HasCount(3, userPrincipalNames);
 			Assert.AreEqual("user-principal-name-1@example.org", userPrincipalNames[0]);
 			Assert.AreEqual("user-principal-name-2@example.org", userPrincipalNames[1]);
 			Assert.AreEqual("user-principal-name-3@example.org", userPrincipalNames[2]);

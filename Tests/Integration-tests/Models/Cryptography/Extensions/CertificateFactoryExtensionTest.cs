@@ -163,13 +163,13 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			Assert.AreEqual(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.AreEqual(2, wrappedCertificate.Extensions.Count);
+			Assert.HasCount(2, wrappedCertificate.Extensions);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var enhancedKeyUsageExtension = extensions[0] as X509EnhancedKeyUsageExtension;
 			Assert.IsNotNull(enhancedKeyUsageExtension);
 			Assert.IsTrue(enhancedKeyUsageExtension.Critical);
-			Assert.AreEqual(1, enhancedKeyUsageExtension.EnhancedKeyUsages.Count);
+			Assert.HasCount(1, enhancedKeyUsageExtension.EnhancedKeyUsages);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.2", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
 
 			var keyUsageExtension = extensions[1] as X509KeyUsageExtension;
@@ -193,7 +193,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			Assert.IsNotNull(certificate.Issuer);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.AreEqual(2, wrappedCertificate.Extensions.Count);
+			Assert.HasCount(2, wrappedCertificate.Extensions);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var basicConstraintsExtension = extensions[0] as X509BasicConstraintsExtension;
@@ -220,7 +220,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			Assert.AreEqual(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.AreEqual(2, wrappedCertificate.Extensions.Count);
+			Assert.HasCount(2, wrappedCertificate.Extensions);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var basicConstraintsExtension = extensions[0] as X509BasicConstraintsExtension;
@@ -250,7 +250,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			Assert.AreEqual(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.AreEqual(3, wrappedCertificate.Extensions.Count);
+			Assert.HasCount(3, wrappedCertificate.Extensions);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var extension = extensions[0];
@@ -261,7 +261,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			var enhancedKeyUsageExtension = extensions[1] as X509EnhancedKeyUsageExtension;
 			Assert.IsNotNull(enhancedKeyUsageExtension);
 			Assert.IsTrue(enhancedKeyUsageExtension.Critical);
-			Assert.AreEqual(1, enhancedKeyUsageExtension.EnhancedKeyUsages.Count);
+			Assert.HasCount(1, enhancedKeyUsageExtension.EnhancedKeyUsages);
 			Assert.AreEqual("1.3.6.1.5.5.7.3.1", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
 
 			var keyUsageExtension = extensions[2] as X509KeyUsageExtension;

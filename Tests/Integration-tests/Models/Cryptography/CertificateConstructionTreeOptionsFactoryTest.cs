@@ -21,7 +21,7 @@ namespace IntegrationTests.Models.Cryptography
 				var constructionTree = new CertificateConstructionTreeOptionsFactory(loggerFactory).Create(certificateWrapper);
 
 				Assert.IsNotNull(constructionTree);
-				Assert.AreEqual(1, constructionTree.Roots.Count);
+				Assert.HasCount(1, constructionTree.Roots);
 			}
 		}
 
