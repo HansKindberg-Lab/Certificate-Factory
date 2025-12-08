@@ -8,31 +8,21 @@ namespace Application.Models.Text.Json.Extensions
 {
 	public static class JsonSerializerOptionsExtension
 	{
-		#region Fields
-
-		private static JsonSerializerOptions _default;
-
-		#endregion
-
 		#region Properties
 
-		public static JsonSerializerOptions Default
-		{
-			get
-			{
-				if(_default == null)
-				{
-					_default = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-					_default.SetDefaults();
-				}
-
-				return _default;
-			}
-		}
+		public static JsonSerializerOptions Default { get; } = CreateJsonSerializerOptions();
 
 		#endregion
 
 		#region Methods
+
+		private static JsonSerializerOptions CreateJsonSerializerOptions()
+		{
+			var jsonSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+			jsonSerializerOptions.SetDefaults();
+
+			return jsonSerializerOptions;
+		}
 
 		public static void SetDefaults(this JsonSerializerOptions options)
 		{

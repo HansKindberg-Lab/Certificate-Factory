@@ -20,25 +20,14 @@ namespace IntegrationTests
 	{
 		#region Fields
 
-		private static IConfiguration _configuration;
-		private static IHostEnvironment _hostEnvironment;
 		public static readonly string ProjectDirectoryPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
 
 		#endregion
 
 		#region Properties
 
-		public static IConfiguration Configuration
-		{
-			get
-			{
-				_configuration ??= CreateConfiguration("appsettings.json");
-
-				return _configuration;
-			}
-		}
-
-		public static IHostEnvironment HostEnvironment => _hostEnvironment ??= CreateHostEnvironment("Integration-tests");
+		public static IConfiguration Configuration => field ??= CreateConfiguration("appsettings.json");
+		public static IHostEnvironment HostEnvironment => field ??= CreateHostEnvironment("Integration-tests");
 
 		#endregion
 
