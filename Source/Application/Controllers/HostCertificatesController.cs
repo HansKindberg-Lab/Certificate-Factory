@@ -1,5 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 using Application.Models;
+using Application.Models.Logging.Extensions;
 using Application.Models.Views.HostCertificates;
 using Application.Models.Web;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,7 @@ namespace Application.Controllers
 				}
 				catch(Exception exception)
 				{
-					this.Logger.LogError(exception, exception.ToString());
+					this.Logger.LogErrorIfEnabled(exception, exception.ToString());
 					model.Error = exception.ToString();
 				}
 			}
