@@ -2,5 +2,5 @@
 
 namespace UnitTests
 {
-	internal class Global { }
+	public class Global { }
 }
