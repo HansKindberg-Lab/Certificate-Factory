@@ -3,12 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationTests.Models.Cryptography
 {
-	[TestClass]
 	public class CertificateFactoryTest
 	{
 		#region Methods
 
-		[TestMethod]
+		[Fact]
 		public async Task Create_ShouldReturnACertificate()
 		{
 			await using(var serviceProvider = await this.CreateServiceProviderAsync())
@@ -30,9 +29,9 @@ namespace IntegrationTests.Models.Cryptography
 
 				using(var certificate = certificateFactory.Create(rsaOptions, certificateOptions))
 				{
-					Assert.IsNotNull(certificate);
-					Assert.AreEqual("00D63C23DF87A790DC4ED72C09172487EA8BDE25A3", certificate.SerialNumber);
-					//Assert.AreEqual(string.Empty, certificate.ToString());
+					Assert.NotNull(certificate);
+					Assert.Equal("00D63C23DF87A790DC4ED72C09172487EA8BDE25A3", certificate.SerialNumber);
+					//Assert.Equal(string.Empty, certificate.ToString());
 				}
 			}
 		}

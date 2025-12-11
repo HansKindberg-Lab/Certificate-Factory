@@ -5,7 +5,6 @@ using Application.Models.Cryptography.Extensions;
 
 namespace UnitTests.Models.Cryptography.Extensions
 {
-	[TestClass]
 	public class EnhancedKeyUsageExtensionTest
 	{
 		#region Methods
@@ -22,89 +21,89 @@ namespace UnitTests.Models.Cryptography.Extensions
 			return new X509EnhancedKeyUsageExtension(collection, false);
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task Description_Test()
 		{
 			await Task.CompletedTask;
 
 			var descriptions = EnhancedKeyUsage.None.Descriptions();
-			Assert.IsFalse(descriptions.Any());
+			Assert.False(descriptions.Any());
 
 			descriptions = EnhancedKeyUsage.ClientAuthentication.Descriptions();
-			Assert.HasCount(1, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.First());
+			Assert.Single(descriptions);
+			Assert.Equal("1.3.6.1.5.5.7.3.2", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.CodeSigning.Descriptions();
-			Assert.HasCount(1, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.3", descriptions.First());
+			Assert.Single(descriptions);
+			Assert.Equal("1.3.6.1.5.5.7.3.3", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.SecureEmail.Descriptions();
-			Assert.HasCount(1, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.4", descriptions.First());
+			Assert.Single(descriptions);
+			Assert.Equal("1.3.6.1.5.5.7.3.4", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.ServerAuthentication.Descriptions();
-			Assert.HasCount(1, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
+			Assert.Single(descriptions);
+			Assert.Equal("1.3.6.1.5.5.7.3.1", descriptions.First());
 
 			descriptions = EnhancedKeyUsage.TimestampSigning.Descriptions();
-			Assert.HasCount(1, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.8", descriptions.First());
+			Assert.Single(descriptions);
+			Assert.Equal("1.3.6.1.5.5.7.3.8", descriptions.First());
 
 			descriptions = (EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.ServerAuthentication).Descriptions();
-			Assert.HasCount(2, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
-			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
+			Assert.Equal(2, descriptions.Count);
+			Assert.Equal("1.3.6.1.5.5.7.3.1", descriptions.First());
+			Assert.Equal("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
 
 			descriptions = (EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.CodeSigning | EnhancedKeyUsage.None | EnhancedKeyUsage.SecureEmail | EnhancedKeyUsage.ServerAuthentication | EnhancedKeyUsage.TimestampSigning).Descriptions();
-			Assert.HasCount(5, descriptions);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.1", descriptions.First());
-			Assert.AreEqual("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
-			Assert.AreEqual("1.3.6.1.5.5.7.3.3", descriptions.ElementAt(2));
-			Assert.AreEqual("1.3.6.1.5.5.7.3.4", descriptions.ElementAt(3));
-			Assert.AreEqual("1.3.6.1.5.5.7.3.8", descriptions.Last());
+			Assert.Equal(5, descriptions.Count);
+			Assert.Equal("1.3.6.1.5.5.7.3.1", descriptions.First());
+			Assert.Equal("1.3.6.1.5.5.7.3.2", descriptions.ElementAt(1));
+			Assert.Equal("1.3.6.1.5.5.7.3.3", descriptions.ElementAt(2));
+			Assert.Equal("1.3.6.1.5.5.7.3.4", descriptions.ElementAt(3));
+			Assert.Equal("1.3.6.1.5.5.7.3.8", descriptions.Last());
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task GetByExtension_Test()
 		{
 			await Task.CompletedTask;
 
 			var enhancedKeyUsageExtension = new X509EnhancedKeyUsageExtension();
 			var enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.IsNull(enhancedKeyUsage);
+			Assert.Null(enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension("1.1");
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.IsNull(enhancedKeyUsage);
+			Assert.Null(enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.ClientAuthentication);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.AreEqual(EnhancedKeyUsage.ClientAuthentication, enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.ClientAuthentication, enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.CodeSigning);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.AreEqual(EnhancedKeyUsage.CodeSigning, enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.CodeSigning, enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.SecureEmail);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.AreEqual(EnhancedKeyUsage.SecureEmail, enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.SecureEmail, enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.ServerAuthentication);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.AreEqual(EnhancedKeyUsage.ServerAuthentication, enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.ServerAuthentication, enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.TimestampSigning);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.AreEqual(EnhancedKeyUsage.TimestampSigning, enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.TimestampSigning, enhancedKeyUsage);
 
 			enhancedKeyUsageExtension = CreateEnhancedKeyUsageExtension(EnhancedKeyUsageValues.ClientAuthentication, EnhancedKeyUsageValues.SecureEmail, EnhancedKeyUsageValues.ServerAuthentication, EnhancedKeyUsageValues.TimestampSigning);
 			enhancedKeyUsage = EnhancedKeyUsageExtension.GetByExtension(enhancedKeyUsageExtension);
-			Assert.IsNotNull(enhancedKeyUsage);
-			Assert.AreEqual(EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.SecureEmail | EnhancedKeyUsage.ServerAuthentication | EnhancedKeyUsage.TimestampSigning, enhancedKeyUsage);
-			Assert.IsTrue(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.ClientAuthentication));
-			Assert.IsTrue(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.SecureEmail));
-			Assert.IsTrue(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.ServerAuthentication));
-			Assert.IsTrue(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.TimestampSigning));
+			Assert.NotNull(enhancedKeyUsage);
+			Assert.Equal(EnhancedKeyUsage.ClientAuthentication | EnhancedKeyUsage.SecureEmail | EnhancedKeyUsage.ServerAuthentication | EnhancedKeyUsage.TimestampSigning, enhancedKeyUsage);
+			Assert.True(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.ClientAuthentication));
+			Assert.True(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.SecureEmail));
+			Assert.True(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.ServerAuthentication));
+			Assert.True(enhancedKeyUsage.Value.HasFlag(EnhancedKeyUsage.TimestampSigning));
 		}
 
 		#endregion

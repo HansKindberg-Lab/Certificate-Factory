@@ -4,12 +4,11 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IntegrationTests.Models.Cryptography
 {
-	[TestClass]
 	public class CertificateConstructionTreeOptionsFactoryTest
 	{
 		#region Methods
 
-		[TestMethod]
+		[Fact]
 		public async Task Create_Test()
 		{
 			await Task.CompletedTask;
@@ -20,8 +19,8 @@ namespace IntegrationTests.Models.Cryptography
 			{
 				var constructionTree = new CertificateConstructionTreeOptionsFactory(loggerFactory).Create(certificateWrapper);
 
-				Assert.IsNotNull(constructionTree);
-				Assert.HasCount(1, constructionTree.Roots);
+				Assert.NotNull(constructionTree);
+				Assert.Single(constructionTree.Roots);
 			}
 		}
 

@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IntegrationTests.Models.Cryptography.Transferring
 {
-	[TestClass]
 	public class CertificateExporterTest
 	{
 		#region Methods
@@ -21,7 +20,7 @@ namespace IntegrationTests.Models.Cryptography.Transferring
 			return await Task.FromResult(services.BuildServiceProvider());
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task Export_ShouldReturnACertificateExport()
 		{
 			const string rootSubject = "CN=Root";
@@ -41,36 +40,36 @@ namespace IntegrationTests.Models.Cryptography.Transferring
 					{
 						var certificateExporter = serviceProvider.GetRequiredService<ICertificateExporter>();
 						var certificateExport = certificateExporter.Export(certificate, "password");
-						Assert.IsNotNull(certificateExport);
+						Assert.NotNull(certificateExport);
 
 						using(var x509Certificate = X509Certificate2.CreateFromPem(certificateExport.CertificatePem))
 						{
-							Assert.IsFalse(x509Certificate.HasPrivateKey);
-							Assert.AreEqual(rootSubject, x509Certificate.Issuer);
-							Assert.AreEqual(subject, x509Certificate.Subject);
+							Assert.False(x509Certificate.HasPrivateKey);
+							Assert.Equal(rootSubject, x509Certificate.Issuer);
+							Assert.Equal(subject, x509Certificate.Subject);
 						}
 
 						using(var x509Certificate = X509Certificate2.CreateFromPem(certificateExport.CertificatePem, certificateExport.PrivateKeyPem))
 						{
-							Assert.IsTrue(x509Certificate.HasPrivateKey);
-							Assert.AreEqual(rootSubject, x509Certificate.Issuer);
-							Assert.AreEqual(subject, x509Certificate.Subject);
+							Assert.True(x509Certificate.HasPrivateKey);
+							Assert.Equal(rootSubject, x509Certificate.Issuer);
+							Assert.Equal(subject, x509Certificate.Subject);
 						}
 
 						var certificateAndPrivateKeyPem = certificateExport.CertificatePem + Environment.NewLine + certificateExport.PrivateKeyPem;
 
 						using(var x509Certificate = X509Certificate2.CreateFromPem(certificateAndPrivateKeyPem))
 						{
-							Assert.IsFalse(x509Certificate.HasPrivateKey);
-							Assert.AreEqual(rootSubject, x509Certificate.Issuer);
-							Assert.AreEqual(subject, x509Certificate.Subject);
+							Assert.False(x509Certificate.HasPrivateKey);
+							Assert.Equal(rootSubject, x509Certificate.Issuer);
+							Assert.Equal(subject, x509Certificate.Subject);
 						}
 
 						using(var x509Certificate = X509Certificate2.CreateFromPem(certificateAndPrivateKeyPem, certificateAndPrivateKeyPem))
 						{
-							Assert.IsTrue(x509Certificate.HasPrivateKey);
-							Assert.AreEqual(rootSubject, x509Certificate.Issuer);
-							Assert.AreEqual(subject, x509Certificate.Subject);
+							Assert.True(x509Certificate.HasPrivateKey);
+							Assert.Equal(rootSubject, x509Certificate.Issuer);
+							Assert.Equal(subject, x509Certificate.Subject);
 						}
 					}
 				}

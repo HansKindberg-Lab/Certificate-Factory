@@ -8,12 +8,11 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IntegrationTests.Models.Cryptography.Extensions
 {
-	[TestClass]
 	public class CertificateFactoryExtensionTest
 	{
 		#region Methods
 
-		[TestMethod]
+		[Fact]
 		public async Task CreateClientCertificate_ShouldReturnAClientCertificate()
 		{
 			const string rootSubject = "CN=Root";
@@ -47,7 +46,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			}
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task CreateIntermediateCertificate_ShouldReturnAnIntermediateCertificate()
 		{
 			const string rootSubject = "CN=Root";
@@ -81,7 +80,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			}
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task CreateRootCertificate_ShouldReturnARootCertificate()
 		{
 			const string subject = "CN=Root";
@@ -115,7 +114,7 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 			return await Task.FromResult(services.BuildServiceProvider());
 		}
 
-		[TestMethod]
+		[Fact]
 		public async Task CreateTlsCertificate_ShouldReturnATlsCertificate()
 		{
 			const string rootSubject = "CN=Root";
@@ -153,122 +152,122 @@ namespace IntegrationTests.Models.Cryptography.Extensions
 		{
 			await Task.CompletedTask;
 
-			Assert.IsNotNull(certificate);
-			Assert.IsFalse(certificate.Archived);
-			Assert.IsTrue(certificate.HasPrivateKey);
-			Assert.AreEqual(rootSubject, certificate.Issuer);
-			Assert.IsNotNull(issuer);
-			Assert.AreEqual(issuer.NotAfter, certificate.NotAfter);
-			Assert.IsTrue(issuer.NotBefore <= certificate.NotBefore);
-			Assert.AreEqual(subject, certificate.Subject);
+			Assert.NotNull(certificate);
+			Assert.False(certificate.Archived);
+			Assert.True(certificate.HasPrivateKey);
+			Assert.Equal(rootSubject, certificate.Issuer);
+			Assert.NotNull(issuer);
+			Assert.Equal(issuer.NotAfter, certificate.NotAfter);
+			Assert.True(issuer.NotBefore <= certificate.NotBefore);
+			Assert.Equal(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.HasCount(2, wrappedCertificate.Extensions);
+			Assert.Equal(2, wrappedCertificate.Extensions.Count);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var enhancedKeyUsageExtension = extensions[0] as X509EnhancedKeyUsageExtension;
-			Assert.IsNotNull(enhancedKeyUsageExtension);
-			Assert.IsTrue(enhancedKeyUsageExtension.Critical);
-			Assert.HasCount(1, enhancedKeyUsageExtension.EnhancedKeyUsages);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.2", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
+			Assert.NotNull(enhancedKeyUsageExtension);
+			Assert.True(enhancedKeyUsageExtension.Critical);
+			Assert.Single(enhancedKeyUsageExtension.EnhancedKeyUsages);
+			Assert.Equal("1.3.6.1.5.5.7.3.2", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
 
 			var keyUsageExtension = extensions[1] as X509KeyUsageExtension;
-			Assert.IsNotNull(keyUsageExtension);
-			Assert.AreEqual(X509KeyUsageFlags.DigitalSignature, keyUsageExtension.KeyUsages);
+			Assert.NotNull(keyUsageExtension);
+			Assert.Equal(X509KeyUsageFlags.DigitalSignature, keyUsageExtension.KeyUsages);
 
-			//Assert.AreEqual(string.Empty, certificate.ToString(true));
+			//Assert.Equal(string.Empty, certificate.ToString(true));
 		}
 
 		protected internal virtual async Task ValidateIntermediateCertificate(ICertificate certificate, ICertificate issuer, string rootSubject, string subject)
 		{
 			await Task.CompletedTask;
 
-			Assert.IsNotNull(certificate);
-			Assert.IsFalse(certificate.Archived);
-			Assert.IsTrue(certificate.HasPrivateKey);
-			Assert.AreEqual(rootSubject, certificate.Issuer);
-			Assert.IsNotNull(issuer);
-			Assert.AreEqual(certificate.Issuer, issuer.Subject);
-			Assert.AreEqual(subject, certificate.Subject);
-			Assert.IsNotNull(certificate.Issuer);
+			Assert.NotNull(certificate);
+			Assert.False(certificate.Archived);
+			Assert.True(certificate.HasPrivateKey);
+			Assert.Equal(rootSubject, certificate.Issuer);
+			Assert.NotNull(issuer);
+			Assert.Equal(certificate.Issuer, issuer.Subject);
+			Assert.Equal(subject, certificate.Subject);
+			Assert.NotNull(certificate.Issuer);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.HasCount(2, wrappedCertificate.Extensions);
+			Assert.Equal(2, wrappedCertificate.Extensions.Count);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var basicConstraintsExtension = extensions[0] as X509BasicConstraintsExtension;
-			Assert.IsNotNull(basicConstraintsExtension);
-			Assert.IsTrue(basicConstraintsExtension.CertificateAuthority);
-			Assert.IsTrue(basicConstraintsExtension.Critical);
-			Assert.IsTrue(basicConstraintsExtension.HasPathLengthConstraint);
-			Assert.AreEqual(0, basicConstraintsExtension.PathLengthConstraint);
+			Assert.NotNull(basicConstraintsExtension);
+			Assert.True(basicConstraintsExtension.CertificateAuthority);
+			Assert.True(basicConstraintsExtension.Critical);
+			Assert.True(basicConstraintsExtension.HasPathLengthConstraint);
+			Assert.Equal(0, basicConstraintsExtension.PathLengthConstraint);
 
 			var keyUsageExtension = extensions[1] as X509KeyUsageExtension;
-			Assert.IsNotNull(keyUsageExtension);
-			Assert.AreEqual(X509KeyUsageFlags.KeyCertSign, keyUsageExtension.KeyUsages);
+			Assert.NotNull(keyUsageExtension);
+			Assert.Equal(X509KeyUsageFlags.KeyCertSign, keyUsageExtension.KeyUsages);
 
-			//Assert.AreEqual(string.Empty, certificate.ToString(true));
+			//Assert.Equal(string.Empty, certificate.ToString(true));
 		}
 
 		protected internal virtual async Task ValidateRootCertificate(ICertificate certificate, string subject)
 		{
 			await Task.CompletedTask;
 
-			Assert.IsNotNull(certificate);
-			Assert.IsFalse(certificate.Archived);
-			Assert.IsTrue(certificate.HasPrivateKey);
-			Assert.AreEqual(subject, certificate.Subject);
+			Assert.NotNull(certificate);
+			Assert.False(certificate.Archived);
+			Assert.True(certificate.HasPrivateKey);
+			Assert.Equal(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.HasCount(2, wrappedCertificate.Extensions);
+			Assert.Equal(2, wrappedCertificate.Extensions.Count);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var basicConstraintsExtension = extensions[0] as X509BasicConstraintsExtension;
-			Assert.IsNotNull(basicConstraintsExtension);
-			Assert.IsTrue(basicConstraintsExtension.CertificateAuthority);
-			Assert.IsTrue(basicConstraintsExtension.Critical);
-			Assert.IsFalse(basicConstraintsExtension.HasPathLengthConstraint);
-			Assert.AreEqual(0, basicConstraintsExtension.PathLengthConstraint);
+			Assert.NotNull(basicConstraintsExtension);
+			Assert.True(basicConstraintsExtension.CertificateAuthority);
+			Assert.True(basicConstraintsExtension.Critical);
+			Assert.False(basicConstraintsExtension.HasPathLengthConstraint);
+			Assert.Equal(0, basicConstraintsExtension.PathLengthConstraint);
 
 			var keyUsageExtension = extensions[1] as X509KeyUsageExtension;
-			Assert.IsNotNull(keyUsageExtension);
-			Assert.AreEqual(X509KeyUsageFlags.KeyCertSign, keyUsageExtension.KeyUsages);
+			Assert.NotNull(keyUsageExtension);
+			Assert.Equal(X509KeyUsageFlags.KeyCertSign, keyUsageExtension.KeyUsages);
 
-			//Assert.AreEqual(string.Empty, certificate.ToString(true));
+			//Assert.Equal(string.Empty, certificate.ToString(true));
 		}
 
 		protected internal virtual async Task ValidateTlsCertificate(ICertificate certificate, ICertificate issuer, string rootSubject, string subject)
 		{
 			await Task.CompletedTask;
 
-			Assert.IsNotNull(certificate);
-			Assert.IsFalse(certificate.Archived);
-			Assert.IsTrue(certificate.HasPrivateKey);
-			Assert.AreEqual(rootSubject, certificate.Issuer);
-			Assert.AreEqual(issuer.NotAfter, certificate.NotAfter);
-			Assert.IsTrue(issuer.NotBefore <= certificate.NotBefore);
-			Assert.AreEqual(subject, certificate.Subject);
+			Assert.NotNull(certificate);
+			Assert.False(certificate.Archived);
+			Assert.True(certificate.HasPrivateKey);
+			Assert.Equal(rootSubject, certificate.Issuer);
+			Assert.Equal(issuer.NotAfter, certificate.NotAfter);
+			Assert.True(issuer.NotBefore <= certificate.NotBefore);
+			Assert.Equal(subject, certificate.Subject);
 
 			var wrappedCertificate = certificate.Unwrap();
-			Assert.HasCount(3, wrappedCertificate.Extensions);
+			Assert.Equal(3, wrappedCertificate.Extensions.Count);
 			var extensions = wrappedCertificate.Extensions.ToList();
 
 			var extension = extensions[0];
-			Assert.IsNotNull(extension);
-			Assert.IsFalse(extension.Critical);
-			Assert.AreEqual("2.5.29.17", extension.Oid?.Value);
+			Assert.NotNull(extension);
+			Assert.False(extension.Critical);
+			Assert.Equal("2.5.29.17", extension.Oid?.Value);
 
 			var enhancedKeyUsageExtension = extensions[1] as X509EnhancedKeyUsageExtension;
-			Assert.IsNotNull(enhancedKeyUsageExtension);
-			Assert.IsTrue(enhancedKeyUsageExtension.Critical);
-			Assert.HasCount(1, enhancedKeyUsageExtension.EnhancedKeyUsages);
-			Assert.AreEqual("1.3.6.1.5.5.7.3.1", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
+			Assert.NotNull(enhancedKeyUsageExtension);
+			Assert.True(enhancedKeyUsageExtension.Critical);
+			Assert.Single(enhancedKeyUsageExtension.EnhancedKeyUsages);
+			Assert.Equal("1.3.6.1.5.5.7.3.1", enhancedKeyUsageExtension.EnhancedKeyUsages[0]?.Value);
 
 			var keyUsageExtension = extensions[2] as X509KeyUsageExtension;
-			Assert.IsNotNull(keyUsageExtension);
-			Assert.AreEqual(X509KeyUsageFlags.DigitalSignature, keyUsageExtension.KeyUsages);
+			Assert.NotNull(keyUsageExtension);
+			Assert.Equal(X509KeyUsageFlags.DigitalSignature, keyUsageExtension.KeyUsages);
 
-			//Assert.AreEqual(string.Empty, certificate.ToString(true));
+			//Assert.Equal(string.Empty, certificate.ToString(true));
 		}
 
 		#endregion

@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using System.Net;
-using Application.Models.ComponentModel;
 using Application.Models.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,17 +7,13 @@ using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-[assembly: DoNotParallelize]
-
 namespace IntegrationTests
 {
-	// ReSharper disable All
-	[TestClass]
 	public static class Global
 	{
 		#region Fields
 
-		public static readonly string ProjectDirectoryPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+		public static readonly DirectoryInfo ProjectDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent!.Parent!.Parent!;
 
 		#endregion
 
@@ -55,9 +48,9 @@ namespace IntegrationTests
 		{
 			return new HostingEnvironment
 			{
-				ApplicationName = typeof(Global).Assembly.GetName().Name,
-				ContentRootFileProvider = new PhysicalFileProvider(ProjectDirectoryPath),
-				ContentRootPath = ProjectDirectoryPath,
+				ApplicationName = typeof(Global)!.Assembly!.GetName()!.Name!,
+				ContentRootFileProvider = new PhysicalFileProvider(ProjectDirectory.FullName),
+				ContentRootPath = ProjectDirectory.FullName,
 				EnvironmentName = environmentName
 			};
 		}
@@ -79,16 +72,6 @@ namespace IntegrationTests
 			return services;
 		}
 
-		[AssemblyInitialize]
-		public static async Task Initialize(TestContext _)
-		{
-			await Task.CompletedTask;
-
-			TypeDescriptor.AddAttributes(typeof(IPAddress), new TypeConverterAttribute(typeof(IpAddressTypeConverter)));
-			TypeDescriptor.AddAttributes(typeof(IPNetwork), new TypeConverterAttribute(typeof(IpNetworkTypeConverter)));
-		}
-
 		#endregion
 	}
-	// ReSharper restore All
 }
