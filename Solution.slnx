@@ -1,0 +1,25 @@
+<Solution>
+	<Folder Name="/.root/">
+		<File Path=".dockerignore" />
+		<File Path=".editorconfig" />
+		<File Path=".gitignore" />
+		<File Path="Directory.Build.props" />
+		<File Path="Directory.Build.targets" />
+		<File Path="NuGet.config" />
+		<File Path="ReadMe.md" />
+	</Folder>
+	<Folder Name="/.root/.github/" />
+	<Folder Name="/.root/.github/workflows/">
+		<File Path=".github/workflows/Docker-deploy.yml" />
+	</Folder>
+	<Folder Name="/Source/">
+		<Project DefaultStartup="true" Path="Source/Application/Application.csproj" />
+	</Folder>
+	<Folder Name="/Tests/">
+		<File Path="Tests/.editorconfig" />
+		<File Path="Tests/Directory.Build.props" />
+		<File Path="Tests/Directory.Build.targets" />
+		<Project Path="Tests/Integration-tests/Integration-tests.csproj" />
+		<Project Path="Tests/Unit-tests/Unit-tests.csproj" />
+	</Folder>
+</Solution>
