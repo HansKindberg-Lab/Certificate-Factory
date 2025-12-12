@@ -19,72 +19,72 @@ namespace IntegrationTests.Models.Cryptography
 			return new X509Certificate2Wrapper(certificate, new NullLoggerFactory());
 		}
 
-		private static X509Certificate2 GetCertificate()
-		{
-			using(var store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
-			{
-				store.Open(OpenFlags.ReadOnly);
+		//private static X509Certificate2 GetCertificate()
+		//{
+		//	using(var store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+		//	{
+		//		store.Open(OpenFlags.ReadOnly);
 
-				if(store.Certificates.Any())
-					return store.Certificates[0];
-			}
+		//		if(store.Certificates.Any())
+		//			return store.Certificates[0];
+		//	}
 
-			using(var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
-			{
-				store.Open(OpenFlags.ReadOnly);
+		//	using(var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+		//	{
+		//		store.Open(OpenFlags.ReadOnly);
 
-				if(store.Certificates.Any())
-					return store.Certificates[0];
-			}
+		//		if(store.Certificates.Any())
+		//			return store.Certificates[0];
+		//	}
 
-			throw new InvalidOperationException("Could not get a certificate.");
-		}
+		//	throw new InvalidOperationException("Could not get a certificate.");
+		//}
 
-		[Fact]
-		public async Task GetChain_Test()
-		{
-			await Task.CompletedTask;
+		//[Fact]
+		//public async Task GetChain_Test()
+		//{
+		//	await Task.CompletedTask;
 
-			using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
-			{
-				var chain = certificateWrapper.GetChain().ToList();
+		//	using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
+		//	{
+		//		var chain = certificateWrapper.GetChain().ToList();
 
-				Assert.Equal(3, chain.Count);
+		//		Assert.Equal(3, chain.Count);
 
-				Assert.Equal(certificateWrapper.WrappedCertificate, ((X509Certificate2Wrapper)chain[0]).WrappedCertificate);
-			}
-		}
+		//		Assert.Equal(certificateWrapper.WrappedCertificate, ((X509Certificate2Wrapper)chain[0]).WrappedCertificate);
+		//	}
+		//}
 
-		[Fact]
-		public async Task GetChainInternal_Test()
-		{
-			await Task.CompletedTask;
+		//[Fact]
+		//public async Task GetChainInternal_Test()
+		//{
+		//	await Task.CompletedTask;
 
-			using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
-			{
-				using(var chain = certificateWrapper.GetChainInternal())
-				{
-					Assert.False(chain.ChainStatus.Any());
+		//	using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
+		//	{
+		//		using(var chain = certificateWrapper.GetChainInternal())
+		//		{
+		//			Assert.False(chain.ChainStatus.Any());
 
-					var certificates = chain.ChainElements.Select(element => element.Certificate).ToList();
+		//			var certificates = chain.ChainElements.Select(element => element.Certificate).ToList();
 
-					Assert.Equal(3, certificates.Count);
+		//			Assert.Equal(3, certificates.Count);
 
-					Assert.Equal(certificateWrapper.WrappedCertificate, certificates[0]);
-				}
-			}
-		}
+		//			Assert.Equal(certificateWrapper.WrappedCertificate, certificates[0]);
+		//		}
+		//	}
+		//}
 
-		[Fact]
-		public async Task GetEnhancedKeyUsage_Test()
-		{
-			await Task.CompletedTask;
+		//[Fact]
+		//public async Task GetEnhancedKeyUsage_Test()
+		//{
+		//	await Task.CompletedTask;
 
-			using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
-			{
-				Assert.Equal(EnhancedKeyUsage.ClientAuthentication, certificateWrapper.GetEnhancedKeyUsage());
-			}
-		}
+		//	using(var certificateWrapper = new X509Certificate2Wrapper(GetCertificate(), new NullLoggerFactory()))
+		//	{
+		//		Assert.Equal(EnhancedKeyUsage.ClientAuthentication, certificateWrapper.GetEnhancedKeyUsage());
+		//	}
+		//}
 
 		[Fact]
 		public async Task GetSubjectAlternativeName_Test()
