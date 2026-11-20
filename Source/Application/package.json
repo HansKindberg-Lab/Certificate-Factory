@@ -18,7 +18,7 @@
 		"Build-Script-Release": "esbuild Scripts/Site.ts --bundle --minify --outfile=wwwroot/Scripts/Site.js",
 		"//": "https://madecurious.com/curiosities/generating-svg-sprites-the-easy-way/, https://github.com/svg-sprite/svg-sprite/blob/HEAD/docs/command-line.md",
 		"Build-Sprite": "svg-sprite -s --symbol-dest wwwroot/Style/Icons --symbol-sprite Sprite.svg Style/Icons/**/*.svg",
-		"Build-StyleSheet-Debug": "sass Style/Site.scss:wwwroot/Style/Site.css --no-source-map",
-		"Build-StyleSheet-Release": "sass Style/Site.scss:wwwroot/Style/Site.css --no-source-map --style=compressed"
+		"Build-StyleSheet-Debug": "sass Style/Site.scss:wwwroot/Style/Site.css --no-source-map --silence-deprecation=color-functions --silence-deprecation=global-builtin --silence-deprecation=if-function --silence-deprecation=import",
+		"Build-StyleSheet-Release": "sass Style/Site.scss:wwwroot/Style/Site.css --no-source-map --style=compressed --silence-deprecation=color-functions --silence-deprecation=global-builtin --silence-deprecation=if-function --silence-deprecation=import"
 	}
 }
