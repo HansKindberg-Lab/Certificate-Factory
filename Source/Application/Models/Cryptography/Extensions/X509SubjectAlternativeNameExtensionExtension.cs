@@ -93,7 +93,7 @@ namespace Application.Models.Cryptography.Extensions
 
 				subjectAlternativeNameExtension.EnsureEnumeration();
 
-				return (_decodedField.GetValue(subjectAlternativeNameExtension) as IEnumerable)!.OfType<object>();
+				return (_decodedField.GetValue(subjectAlternativeNameExtension) as IEnumerable).OfType<object>();
 			}
 
 			#endregion
