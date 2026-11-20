@@ -1,21 +1,26 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Net;
 using Application.Models.ComponentModel;
-using Xunit.Abstractions;
-using Xunit.Sdk;
-
-[assembly: TestFramework("IntegrationTests.Fixtures.FixtureTestFramework", "Integration-tests")]
 
 namespace IntegrationTests.Fixtures
 {
-	public class FixtureTestFramework : XunitTestFramework
+	public class Fixture : IDisposable
 	{
 		#region Constructors
 
-		public FixtureTestFramework(IMessageSink messageSink) : base(messageSink)
+		public Fixture()
 		{
 			TypeDescriptor.AddAttributes(typeof(IPAddress), new TypeConverterAttribute(typeof(IpAddressTypeConverter)));
 			TypeDescriptor.AddAttributes(typeof(IPNetwork), new TypeConverterAttribute(typeof(IpNetworkTypeConverter)));
+		}
+
+		#endregion
+
+		#region Methods
+
+		public void Dispose()
+		{
+			GC.SuppressFinalize(this);
 		}
 
 		#endregion

@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
+[assembly: AssemblyFixture(typeof(IntegrationTests.Fixtures.Fixture))]
+
 namespace IntegrationTests
 {
 	public static class Global

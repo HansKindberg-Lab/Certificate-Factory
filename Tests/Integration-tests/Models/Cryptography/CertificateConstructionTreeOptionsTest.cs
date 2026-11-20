@@ -77,7 +77,7 @@ namespace IntegrationTests.Models.Cryptography
 			var constructionTree = new CertificateConstructionTreeOptions();
 			configuration.Bind(constructionTree);
 
-			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectory.FullName, _resourcesDirectoryRelativePath, "Expected-1.json"));
+			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectory.FullName, _resourcesDirectoryRelativePath, "Expected-1.json"), TestContext.Current.CancellationToken);
 
 			var json = constructionTree.ToJson();
 
@@ -91,7 +91,7 @@ namespace IntegrationTests.Models.Cryptography
 			var constructionTree = new CertificateConstructionTreeOptions();
 			configuration.Bind(constructionTree);
 
-			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectory.FullName, _resourcesDirectoryRelativePath, "Expected-2.json"));
+			var expectedJson = await File.ReadAllTextAsync(Path.Combine(Global.ProjectDirectory.FullName, _resourcesDirectoryRelativePath, "Expected-2.json"), TestContext.Current.CancellationToken);
 
 			var json = constructionTree.ToJson();
 
